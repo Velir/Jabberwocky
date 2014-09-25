@@ -71,7 +71,7 @@ namespace Jabberwocky.Glass.Tests.Factory
 		[Test]
 		public void GlassFactory_NoMatchingTemplate_Fallsthrough()
 		{
-			var mockItem = Substitute.For<IGlassBase>();
+			var mockItem = Substitute.For<IBaseType>();
 			mockItem._TemplateId.Returns(Guid.NewGuid()); // No match
 			mockItem._BaseTemplates.Returns(new[] {Guid.Empty});
 
@@ -132,7 +132,7 @@ namespace Jabberwocky.Glass.Tests.Factory
 
 		private ITestInterface GetItemWithFallback()
 		{
-			var mockItem = Substitute.For<IGlassBase>();
+			var mockItem = Substitute.For<IBaseType>();
 			mockItem._TemplateId.Returns(new Guid(FakeTemplateString)); // Matching template
 			mockItem._BaseTemplates.Returns(new[] {Guid.Empty});
 
@@ -143,7 +143,7 @@ namespace Jabberwocky.Glass.Tests.Factory
 		#region Glass Interface & Model Definitions
 
 		// No templateID (or even attribute!)
-		private interface IBaseType
+		public interface IBaseType : IGlassBase
 		{
 		}
 
@@ -201,6 +201,12 @@ namespace Jabberwocky.Glass.Tests.Factory
 		[GlassFactoryType(typeof (IBaseType))]
 		public abstract class IBaseTypeModel : ITestInterface
 		{
+			private readonly IBaseType _innerItem;
+			protected IBaseTypeModel(IBaseType innerItem)
+			{
+				_innerItem = innerItem;
+			}
+
 			public bool IsFallback
 			{
 				get { return true; }

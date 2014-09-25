@@ -60,7 +60,7 @@ namespace Jabberwocky.Glass.Factory
 		{
 			if (item == null || interfaceType == null) return null;
 
-			if (TemplateCache == null || !TemplateCache.ContainsKey(interfaceType))
+			if (!TemplateCache.ContainsKey(interfaceType))
 			{
 				return null;
 			}
@@ -75,13 +75,15 @@ namespace Jabberwocky.Glass.Factory
 			}
 
 			// No exact match... Try base templates (up to configurable depth)
-			ISitecoreService service = _serviceFactory();
-			foreach (Guid baseTemplateId in GetBaseTemplates(service.GetItem<IBaseTemplates>(item._Id), service))
+			using (ISitecoreService service = _serviceFactory())
 			{
-				string templateId = baseTemplateId.ToString();
-				if (itemInterfaces.ContainsKey(templateId))
+				foreach (Guid baseTemplateId in GetBaseTemplates(service.GetItem<IBaseTemplates>(item._Id), service))
 				{
-					return itemInterfaces[templateId];
+					string templateId = baseTemplateId.ToString();
+					if (itemInterfaces.ContainsKey(templateId))
+					{
+						return itemInterfaces[templateId];
+					}
 				}
 			}
 
@@ -93,6 +95,7 @@ namespace Jabberwocky.Glass.Factory
 			if (item == null || depth <= 0) return DefaultBaseTemplateArray;
 
 			var baseTemplates = item.TemplateBaseTemplates ?? item.BaseTemplates;
+			baseTemplates = baseTemplates == null ? null : baseTemplates.ToArray();
 			if (baseTemplates == null || !baseTemplates.Any()) return DefaultBaseTemplateArray;
 
 			// Breadth first search (recursive)

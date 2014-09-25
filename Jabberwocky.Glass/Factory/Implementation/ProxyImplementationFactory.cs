@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Reflection;
 using Castle.DynamicProxy;
 using Jabberwocky.Glass.Factory.Interceptors;
 
@@ -10,6 +12,8 @@ namespace Jabberwocky.Glass.Factory.Implementation
 	public class ProxyImplementationFactory : IImplementationFactory
 	{
 		private static readonly ProxyGenerator ProxyGenerator = new ProxyGenerator();
+
+		private static readonly BindingFlags ConstructorFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
 
 		private readonly Func<Type, object, FallbackInterceptor> _interceptorFactory;
 
@@ -27,7 +31,7 @@ namespace Jabberwocky.Glass.Factory.Implementation
 		public object Create(Type t, Type asType, object glassModel)
 		{
 			// Return proxy with inner item
-			if (t.GetConstructor(new[] { glassModel.GetType() }) != null)
+			if (t.GetConstructors(ConstructorFlags).FirstOrDefault(info => info.GetParameters().FirstOrDefault(pi => pi.ParameterType.IsInstanceOfType(glassModel)) != null) != null)
 			{
 				return ProxyGenerator.CreateClassProxy(t, new[] { glassModel }, _interceptorFactory(asType, glassModel));
 			}
