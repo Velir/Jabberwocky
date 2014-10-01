@@ -13,7 +13,7 @@ namespace Jabberwocky.Glass.Factory.Implementation
 	{
 		private static readonly ProxyGenerator ProxyGenerator = new ProxyGenerator();
 
-		private static readonly BindingFlags ConstructorFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
+		private const BindingFlags ConstructorFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
 
 		private readonly Func<Type, object, FallbackInterceptor> _interceptorFactory;
 

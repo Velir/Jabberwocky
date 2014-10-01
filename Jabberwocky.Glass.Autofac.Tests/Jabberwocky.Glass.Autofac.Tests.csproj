@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C29D9286-8D3A-40EB-A5D9-2100295F7970}</ProjectGuid>
+    <ProjectGuid>{5C9DD108-B26F-43EA-B8F3-5A3512672957}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Jabberwocky.Glass.Tests</RootNamespace>
-    <AssemblyName>Jabberwocky.Glass.Tests</AssemblyName>
+    <RootNamespace>Jabberwocky.Glass.Autofac.Tests</RootNamespace>
+    <AssemblyName>Jabberwocky.Glass.Autofac.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -37,6 +37,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="Castle.Core">
       <HintPath>..\packages\Castle.Core.3.2.0\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
@@ -63,14 +66,18 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Factory\Builder\DefaultGlassFactoryBuilderTests.cs" />
-    <Compile Include="Factory\GlassInterfaceFactoryTests.cs" />
+    <Compile Include="Factory\Builder\AutofacGlassFactoryBuilderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Jabberwocky.Glass.Autofac\Jabberwocky.Glass.Autofac.csproj">
+      <Project>{EA620F62-8D08-4031-BAC4-1C60D5C5CBC9}</Project>
+      <Name>Jabberwocky.Glass.Autofac</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Jabberwocky.Glass\Jabberwocky.Glass.csproj">
       <Project>{13E08D30-B2A4-45EF-A28E-C916EB80B70D}</Project>
       <Name>Jabberwocky.Glass</Name>
