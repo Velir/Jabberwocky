@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,6 +13,21 @@ namespace Jabberwocky.Core.Tests.Utils
 	[TestFixture]
 	public class LockUtilTests
 	{
+		[Test]
+		public void GetLockHighConcurrencyTest()
+		{
+			Parallel.For(0, 100000, i => (i).ToString().GetLock().Dispose());
+		}
+
+		[Test]
+		public void GetLockAsyncHighConcurrencyTest()
+		{
+			var bag = new ConcurrentBag<Task>();
+			Parallel.For(0, 100000, i => bag.Add(Task.Run(async () => (await (i).GetLockAsync()).Dispose())));
+
+			Task.WaitAll(bag.ToArray());
+		}
+
 		[Test]
 		public void GetLock()
 		{

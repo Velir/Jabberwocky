@@ -131,14 +131,12 @@ namespace Jabberwocky.Core.Utils
 
 			public void Dispose()
 			{
-				bool requireDispose = false;
 				try
 				{
 					if (Interlocked.Decrement(ref _lockState.RefCount) <= 0)
 					{
 						if (!_lockState.IsValid) return;
 
-						requireDispose = true;
 						_lockState.IsValid = false;
 						LockState val;
 						_container.TryRemove(_key, out val);
@@ -147,32 +145,15 @@ namespace Jabberwocky.Core.Utils
 				finally
 				{
 					_lockState.Semaphore.Release();
-
-					if (requireDispose)
-						_lockState.Dispose();
 				}
 			}
 		}
 
-		private sealed class LockState : IDisposable
+		private sealed class LockState
 		{
-			private const int DisposedFalse = 0;
-			private const int DisposedTrue = 1;
-
 			public int RefCount;
 			public readonly SemaphoreSlim Semaphore = new SemaphoreSlim(1);
 			public volatile bool IsValid = true;
-
-			private int _disposed = DisposedFalse;
-			public void Dispose()
-			{
-				if (Interlocked.CompareExchange(ref _disposed, DisposedTrue, DisposedFalse) == DisposedTrue) return;
-
-				if (Semaphore != null)
-				{
-					Semaphore.Dispose();
-				}
-			}
 		}
 
 		#endregion
