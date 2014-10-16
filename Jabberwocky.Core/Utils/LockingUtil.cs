@@ -152,6 +152,8 @@ namespace Jabberwocky.Core.Utils
 		private sealed class LockState
 		{
 			public int RefCount;
+			// Note that we no longer dispose of this resource; we will now rely on non-deterministic finalization cleanup
+			// Justification: http://source.roslyn.codeplex.com/#Microsoft.CodeAnalysis.Workspaces/Utilities/AsyncSemaphore.cs,91c6ef418f692fa1,references
 			public readonly SemaphoreSlim Semaphore = new SemaphoreSlim(1);
 			public volatile bool IsValid = true;
 		}
