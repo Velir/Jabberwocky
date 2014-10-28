@@ -2,14 +2,21 @@
 using System.Reflection;
 using Autofac;
 using Autofac.Extras.DynamicProxy2;
+using Glass.Mapper.Sc;
 using Jabberwocky.Core.Utils.Extensions;
 using Jabberwocky.Glass.Autofac.Glass;
 using Jabberwocky.Glass.Models;
+using Jabberwocky.Glass.Services;
 
 namespace Jabberwocky.Glass.Autofac.Extensions
 {
 	public static class GlassRegistrationExtensions
 	{
+		/// <summary>
+		/// This is the default database that should be used to target the ISitecoreContext and ISitecoreService implementations
+		/// </summary>
+		private const string DefaultDatabaseName = "master";
+
 		public static ContainerBuilder RegisterGlassModelsAsInterfacesAndSelf(this ContainerBuilder builder, string[] assemblyNames)
 		{
 			builder.RegisterType<LazyObjectInterceptor>().AsSelf().ExternallyOwned();
@@ -42,6 +49,22 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 					.InterceptedBy(typeof(LazyObjectInterceptor))
 					.ExternallyOwned();
 			}
+
+			return builder;
+		}
+
+		public static ContainerBuilder RegisterGlassServices(this ContainerBuilder builder)
+		{
+			builder.RegisterType<ItemService>().As<IItemService>();
+			builder.RegisterType<LinkService>().As<ILinkService>();
+			builder.RegisterType<SitecoreContext>().As<ISitecoreContext>().ExternallyOwned();
+			builder.Register(c =>
+			{
+				var context = c.Resolve<ISitecoreContext>();
+				return context != null && context.Database != null && context.Database.Name != "core"  // prob need to change this.
+					? (ISitecoreService)context
+					: new SitecoreService(DefaultDatabaseName);
+			}).As<ISitecoreService>().ExternallyOwned();
 
 			return builder;
 		}
