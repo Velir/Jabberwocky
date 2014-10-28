@@ -13,17 +13,20 @@ namespace Jabberwocky.Core.Tests.Utils
 	[TestFixture]
 	public class LockUtilTests
 	{
+		const int NumIterations = 100000;
+		const int ContentionRatio = 10; // 1 in 10 (10%)
+
 		[Test]
 		public void GetLockHighConcurrencyTest()
 		{
-			Parallel.For(0, 100000, i => (i).ToString().GetLock().Dispose());
+			Parallel.For(0, NumIterations, i => (i % ContentionRatio).GetLock().Dispose());
 		}
 
 		[Test]
 		public void GetLockAsyncHighConcurrencyTest()
 		{
 			var bag = new ConcurrentBag<Task>();
-			Parallel.For(0, 100000, i => bag.Add(Task.Run(async () => (await (i).GetLockAsync()).Dispose())));
+			Parallel.For(0, NumIterations, i => bag.Add(Task.Run(async () => (await (i % ContentionRatio).GetLockAsync()).Dispose())));
 
 			Task.WaitAll(bag.ToArray());
 		}
