@@ -70,6 +70,7 @@
     <Compile Include="Factory\Interfaces\BaseInterface.cs" />
     <Compile Include="Factory\Util\GlassInterfaceMetadata.cs" />
     <Compile Include="Factory\Util\IBaseTemplates.cs" />
+    <Compile Include="Models\GlassBase.cs" />
     <Compile Include="Models\IGlassBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ISiteContextService.cs" />

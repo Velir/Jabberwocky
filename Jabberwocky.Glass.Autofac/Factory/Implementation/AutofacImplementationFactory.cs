@@ -34,8 +34,8 @@ namespace Jabberwocky.Glass.Autofac.Factory.Implementation
 				new TypedParameter(exactGenericGlassType, glassModel),
 
 				// These are the FallbackInterceptor specific constructor params
-				new NamedParameter(Extensions.RegistrationExtensions.GlassModelNamedParameter, glassModel),
-				new NamedParameter(Extensions.RegistrationExtensions.InterfaceNamedParameter, asType));
+				new NamedParameter(Extensions.InterceptorRegistrationExtensions.GlassModelNamedParameter, glassModel),
+				new NamedParameter(Extensions.InterceptorRegistrationExtensions.InterfaceNamedParameter, asType));
 
 			return implTarget;	 // Should be proxied automatically with new RegistrationExtensions helpers
 		}

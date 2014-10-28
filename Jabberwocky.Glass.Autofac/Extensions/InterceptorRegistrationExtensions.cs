@@ -10,7 +10,7 @@ using Castle.DynamicProxy;
 
 namespace Jabberwocky.Glass.Autofac.Extensions
 {
-	public static class RegistrationExtensions
+	public static class InterceptorRegistrationExtensions
 	{
 		private const string InterceptorsPropertyName = "Autofac.Extras.DynamicProxy2.RegistrationExtensions.InterceptorsPropertyName";
 

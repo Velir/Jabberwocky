@@ -56,12 +56,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\RegistrationExtensions.cs" />
+    <Compile Include="Extensions\AutofacRegistrationExtensions.cs" />
+    <Compile Include="Extensions\FactoryRegistrationExtensions.cs" />
+    <Compile Include="Extensions\GlassRegistrationExtensions.cs" />
+    <Compile Include="Extensions\InterceptorRegistrationExtensions.cs" />
     <Compile Include="Factory\Builder\AutofacGlassFactoryBuilder.cs" />
     <Compile Include="Factory\Implementation\AutofacImplementationFactory.cs" />
+    <Compile Include="Glass\LazyObjectInterceptor.cs" />
+    <Compile Include="Glass\Tasks\AutofacGlassContructorTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\AutofacConfig.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Jabberwocky.Core\Jabberwocky.Core.csproj">
+      <Project>{79F22272-B90E-4461-BAEE-92AE1A6C28BC}</Project>
+      <Name>Jabberwocky.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Jabberwocky.Glass\Jabberwocky.Glass.csproj">
       <Project>{13E08D30-B2A4-45EF-A28E-C916EB80B70D}</Project>
       <Name>Jabberwocky.Glass</Name>
