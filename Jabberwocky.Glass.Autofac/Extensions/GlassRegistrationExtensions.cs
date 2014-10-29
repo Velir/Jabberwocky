@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Reflection;
 using Autofac;
 using Autofac.Extras.DynamicProxy2;
@@ -17,13 +18,27 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 		/// </summary>
 		private const string DefaultDatabaseName = "master";
 
-		public static ContainerBuilder RegisterGlassModelsAsInterfacesAndSelf(this ContainerBuilder builder, string[] assemblyNames)
+		/// <summary>
+		/// This is the 'core' database
+		/// </summary>
+		private const string CoreDatabaseName = "core";
+
+		/// <summary>
+		/// Registers concrete Glass Models, including lazy variations
+		/// </summary>
+		/// <remarks>
+		/// Note that this does not register interface-based Glass Models, as those do not require DI
+		/// </remarks>
+		/// <param name="builder"></param>
+		/// <param name="assemblyNames"></param>
+		/// <returns></returns>
+		public static ContainerBuilder RegisterConcreteGlassModelsAsInterfacesAndSelf(this ContainerBuilder builder, string[] assemblyNames)
 		{
 			builder.RegisterType<LazyObjectInterceptor>().AsSelf().ExternallyOwned();
 
 			var assemblies = assemblyNames.Select(Assembly.Load);
 
-			foreach (var type in assemblies.SelectMany(a => a.ExportedTypes).Where(type => typeof (GlassBase).IsAssignableFrom(type)))
+			foreach (var type in assemblies.SelectMany(a => a.ExportedTypes).Where(type => typeof(GlassBase).IsAssignableFrom(type)))
 			{
 				// Register lazy versions of each "DIRECT" (no inheritance) interface
 				foreach (
@@ -53,20 +68,38 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 			return builder;
 		}
 
-		public static ContainerBuilder RegisterGlassServices(this ContainerBuilder builder)
+		/// <summary>
+		/// Registers the ISitecoreContext and ISitecoreService, as well as some basic services built on top of Glass
+		/// </summary>
+		/// <param name="builder"></param>
+		/// <param name="customServiceResolver">An optional delegate, which allows custom registration logic for the SitecoreService</param>
+		/// <returns></returns>
+		public static ContainerBuilder RegisterGlassServices(this ContainerBuilder builder, Action<ContainerBuilder> customServiceResolver = null)
 		{
 			builder.RegisterType<ItemService>().As<IItemService>();
 			builder.RegisterType<LinkService>().As<ILinkService>();
 			builder.RegisterType<SitecoreContext>().As<ISitecoreContext>().ExternallyOwned();
-			builder.Register(c =>
+
+			if (customServiceResolver == null)
 			{
-				var context = c.Resolve<ISitecoreContext>();
-				return context != null && context.Database != null && context.Database.Name != "core"  // prob need to change this.
-					? (ISitecoreService)context
-					: new SitecoreService(DefaultDatabaseName);
-			}).As<ISitecoreService>().ExternallyOwned();
+				// This is a default resolver for the ISitecoreService
+				// It should work across ASP.NET WebForms, MVC, WebAPI with defaults.
+				// It makes the assumption that should the current Sitecore Context be indeterminate (or 'core'), then the master DB is preferred
+
+				builder.Register(c =>
+				{
+					var context = c.Resolve<ISitecoreContext>();
+					return context != null && context.Database != null && context.Database.Name != CoreDatabaseName
+						? (ISitecoreService)context
+						: new SitecoreService(DefaultDatabaseName);
+				}).As<ISitecoreService>().ExternallyOwned();
+			}
+			else
+			{
+				customServiceResolver(builder);
+			}
 
 			return builder;
 		}
-    }
+	}
 }
