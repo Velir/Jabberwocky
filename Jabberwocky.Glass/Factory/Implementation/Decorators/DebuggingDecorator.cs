@@ -30,7 +30,7 @@ namespace Jabberwocky.Glass.Factory.Implementation.Decorators
 			var exactGenericGlassType = typeAttribute.Type;
 
 			// Assert that we are able to construct the Glass Factory type with the given Glass model
-			if (!glassModel.GetType().IsAssignableFrom(exactGenericGlassType))
+			if (!exactGenericGlassType.IsInstanceOfType(glassModel))
 			{
 				if (!IsDebuggingEnabled)
 				{
@@ -38,7 +38,7 @@ namespace Jabberwocky.Glass.Factory.Implementation.Decorators
 				}
 
 				// Otherwise, throw an exception
-				throw new ImplementationMismatchException(t, glassModel.GetType());
+				throw new ImplementationMismatchException(exactGenericGlassType, glassModel);
 			}
 
 			return _innerFactory.Create(t, asType, glassModel);
