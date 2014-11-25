@@ -1,4 +1,5 @@
-﻿using System.Dynamic;
+﻿using System;
+using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 
@@ -18,6 +19,8 @@ namespace Jabberwocky.Core.Testing
 		/// </summary>
 		private readonly object _wrapped;
 
+		private readonly Type _targetType;
+
 		/// <summary>
 		/// Specify the flags for accessing members
 		/// </summary>
@@ -30,6 +33,23 @@ namespace Jabberwocky.Core.Testing
 		public DynamicWrapper(object o)
 		{
 			_wrapped = o;
+			_targetType = o.GetType();
+		}
+
+		public DynamicWrapper(object o, Type type)
+		{
+			_wrapped = o;
+			_targetType = type;
+		}
+
+		public static dynamic For<T>(T o)
+		{
+			return new DynamicWrapper(o, typeof(T));
+		}
+
+		public static dynamic For(object o)
+		{
+			return new DynamicWrapper(o, o.GetType());
 		}
 
 		/// <summary>
@@ -51,7 +71,7 @@ namespace Jabberwocky.Core.Testing
 			if (ctor != null)
 			{
 				var instance = ctor.Invoke(args);
-				return new DynamicWrapper(instance);
+				return DynamicWrapper.For(instance);
 			}
 
 			return null;
@@ -65,7 +85,7 @@ namespace Jabberwocky.Core.Testing
 			var types = from a in args
 				select a.GetType();
 
-			var method = _wrapped.GetType().GetMethod
+			var method = _targetType.GetMethod
 				(binder.Name, flags, null, types.ToArray(), null);
 
 			if (method == null)
@@ -81,12 +101,12 @@ namespace Jabberwocky.Core.Testing
 		public override bool TryGetMember(GetMemberBinder binder, out object result)
 		{
 			//Try getting a property of that name
-			var prop = _wrapped.GetType().GetProperty(binder.Name, flags);
-
+			var prop = _targetType.GetProperty(binder.Name, flags);
+			
 			if (prop == null)
 			{
 				//Try getting a field of that name
-				var fld = _wrapped.GetType().GetField(binder.Name, flags);
+				var fld = _targetType.GetField(binder.Name, flags);
 				if (fld != null)
 				{
 					result = fld.GetValue(_wrapped);
@@ -104,10 +124,10 @@ namespace Jabberwocky.Core.Testing
 		/// </summary>
 		public override bool TrySetMember(SetMemberBinder binder, object value)
 		{
-			var prop = _wrapped.GetType().GetProperty(binder.Name, flags);
+			var prop = _targetType.GetProperty(binder.Name, flags);
 			if (prop == null)
 			{
-				var fld = _wrapped.GetType().GetField(binder.Name, flags);
+				var fld = _targetType.GetField(binder.Name, flags);
 				if (fld != null)
 				{
 					fld.SetValue(_wrapped, value);

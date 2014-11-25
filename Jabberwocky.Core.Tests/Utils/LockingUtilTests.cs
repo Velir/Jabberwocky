@@ -95,8 +95,8 @@ namespace Jabberwocky.Core.Tests.Utils
 
 				// Task 1 is out of lock, Task 2 should be IN lock (assignment should have occurred)
 				Assert.IsNotNull(lock2);
-				dynamic dLock1 = new DynamicWrapper(lock1);
-				dynamic dLock2 = new DynamicWrapper(lock2);
+				dynamic dLock1 = DynamicWrapper.For((object)lock1);
+				dynamic dLock2 = DynamicWrapper.For((object)lock2);
 
 				// Assert that the actual lock objects are the same reference
 				Assert.AreSame(dLock1._lockState, dLock2._lockState);
@@ -112,7 +112,7 @@ namespace Jabberwocky.Core.Tests.Utils
 				// Now show that another lock on the same key (with no other re-entrant threads grabbing the lock) will be different
 				using (var lock3 = key1.GetLock())
 				{
-					dynamic dLock3 = new DynamicWrapper(lock3);
+					dynamic dLock3 = DynamicWrapper.For((object)lock3);
 					Assert.AreNotSame(dLock3._lockState, dLock2._lockState);
 					Assert.AreEqual(1, ((ICollection)dLock1._container).Count);
 				}
@@ -193,8 +193,8 @@ namespace Jabberwocky.Core.Tests.Utils
 
 				// Task 1 is out of lock, Task 2 should be IN lock (assignment should have occurred)
 				Assert.IsNotNull(lock2);
-				dynamic dLock1 = new DynamicWrapper(lock1);
-				dynamic dLock2 = new DynamicWrapper(lock2);
+				dynamic dLock1 = DynamicWrapper.For((object)lock1);
+				dynamic dLock2 = DynamicWrapper.For((object)lock2);
 
 				// Assert that the actual lock objects are the same reference
 				Assert.AreSame(dLock1._lockState, dLock2._lockState);
@@ -211,7 +211,7 @@ namespace Jabberwocky.Core.Tests.Utils
 				// AND: this is a SYNC lock, not ASYNC!
 				using (var lock3 = key1.GetLock())
 				{
-					dynamic dLock3 = new DynamicWrapper(lock3);
+					dynamic dLock3 = DynamicWrapper.For((object)lock3);
 					Assert.AreNotSame(dLock3._lockState, dLock2._lockState);
 					Assert.AreEqual(1, ((ICollection)dLock1._container).Count);
 				}

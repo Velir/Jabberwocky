@@ -49,11 +49,16 @@
     <Reference Include="Glass.Mapper.Sc">
       <HintPath>..\packages\Glass.Mapper.Sc.3.2.1.42\lib\net45\Glass.Mapper.Sc.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="NSubstitute">
       <HintPath>..\packages\NSubstitute.1.7.2.0\lib\NET45\NSubstitute.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.Kernel, Version=7.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\Sitecore\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>
@@ -67,6 +72,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Factory\Builder\AutofacGlassFactoryBuilderTests.cs" />
+    <Compile Include="Pipelines\Pipelines\AutofacProcessorFactoryTests.cs" />
+    <Compile Include="Pipelines\Processors\TestProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -74,6 +81,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Jabberwocky.Core\Jabberwocky.Core.csproj">
+      <Project>{79F22272-B90E-4461-BAEE-92AE1A6C28BC}</Project>
+      <Name>Jabberwocky.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Jabberwocky.Glass.Autofac\Jabberwocky.Glass.Autofac.csproj">
       <Project>{EA620F62-8D08-4031-BAC4-1C60D5C5CBC9}</Project>
       <Name>Jabberwocky.Glass.Autofac</Name>

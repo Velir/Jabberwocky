@@ -13,7 +13,7 @@ namespace Jabberwocky.Core.Tests.Caching
 
 		protected override ObjectCache InnerCache
 		{
-			get { return ((dynamic)new DynamicWrapper(_cacheProvider))._internalCache; }
+			get { return ((dynamic)DynamicWrapper.For(_cacheProvider))._internalCache; }
 		}
 
 		protected override SiteCache CreateTestProvider()
@@ -26,7 +26,7 @@ namespace Jabberwocky.Core.Tests.Caching
 			base.TestCleanup();
 
 			// need to cleanup static data
-			((dynamic)new DynamicWrapper(_cacheProvider))._internalCache = new MemoryCache("in-memory");
+			((dynamic)DynamicWrapper.For(_cacheProvider))._internalCache = new MemoryCache("in-memory");
 		}
 
 		[Test]
@@ -63,7 +63,7 @@ namespace Jabberwocky.Core.Tests.Caching
 		{
 			var singleton = SiteCache.Default;
 
-			var singletonCache = ((dynamic) new DynamicWrapper(singleton))._internalCache;
+			var singletonCache = (DynamicWrapper.For((object)singleton))._internalCache;
 
 			Assert.AreNotSame(_cacheProvider, singleton); // Are NOT the same SiteCache instance
 			Assert.AreSame(InnerCache, singletonCache); // But ARE the same MemoryCache instance
