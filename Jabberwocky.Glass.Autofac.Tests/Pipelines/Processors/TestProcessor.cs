@@ -15,7 +15,7 @@ namespace Jabberwocky.Glass.Autofac.Tests.Pipelines.Processors
 			_testDependency = testDependency;
 		}
 
-		protected override void Process(string pipelineArgs)
+		protected override void Run(string pipelineArgs)
 		{
 			// do nothing
 		}

@@ -72,7 +72,7 @@ namespace Jabberwocky.Glass.Autofac.Tests.Pipelines.Pipelines
 			Assert.IsNotNull(service);
 			Assert.IsFalse(isDisposed);
 
-			service.Run(null);
+			service.Process(null);
 
 			// After
 			Assert.IsTrue(isDisposed);

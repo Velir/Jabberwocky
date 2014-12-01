@@ -65,6 +65,7 @@
     <Compile Include="Extensions\FactoryRegistrationExtensions.cs" />
     <Compile Include="Extensions\GlassRegistrationExtensions.cs" />
     <Compile Include="Extensions\InterceptorRegistrationExtensions.cs" />
+    <Compile Include="Extensions\SitecorePipelineRegistrationExtensions.cs" />
     <Compile Include="Factory\Builder\AutofacGlassFactoryBuilder.cs" />
     <Compile Include="Factory\Implementation\AutofacImplementationFactory.cs" />
     <Compile Include="Glass\LazyObjectInterceptor.cs" />

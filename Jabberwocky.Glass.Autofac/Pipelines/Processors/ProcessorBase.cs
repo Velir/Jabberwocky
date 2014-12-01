@@ -20,14 +20,14 @@ namespace Jabberwocky.Glass.Autofac.Pipelines.Processors
 			_lifetimeScope = lifetimeScope;
 		}
 
-		public void Run(T pipelineArgs)
+		public void Process(T pipelineArgs)
 		{
 			using (_lifetimeScope)
 			{
-				Process(pipelineArgs);
+				Run(pipelineArgs);
 			}
 		}
 
-		protected abstract void Process(T pipelineArgs);
+		protected abstract void Run(T pipelineArgs);
 	}
 }
