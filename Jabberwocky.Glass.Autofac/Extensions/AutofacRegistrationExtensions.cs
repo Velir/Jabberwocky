@@ -14,7 +14,7 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 		/// </remarks>
 		/// <param name="container"></param>
 		/// <returns></returns>
-		public static IContainer RegisterContainer(IContainer container)
+		public static IContainer RegisterContainer(this IContainer container)
 		{
 			// Enable resolving the root container
 			var tempBuilder = new ContainerBuilder();

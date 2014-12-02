@@ -16,7 +16,7 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 		/// <summary>
 		/// This is the default database that should be used to target the ISitecoreContext and ISitecoreService implementations
 		/// </summary>
-		private const string DefaultDatabaseName = "master";
+		private const string DefaultDatabaseName = "web";
 
 		/// <summary>
 		/// This is the 'core' database
@@ -32,7 +32,7 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 		/// <param name="builder"></param>
 		/// <param name="assemblyNames"></param>
 		/// <returns></returns>
-		public static ContainerBuilder RegisterConcreteGlassModelsAsInterfacesAndSelf(this ContainerBuilder builder, string[] assemblyNames)
+		public static ContainerBuilder RegisterConcreteGlassModelsAsInterfacesAndSelf(this ContainerBuilder builder, params string[] assemblyNames)
 		{
 			builder.RegisterType<LazyObjectInterceptor>().AsSelf().ExternallyOwned();
 

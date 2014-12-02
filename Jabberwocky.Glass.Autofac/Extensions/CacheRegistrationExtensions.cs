@@ -8,7 +8,7 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 {
 	public static class CacheRegistrationExtensions
 	{
-		public static void RegisterCacheServices(ContainerBuilder builder)
+		public static void RegisterCacheServices(this ContainerBuilder builder)
 		{
 			// If necessary, register SiteContextService
 			builder.RegisterType<SiteContextService>().As<ISiteContextService>().PreserveExistingDefaults();
