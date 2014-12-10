@@ -19,7 +19,7 @@ namespace Jabberwocky.Glass.Autofac.Pipelines.Factories
 			if (type == null) return null;
 
 			// Includes Pipeline specific registrations that override existing defaults
-			var scope = Container.BeginLifetimeScope(builder => builder.RegisterSitecorePipelineServices());
+			var scope = Container.BeginLifetimeScope(ConfigureRegistrationOverrides);
 			try
 			{
 				return scope.Resolve(type);
@@ -31,6 +31,11 @@ namespace Jabberwocky.Glass.Autofac.Pipelines.Factories
 			}
 
 			return null;
+		}
+
+		protected virtual void ConfigureRegistrationOverrides(ContainerBuilder builder)
+		{
+			builder.RegisterSitecorePipelineServices();
 		}
 
 		private static Type ResolveType(string identifier)
