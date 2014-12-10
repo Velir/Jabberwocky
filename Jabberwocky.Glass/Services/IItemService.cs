@@ -10,5 +10,9 @@ namespace Jabberwocky.Glass.Services
 		IEnumerable<IGlassBase> GetAncestors(IGlassBase item);
 
 		bool HasPresentation(IGlassBase item);
+
+		bool IsContentItem(IGlassBase item);
+
+		bool IsMediaItem(IGlassBase item);
 	}
 }

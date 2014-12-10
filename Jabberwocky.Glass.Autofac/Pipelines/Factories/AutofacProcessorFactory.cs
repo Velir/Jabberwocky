@@ -1,5 +1,6 @@
 ﻿using System;
 using Autofac;
+using Jabberwocky.Glass.Autofac.Extensions;
 using Jabberwocky.Glass.Autofac.Util;
 using Sitecore.Reflection;
 
@@ -17,7 +18,8 @@ namespace Jabberwocky.Glass.Autofac.Pipelines.Factories
 			var type = ResolveType(identifier);
 			if (type == null) return null;
 
-			var scope = Container.BeginLifetimeScope();
+			// Includes Pipeline specific registrations that override existing defaults
+			var scope = Container.BeginLifetimeScope(builder => builder.RegisterSitecorePipelineServices());
 			try
 			{
 				return scope.Resolve(type);

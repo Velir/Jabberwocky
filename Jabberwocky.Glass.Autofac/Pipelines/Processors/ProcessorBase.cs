@@ -28,6 +28,6 @@ namespace Jabberwocky.Glass.Autofac.Pipelines.Processors
 			}
 		}
 
-		protected abstract void Run(T pipelineArgs);
+		protected internal abstract void Run(T pipelineArgs);
 	}
 }

@@ -1,12 +1,17 @@
 ﻿using System.Linq;
 using System.Reflection;
 using Autofac;
+using Glass.Mapper.Sc;
 using Jabberwocky.Glass.Autofac.Pipelines.Processors;
 
 namespace Jabberwocky.Glass.Autofac.Extensions
 {
 	public static class SitecorePipelineRegistrationExtensions
 	{
+		/// <summary>
+		///  This is the master database, that should only be used 'master' context
+		/// </summary>
+		private const string MasterDatabaseName = "master";
 
 		/// <summary>
 		/// Registers any custom Sitecore Pipeline Processors that implement the IProcessor interface 
@@ -32,9 +37,16 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 		public static ContainerBuilder RegisterProcessors(this ContainerBuilder builder, params Assembly[] assemblies)
 		{
 			builder.RegisterAssemblyTypes(assemblies).AsClosedTypesOf(typeof(IProcessor<>));
-
+			
 			return builder;
 		}
 
+		internal static ContainerBuilder RegisterSitecorePipelineServices(this ContainerBuilder builder)
+		{
+			// Register custom ISitecoreService behavior for custom lifetime scopes
+			builder.Register(c => new SitecoreService(MasterDatabaseName)).As<ISitecoreService>();
+
+			return builder;
+		}
 	}
 }

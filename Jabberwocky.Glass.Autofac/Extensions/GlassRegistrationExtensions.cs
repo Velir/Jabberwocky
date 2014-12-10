@@ -17,7 +17,7 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 		/// This is the default database that should be used to target the ISitecoreContext and ISitecoreService implementations
 		/// </summary>
 		private const string DefaultDatabaseName = "web";
-
+		
 		/// <summary>
 		/// This is the 'core' database
 		/// </summary>
@@ -98,7 +98,7 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 			{
 				customServiceResolver(builder);
 			}
-
+			
 			return builder;
 		}
 	}
