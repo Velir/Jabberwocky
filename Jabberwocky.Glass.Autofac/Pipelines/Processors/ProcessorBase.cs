@@ -1,5 +1,4 @@
 ﻿using System;
-using Autofac;
 
 namespace Jabberwocky.Glass.Autofac.Pipelines.Processors
 {
@@ -10,19 +9,13 @@ namespace Jabberwocky.Glass.Autofac.Pipelines.Processors
 	/// 
 	/// </remarks>
 	/// <typeparam name="T"></typeparam>
-	public abstract class ProcessorBase<T> : IProcessor<T>
+	public abstract class ProcessorBase<T> : ProcessorLifetimeBase, IProcessor<T>
 	{
-		private readonly ILifetimeScope _lifetimeScope;
-
-		protected ProcessorBase(ILifetimeScope lifetimeScope)
-		{
-			if (lifetimeScope == null) throw new ArgumentNullException("lifetimeScope");
-			_lifetimeScope = lifetimeScope;
-		}
-
 		public void Process(T pipelineArgs)
 		{
-			using (_lifetimeScope)
+			if (LifetimeScope == null) throw new InvalidOperationException("LifetimeScope was not initialized correctly.");
+
+			using (LifetimeScope)
 			{
 				Run(pipelineArgs);
 			}

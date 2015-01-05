@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System;
+using Autofac;
 using Jabberwocky.Core.Testing;
 using Jabberwocky.Glass.Autofac.Pipelines.Factories;
 using Jabberwocky.Glass.Autofac.Pipelines.Processors;
@@ -65,7 +66,7 @@ namespace Jabberwocky.Glass.Autofac.Tests.Pipelines.Pipelines
 			dynamic dynService = DynamicWrapper.For(service);
 
 			var isDisposed = false;
-			ILifetimeScope scope = dynService._lifetimeScope;
+			ILifetimeScope scope = dynService.LifetimeScope;
 			scope.CurrentScopeEnding += (sender, args) => isDisposed = true;
 
 			// Before
@@ -85,7 +86,7 @@ namespace Jabberwocky.Glass.Autofac.Tests.Pipelines.Pipelines
 			var mockScope = Substitute.For<ILifetimeScope>();
 			var mockContainer = Substitute.For<IContainer>();
 
-			mockContainer.BeginLifetimeScope().Returns(mockScope);
+			mockContainer.BeginLifetimeScope(Arg.Any<Action<object>>()).ReturnsForAnyArgs(mockScope);
 
 			AutofacConfig.ServiceLocator = mockContainer;
 

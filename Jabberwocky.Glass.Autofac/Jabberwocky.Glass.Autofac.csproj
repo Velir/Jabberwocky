@@ -72,6 +72,7 @@
     <Compile Include="Glass\LazyObjectInterceptor.cs" />
     <Compile Include="Glass\Tasks\AutofacGlassContructorTask.cs" />
     <Compile Include="Pipelines\Factories\AutofacProcessorFactory.cs" />
+    <Compile Include="Pipelines\Processors\ProcessorLifetimeBase.cs" />
     <Compile Include="Pipelines\Processors\ProcessorBase.cs" />
     <Compile Include="Pipelines\Processors\IProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

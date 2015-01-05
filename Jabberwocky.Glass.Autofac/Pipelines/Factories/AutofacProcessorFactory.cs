@@ -1,6 +1,7 @@
 ﻿using System;
 using Autofac;
 using Jabberwocky.Glass.Autofac.Extensions;
+using Jabberwocky.Glass.Autofac.Pipelines.Processors;
 using Jabberwocky.Glass.Autofac.Util;
 using Sitecore.Reflection;
 
@@ -22,7 +23,16 @@ namespace Jabberwocky.Glass.Autofac.Pipelines.Factories
 			var scope = Container.BeginLifetimeScope(ConfigureRegistrationOverrides);
 			try
 			{
-				return scope.Resolve(type);
+				var processor = scope.Resolve(type);
+
+				// Assign LifetimeScope if possible
+				var baseProcessor = processor as ProcessorLifetimeBase;
+				if (baseProcessor != null)
+				{
+					baseProcessor.LifetimeScope = scope;
+				}
+
+				return processor;
 			}
 			catch
 			{

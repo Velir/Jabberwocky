@@ -8,8 +8,7 @@ namespace Jabberwocky.Glass.Autofac.Tests.Pipelines.Processors
 	{
 		private readonly object _testDependency;
 
-		public TestProcessor(object testDependency, ILifetimeScope lifetimeScope) 
-			: base(lifetimeScope)
+		public TestProcessor(object testDependency)
 		{
 			if (testDependency == null) throw new ArgumentNullException("testDependency");
 			_testDependency = testDependency;
