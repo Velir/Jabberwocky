@@ -86,8 +86,16 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 				// It should work across ASP.NET WebForms, MVC, WebAPI with defaults.
 				// It makes the assumption that should the current Sitecore Context be indeterminate (or 'core'), then the master DB is preferred
 
-				builder.Register(c =>
+				builder.Register((c, p) =>
 				{
+					var overriddenDbParam = p.OfType<TypedParameter>().FirstOrDefault(@param => @param.Type == typeof(string));
+					var overriddenDb = overriddenDbParam != null ? overriddenDbParam.Value as string : null;
+
+					if (!string.IsNullOrEmpty(overriddenDb))
+					{
+						return new SitecoreService(overriddenDb);
+					}
+
 					var context = c.Resolve<ISitecoreContext>();
 					return context != null && context.Database != null && context.Database.Name != CoreDatabaseName
 						? (ISitecoreService)context
