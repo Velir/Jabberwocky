@@ -36,6 +36,9 @@
     <Reference Include="Autofac">
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
     </Reference>
+    <Reference Include="Autofac.Extras.AggregateService">
+      <HintPath>..\packages\Autofac.Extras.AggregateService.3.0.4\lib\net40\Autofac.Extras.AggregateService.dll</HintPath>
+    </Reference>
     <Reference Include="Autofac.Extras.DynamicProxy2">
       <HintPath>..\packages\Autofac.Extras.DynamicProxy2.3.0.4\lib\net40\Autofac.Extras.DynamicProxy2.dll</HintPath>
     </Reference>
@@ -61,7 +64,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\AutowireServiceAttribute.cs" />
     <Compile Include="Extensions\AutofacRegistrationExtensions.cs" />
+    <Compile Include="Extensions\AutowireRegistrationExtensions.cs" />
     <Compile Include="Extensions\CacheRegistrationExtensions.cs" />
     <Compile Include="Extensions\FactoryRegistrationExtensions.cs" />
     <Compile Include="Extensions\GlassRegistrationExtensions.cs" />
