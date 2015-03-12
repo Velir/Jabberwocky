@@ -44,7 +44,7 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 		internal static ContainerBuilder RegisterSitecorePipelineServices(this ContainerBuilder builder)
 		{
 			// Register custom ISitecoreService behavior for custom lifetime scopes
-			builder.Register(c => new SitecoreService(MasterDatabaseName)).As<ISitecoreService>();
+			//builder.Register(c => new SitecoreService(MasterDatabaseName)).As<ISitecoreService>();
 
 			return builder;
 		}
