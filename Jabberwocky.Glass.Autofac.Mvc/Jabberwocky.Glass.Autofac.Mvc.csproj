@@ -60,6 +60,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
@@ -91,6 +92,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\HttpGetOrInvalidHttpPostAttribute.cs" />
+    <Compile Include="Attributes\ValidateFormHandlerAttribute.cs" />
+    <Compile Include="Attributes\ValidHttpPostAttribute.cs" />
     <Compile Include="Extensions\MvcRegistrationExtensions.cs" />
     <Compile Include="Models\Factory\IViewModelFactory.cs" />
     <Compile Include="Models\Factory\AutofacViewModelFactory.cs" />
@@ -100,6 +104,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IRenderingContextService.cs" />
     <Compile Include="Services\RenderingContextService.cs" />
+    <Compile Include="Util\CustomSitecoreHelper.cs" />
     <Compile Include="Views\CustomGlassView.cs" />
   </ItemGroup>
   <ItemGroup>
