@@ -1,7 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Reflection;
 using Autofac;
-using Glass.Mapper.Sc;
 using Jabberwocky.Glass.Autofac.Pipelines.Processors;
 
 namespace Jabberwocky.Glass.Autofac.Extensions
@@ -13,6 +13,8 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 		/// </summary>
 		private const string MasterDatabaseName = "master";
 
+		private const string JabberwockyMvcDll = "Jabberwocky.Glass.Autofac.Mvc";
+
 		/// <summary>
 		/// Registers any custom Sitecore Pipeline Processors that implement the IProcessor interface 
 		/// </summary>
@@ -21,9 +23,9 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 		/// <returns>
 		/// Container Builder
 		/// </returns>
-		public static ContainerBuilder RegisterProcessors(this ContainerBuilder builder, params string[] assemblyNames)
+		public static ContainerBuilder RegisterProcessors(this ContainerBuilder builder, string[] assemblyNames)
 		{
-			return builder.RegisterProcessors(assemblyNames.Select(Assembly.Load).ToArray());
+			return builder.RegisterProcessors(assemblyNames.Select(TryLoadAssembly).ToArray());
 		}
 
 		/// <summary>
@@ -36,17 +38,32 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 		/// </returns>
 		public static ContainerBuilder RegisterProcessors(this ContainerBuilder builder, params Assembly[] assemblies)
 		{
-			builder.RegisterAssemblyTypes(assemblies).AsClosedTypesOf(typeof(IProcessor<>));
+			var asm = new[] {TryLoadAssembly(JabberwockyMvcDll)}.Concat(assemblies).Distinct().ToArray();
+
+			builder.RegisterAssemblyTypes(asm).AsClosedTypesOf(typeof(IProcessor<>));
 			
 			return builder;
 		}
 
+		[Obsolete("Need to figure out how to do this appropriately, so we can vary registrations by pipeline")]
 		internal static ContainerBuilder RegisterSitecorePipelineServices(this ContainerBuilder builder)
 		{
 			// Register custom ISitecoreService behavior for custom lifetime scopes
 			//builder.Register(c => new SitecoreService(MasterDatabaseName)).As<ISitecoreService>();
 
 			return builder;
+		}
+
+		private static Assembly TryLoadAssembly(string assemblyName)
+		{
+			try
+			{
+				return Assembly.Load(assemblyName);
+			}
+			catch
+			{
+				return null;
+			}
 		}
 	}
 }

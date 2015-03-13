@@ -10,12 +10,12 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Extensions
 	public static class MvcRegistrationExtensions
 	{
 
-		public static void RegisterGlassMvcServices(this ContainerBuilder builder, params string[] assemblies)
+		public static void RegisterGlassMvcServices(this ContainerBuilder builder, params string[] assemblyNames)
 		{
 			builder.RegisterType<RenderingContextService>().As<IRenderingContextService>().InstancePerLifetimeScope();
 			builder.RegisterType<AutofacViewModelFactory>().As<IViewModelFactory>();
 
-			builder.RegisterAssemblyTypes(assemblies.Select(Assembly.Load).ToArray()).AsClosedTypesOf(typeof (GlassViewModel<>)).AsSelf();
+			builder.RegisterAssemblyTypes(assemblyNames.Select(Assembly.Load).ToArray()).AsClosedTypesOf(typeof (GlassViewModel<>)).AsSelf();
 		}
 	}
 }
