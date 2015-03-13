@@ -29,7 +29,7 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Models.Factory
 
 		public object Create(Type model)
 		{
-			var viewModel = _resolver.Resolve(model);
+			var viewModel = _resolver.ResolveOptional(model);
 
 			var glassViewModel = viewModel as InjectableGlassViewModelBase;
 			if (glassViewModel != null)
