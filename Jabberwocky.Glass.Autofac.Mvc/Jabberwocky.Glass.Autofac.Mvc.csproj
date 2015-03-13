@@ -109,8 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="App_Config\Include\Glass.Mapper.Sc.CodeFirst.config.exclude" />
-    <None Include="App_Config\Include\Glass.Mapper.Sc.Mvc.Config" />
+    <None Include="App_Config\Include\Jabberwocky.Glass.Autofac.Mvc.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
