@@ -98,6 +98,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App_Config\Include\Jabberwocky.Glass.Autofac.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
