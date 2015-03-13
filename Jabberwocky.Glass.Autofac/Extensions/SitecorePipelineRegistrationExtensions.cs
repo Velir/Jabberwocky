@@ -38,7 +38,7 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 		/// </returns>
 		public static ContainerBuilder RegisterProcessors(this ContainerBuilder builder, params Assembly[] assemblies)
 		{
-			var asm = new[] {TryLoadAssembly(JabberwockyMvcDll)}.Concat(assemblies).Distinct().ToArray();
+			var asm = new[] {TryLoadAssembly(JabberwockyMvcDll)}.Concat(assemblies).Where(a => a != null).Distinct().ToArray();
 
 			builder.RegisterAssemblyTypes(asm).AsClosedTypesOf(typeof(IProcessor<>));
 			
