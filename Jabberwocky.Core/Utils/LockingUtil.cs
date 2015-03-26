@@ -124,9 +124,9 @@ namespace Jabberwocky.Core.Utils
 				_lockState.Semaphore.Wait();
 			}
 
-			public async Task AcquireAsync(CancellationToken token = default(CancellationToken))
+			public Task AcquireAsync(CancellationToken token = default(CancellationToken))
 			{
-				await _lockState.Semaphore.WaitAsync(token).ConfigureAwait(false);
+				return _lockState.Semaphore.WaitAsync(token);
 			}
 
 			public void Dispose()
