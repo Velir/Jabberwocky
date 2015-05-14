@@ -23,6 +23,8 @@ namespace Jabberwocky.Glass.Tests.Factory
 		private ILookup<Type, GlassInterfaceMetadata> _interfaceMappings;
 
 		private const string FakeTemplateString = "6C1F0868-7542-4B77-BAA7-4BB9CFBE60F3";
+		private const string FakeEmptyBaseTemplate = "EFA3C0E7-F03B-494F-A0D9-C33B3B27E4AF";
+		private const string FakeTemplateWithBase = "34BCA8F1-8F4E-4983-957C-0B18F0CD5C3F";
 
 		// SUT
 		private GlassInterfaceFactory _glassFactory;
@@ -31,7 +33,7 @@ namespace Jabberwocky.Glass.Tests.Factory
 		public void Initialize()
 		{
 			_mockService = Substitute.For<ISitecoreService>();
-
+			
 			var typeDictionary = new Dictionary<Type, IEnumerable<GlassInterfaceMetadata>>
 			{
 				// Type of Glass Factory Interface (and associated 'abstract' implementations)
@@ -130,11 +132,56 @@ namespace Jabberwocky.Glass.Tests.Factory
 			testItem.NonVirtualNotImplementedMethod();
 		}
 
+		[Test]
+		public void GlassFactory_DepthFirstBaseTemplateSearch_ReturnsMatchBeforeFallbackImplementation()
+		{
+
+			var mockItem = Substitute.For<ITemplateWithBase>();
+			{
+				mockItem._Id = Guid.NewGuid();
+				mockItem._TemplateId.Returns(new Guid(FakeTemplateWithBase)); // matching template
+				mockItem._BaseTemplates.Returns(new[] {new Guid(FakeEmptyBaseTemplate), new Guid(FakeTemplateString)});
+				var templateItem = Substitute.For<IBaseTemplates>();
+				templateItem.BaseTemplates.Returns(ci => mockItem._BaseTemplates.ToArray());
+				templateItem.TemplateBaseTemplates.Returns(ci => mockItem._BaseTemplates.ToArray());
+
+				_mockService.GetItem<IBaseTemplates>(mockItem._Id).Returns(templateItem);
+			}
+
+			{
+				var item = Substitute.For<IEmptyBaseTemplate>();
+				item._Id = Guid.NewGuid();
+				item._TemplateId.Returns(new Guid(FakeEmptyBaseTemplate));  // matching template
+				item._BaseTemplates.Returns(new Guid[0]);
+				var templateItem = Substitute.For<IBaseTemplates>();
+				templateItem.BaseTemplates.Returns(ci => mockItem._BaseTemplates.ToArray());
+				templateItem.TemplateBaseTemplates.Returns(ci => mockItem._BaseTemplates.ToArray());
+
+				_mockService.GetItem<IBaseTemplates>(item._Id).Returns(templateItem);
+			}
+
+			{
+				var item = Substitute.For<IInheritedTemplate>();
+				item._Id = Guid.NewGuid();
+				item._TemplateId.Returns(new Guid(FakeTemplateString));	// matching template
+				item._BaseTemplates.Returns(new Guid[0]);
+				var templateItem = Substitute.For<IBaseTemplates>();
+				templateItem.BaseTemplates.Returns(ci => mockItem._BaseTemplates.ToArray());
+				templateItem.TemplateBaseTemplates.Returns(ci => mockItem._BaseTemplates.ToArray());
+
+				_mockService.GetItem<IBaseTemplates>(item._Id).Returns(templateItem);
+			}
+
+			var testItem = _glassFactory.GetItem<ITestInterface>(mockItem);
+			Assert.IsNotNull(testItem);
+			Assert.IsTrue(testItem.VirtualIsNotFallback);
+		}
+
 		private ITestInterface GetItemWithFallback()
 		{
 			var mockItem = Substitute.For<IBaseType>();
 			mockItem._TemplateId.Returns(new Guid(FakeTemplateString)); // Matching template
-			mockItem._BaseTemplates.Returns(new[] {Guid.Empty});
+			mockItem._BaseTemplates.Returns(new Guid[0]);
 
 			var testItem = _glassFactory.GetItem<ITestInterface>(mockItem);
 			return testItem;
@@ -147,9 +194,17 @@ namespace Jabberwocky.Glass.Tests.Factory
 		{
 		}
 
+		// Fake base template
+		[SitecoreType(TemplateId = FakeEmptyBaseTemplate)]
+		public interface IEmptyBaseTemplate : IGlassBase { }
+
+		// This template models a parent template that contains 2 base templates, the first of which itself has 0 base templates
+		[SitecoreType(TemplateId = FakeTemplateWithBase)]
+		public interface ITemplateWithBase : IEmptyBaseTemplate, IInheritedTemplate, IGlassBase { }
+
 		// Fake template
 		[SitecoreType(TemplateId = FakeTemplateString)]
-		private interface IInheritedTemplate : IBaseType
+		public interface IInheritedTemplate : IBaseType
 		{
 		}
 

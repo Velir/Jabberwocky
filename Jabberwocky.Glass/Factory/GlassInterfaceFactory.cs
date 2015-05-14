@@ -16,7 +16,7 @@ namespace Jabberwocky.Glass.Factory
 		private readonly IDictionary<Type, IDictionary<string, Type>> _templateCache;
 
 		private static readonly string DefaultFallbackTemplateId = Guid.Empty.ToString();
-		private static readonly Guid[] DefaultBaseTemplateArray = { Guid.Empty };
+		private static readonly Guid[] DefaultBaseTemplateArray = new Guid[0];
 
 		public IDictionary<Type, IDictionary<string, Type>> TemplateCache { get { return _templateCache; } }
 
@@ -92,6 +92,11 @@ namespace Jabberwocky.Glass.Factory
 
 		public IEnumerable<Guid> GetBaseTemplates(IBaseTemplates item, ISitecoreService service, int depth = MaxDepth)
 		{
+			return InternalGetBaseTemplates(item, service, depth).Concat(new[] {new Guid(DefaultFallbackTemplateId)});
+		}
+
+		private IEnumerable<Guid> InternalGetBaseTemplates(IBaseTemplates item, ISitecoreService service, int depth)
+		{
 			if (item == null || depth <= 0) return DefaultBaseTemplateArray;
 
 			var baseTemplates = item.TemplateBaseTemplates ?? item.BaseTemplates;
@@ -99,7 +104,7 @@ namespace Jabberwocky.Glass.Factory
 			if (baseTemplates == null || !baseTemplates.Any()) return DefaultBaseTemplateArray;
 
 			// Breadth first search (recursive)
-			return baseTemplates.Concat(baseTemplates.SelectMany(guid => GetBaseTemplates(service.GetItem<IBaseTemplates>(guid), service, depth - 1)));
+			return baseTemplates.Concat(baseTemplates.SelectMany(guid => InternalGetBaseTemplates(service.GetItem<IBaseTemplates>(guid), service, depth - 1)));
 		}
 
 		private IDictionary<Type, IDictionary<string, Type>> GenerateCache(ILookup<Type, GlassInterfaceMetadata> interfaceMappings)
