@@ -67,3 +67,6 @@ packages/
 
 #Test files
 *.testsettings
+
+#GhostDoc
+*.GhostDoc*
