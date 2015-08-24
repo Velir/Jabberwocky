@@ -11,6 +11,7 @@ using Jabberwocky.Glass.Factory.Util;
 using Jabberwocky.Glass.Models;
 using NSubstitute;
 using NUnit.Framework;
+using Jabberwocky.Glass.Factory.Interfaces;
 
 namespace Jabberwocky.Glass.Tests.Factory
 {

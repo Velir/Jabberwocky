@@ -32,14 +32,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="GlassFactoryTypeIsAbstractCodeFixProvider.cs" />
-    <Compile Include="GlassFactoryTypeIsAbstractAnalyzer.cs" />
+    <Compile Include="GlassFactory\GlassFactoryBaseInterfaceTypesMatchAnalyzer.cs" />
+    <Compile Include="GlassFactory\GlassFactoryTypeIsAbstractCodeFixProvider.cs" />
+    <Compile Include="GlassFactory\GlassFactoryTypeIsAbstractAnalyzer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Util\GlassFactoryAnalyzerUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">

@@ -129,4 +129,13 @@
     <value>Declared Glass Interface Type is not 'abstract'</value>
     <comment>The title of the diagnostic.</comment>
   </data>
+  <data name="BaseInterfaceDescription" xml:space="preserve">
+    <value>The declared Glass Interface Type and BaseInterface generic type parameter must match</value>
+  </data>
+  <data name="BaseInterfaceMessageFormat" xml:space="preserve">
+    <value>Glass Interface Type and Base Interface generic type do not match</value>
+  </data>
+  <data name="BaseInterfaceTitle" xml:space="preserve">
+    <value>Declared Glass Interface Type and BaseInterface generic type do not match</value>
+  </data>
 </root>

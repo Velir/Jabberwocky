@@ -87,5 +87,32 @@ namespace Jabberwocky.Glass.CodeAnalysis {
                 return ResourceManager.GetString("AnalyzerTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The declared Glass Interface Type and BaseInterface generic type parameter must match.
+        /// </summary>
+        internal static string BaseInterfaceDescription {
+            get {
+                return ResourceManager.GetString("BaseInterfaceDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Glass Interface Type and Base Interface generic type do not match.
+        /// </summary>
+        internal static string BaseInterfaceMessageFormat {
+            get {
+                return ResourceManager.GetString("BaseInterfaceMessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Declared Glass Interface Type and BaseInterface generic type do not match.
+        /// </summary>
+        internal static string BaseInterfaceTitle {
+            get {
+                return ResourceManager.GetString("BaseInterfaceTitle", resourceCulture);
+            }
+        }
     }
 }

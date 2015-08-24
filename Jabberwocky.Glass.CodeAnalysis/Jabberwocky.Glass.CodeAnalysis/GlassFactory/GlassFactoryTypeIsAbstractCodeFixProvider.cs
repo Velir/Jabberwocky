@@ -4,12 +4,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CodeActions;
+using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Jabberwocky.Glass.CodeAnalysis
+namespace Jabberwocky.Glass.CodeAnalysis.GlassFactory
 {
 	[ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(GlassFactoryTypeIsAbstractCodeFixProvider)), Shared]
 	public class GlassFactoryTypeIsAbstractCodeFixProvider : CodeFixProvider
