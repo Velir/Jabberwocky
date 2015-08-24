@@ -27,22 +27,25 @@ namespace Jabberwocky.Glass.CodeAnalysis
 		{
 			var root = await context.Document.GetSyntaxRootAsync(context.CancellationToken).ConfigureAwait(false);
 
-			var diagnostic = context.Diagnostics.First();
-			var diagnosticSpan = diagnostic.Location.SourceSpan;
+			foreach (var diagnostic in context.Diagnostics)
+			{
+				var diagnosticSpan = diagnostic.Location.SourceSpan;
 
-			// Find the type declaration identified by the diagnostic.
-			var declaration = root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf().OfType<ClassDeclarationSyntax>().FirstOrDefault(); /* TypeDeclarationSyntax */
+				// Find the type declaration identified by the diagnostic.
+				var declaration =
+					root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf().OfType<ClassDeclarationSyntax>().FirstOrDefault();
 
-			// Only operate on class declarations explicitly
-			if (declaration == null) return;
+				// Only operate on class declarations explicitly
+				if (declaration == null) return;
 
-			// Register a code action that will invoke the fix.
-			context.RegisterCodeFix(
-				CodeAction.Create(
-					title: Title,
-					createChangedSolution: c => MakeAbstractAsync(context.Document, declaration, c),
-					equivalenceKey: Title),
-				diagnostic);
+				// Register a code action that will invoke the fix.
+				context.RegisterCodeFix(
+					CodeAction.Create(
+						title: Title,
+						createChangedSolution: c => MakeAbstractAsync(context.Document, declaration, c),
+						equivalenceKey: Title),
+					diagnostic);
+			}
 		}
 
 		private async Task<Solution> MakeAbstractAsync(Document document, ClassDeclarationSyntax typeDecl, CancellationToken cancellationToken)
@@ -56,7 +59,7 @@ namespace Jabberwocky.Glass.CodeAnalysis
 			var newDocument = document.WithSyntaxRoot(newRoot);
 			var newSolution = newDocument.Project.Solution;
 
-			// Return the new solution with the now-uppercase type name.
+			// Return the new solution with the now-abstract type name.
 			return newSolution;
 		}
 	}
