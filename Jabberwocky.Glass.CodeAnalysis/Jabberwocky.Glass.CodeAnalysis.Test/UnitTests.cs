@@ -99,7 +99,7 @@ public interface IBaseType : IGlassBase
 
 		protected override CodeFixProvider GetCSharpCodeFixProvider()
 		{
-			return new JabberwockyGlassCodeAnalysisCodeFixProvider();
+			return new GlassFactoryTypeIsAbstractCodeFixProvider();
 		}
 
 		protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()

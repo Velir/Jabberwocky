@@ -11,10 +11,10 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Jabberwocky.Glass.CodeAnalysis
 {
-	[ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(JabberwockyGlassCodeAnalysisCodeFixProvider)), Shared]
-	public class JabberwockyGlassCodeAnalysisCodeFixProvider : CodeFixProvider
+	[ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(GlassFactoryTypeIsAbstractCodeFixProvider)), Shared]
+	public class GlassFactoryTypeIsAbstractCodeFixProvider : CodeFixProvider
 	{
-		private const string Title = "Make abstract";
+		private const string Title = "Make Abstract";
 
 		public sealed override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(GlassFactoryTypeIsAbstractAnalyzer.DiagnosticId);
 
