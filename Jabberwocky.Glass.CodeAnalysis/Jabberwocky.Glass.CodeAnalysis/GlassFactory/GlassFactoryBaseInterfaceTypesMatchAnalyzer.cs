@@ -2,6 +2,7 @@
 using System.Linq;
 using Jabberwocky.Glass.CodeAnalysis.Util;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 using static Jabberwocky.Glass.CodeAnalysis.Util.GlassFactoryAnalyzerUtil;
 
@@ -28,13 +29,13 @@ namespace Jabberwocky.Glass.CodeAnalysis.GlassFactory
 		private static void AnalyzeSymbol(SymbolAnalysisContext context)
 		{
 			var namedTypeSymbol = (INamedTypeSymbol)context.Symbol;
-			
+
 			// need to find out if Attribute is assigned to class
-			var attribute = context.Symbol.GetAttributes().FirstOrDefault(GlassFactoryAnalyzerUtil.IsGlassFactoryTypeAttribute);
+			var attribute = context.Symbol.GetAttributes().FirstOrDefault(IsGlassFactoryTypeAttribute);
 			
 			// Are we a valid analysis target?
 			if (attribute == null || !GlassFactoryAnalyzerUtil.InheritsBaseInterfaceClass(namedTypeSymbol) 
-				|| DoesAttributeTypeMatchBaseInterfaceGenericType(attribute, namedTypeSymbol))
+				|| DoesAttributeTypeMatchBaseInterfaceGenericType(attribute, namedTypeSymbol, context.Compilation))
 				return;
 
 			// We're a valid analysis target
@@ -45,14 +46,16 @@ namespace Jabberwocky.Glass.CodeAnalysis.GlassFactory
 			}
 		}
 
-		private static bool DoesAttributeTypeMatchBaseInterfaceGenericType(AttributeData attribute, INamedTypeSymbol namedTypeSymbol)
+		private static bool DoesAttributeTypeMatchBaseInterfaceGenericType(AttributeData attribute, INamedTypeSymbol namedTypeSymbol, Compilation compilation)
 		{
 			var typeParam = attribute.ConstructorArguments.FirstOrDefault().Value as INamedTypeSymbol;
-
+			
 			if (typeParam == null) return false;
 
 			var genericGlassType = namedTypeSymbol.BaseType.TypeArguments.FirstOrDefault();
-			return GetFullyQualifiedTypeName(typeParam) == GetFullyQualifiedTypeName(genericGlassType);
+			var conversion = compilation.ClassifyConversion(typeParam, genericGlassType);
+            return GetFullyQualifiedTypeName(typeParam) == GetFullyQualifiedTypeName(genericGlassType)
+				|| conversion.IsExplicit || conversion.IsImplicit;
 		}
 	}
 }

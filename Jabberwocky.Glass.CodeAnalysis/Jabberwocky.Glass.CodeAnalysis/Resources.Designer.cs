@@ -89,7 +89,7 @@ namespace Jabberwocky.Glass.CodeAnalysis {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The declared Glass Interface Type and BaseInterface generic type parameter must match.
+        ///   Looks up a localized string similar to The declared Glass Interface Type and BaseInterface generic type parameter must be assignment compatible.
         /// </summary>
         internal static string BaseInterfaceDescription {
             get {
@@ -98,7 +98,7 @@ namespace Jabberwocky.Glass.CodeAnalysis {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Glass Interface Type and Base Interface generic type do not match.
+        ///   Looks up a localized string similar to Glass Interface Type and Base Interface generic type are incompatible.
         /// </summary>
         internal static string BaseInterfaceMessageFormat {
             get {
@@ -107,7 +107,7 @@ namespace Jabberwocky.Glass.CodeAnalysis {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Declared Glass Interface Type and BaseInterface generic type do not match.
+        ///   Looks up a localized string similar to Declared Glass Interface Type and BaseInterface generic type are incompatible.
         /// </summary>
         internal static string BaseInterfaceTitle {
             get {

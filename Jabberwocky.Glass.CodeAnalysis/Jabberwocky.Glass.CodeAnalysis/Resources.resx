@@ -130,12 +130,12 @@
     <comment>The title of the diagnostic.</comment>
   </data>
   <data name="BaseInterfaceDescription" xml:space="preserve">
-    <value>The declared Glass Interface Type and BaseInterface generic type parameter must match</value>
+    <value>The declared Glass Interface Type and BaseInterface generic type parameter must be assignment compatible</value>
   </data>
   <data name="BaseInterfaceMessageFormat" xml:space="preserve">
-    <value>Glass Interface Type and Base Interface generic type do not match</value>
+    <value>Glass Interface Type and Base Interface generic type are incompatible</value>
   </data>
   <data name="BaseInterfaceTitle" xml:space="preserve">
-    <value>Declared Glass Interface Type and BaseInterface generic type do not match</value>
+    <value>Declared Glass Interface Type and BaseInterface generic type are incompatible</value>
   </data>
 </root>
