@@ -31,7 +31,7 @@ namespace Jabberwocky.Glass.CodeAnalysis.GlassFactory
 			var namedTypeSymbol = (INamedTypeSymbol)context.Symbol;
 
 			// need to find out if Attribute is assigned to class
-			var attribute = context.Symbol.GetAttributes().FirstOrDefault(GlassFactoryAnalyzerUtil.IsGlassFactoryTypeAttribute);
+			var attribute = namedTypeSymbol.GetAttributes().FirstOrDefault(GlassFactoryAnalyzerUtil.IsGlassFactoryTypeAttribute);
 			
 			// Are we a valid analysis target?
 			if (attribute == null || namedTypeSymbol.IsAbstract) return;

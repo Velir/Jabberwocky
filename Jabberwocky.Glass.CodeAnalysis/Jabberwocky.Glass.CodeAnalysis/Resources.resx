@@ -138,4 +138,13 @@
   <data name="BaseInterfaceTitle" xml:space="preserve">
     <value>Declared Glass Interface Type and BaseInterface generic type are incompatible</value>
   </data>
+  <data name="SuspiciousPropertyDescription" xml:space="preserve">
+    <value>Suspicious property: Should either be marked abstract, or specify an explicit implementation</value>
+  </data>
+  <data name="SuspiciousPropertyMessageFormat" xml:space="preserve">
+    <value>The property '{0}' should either be marked abstract, or specify an explicit implementation</value>
+  </data>
+  <data name="SuspiciousPropertyTitle" xml:space="preserve">
+    <value>Suspicious property: Should be marked abstract</value>
+  </data>
 </root>

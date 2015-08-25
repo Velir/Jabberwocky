@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System.Linq;
+using Microsoft.CodeAnalysis;
 
 namespace Jabberwocky.Glass.CodeAnalysis.Util
 {
@@ -30,6 +31,12 @@ namespace Jabberwocky.Glass.CodeAnalysis.Util
 		{
 			var symbolDisplayFormat = new SymbolDisplayFormat(typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces);
 			return symbol.BaseType?.ToDisplayString(symbolDisplayFormat);
+		}
+
+		public static bool IsTypeGlassFactoryType(ITypeSymbol symbol)
+		{
+			var attribute = symbol.GetAttributes().FirstOrDefault(IsGlassFactoryTypeAttribute);
+			return attribute != null && symbol.IsAbstract;
 		}
 	}
 }

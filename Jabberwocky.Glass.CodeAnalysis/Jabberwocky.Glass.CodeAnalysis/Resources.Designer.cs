@@ -114,5 +114,32 @@ namespace Jabberwocky.Glass.CodeAnalysis {
                 return ResourceManager.GetString("BaseInterfaceTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Suspicious property: Should either be marked abstract, or specify an explicit implementation.
+        /// </summary>
+        internal static string SuspiciousPropertyDescription {
+            get {
+                return ResourceManager.GetString("SuspiciousPropertyDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The property &apos;{0}&apos; should either be marked abstract, or specify an explicit implementation.
+        /// </summary>
+        internal static string SuspiciousPropertyMessageFormat {
+            get {
+                return ResourceManager.GetString("SuspiciousPropertyMessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Suspicious property: Should be marked abstract.
+        /// </summary>
+        internal static string SuspiciousPropertyTitle {
+            get {
+                return ResourceManager.GetString("SuspiciousPropertyTitle", resourceCulture);
+            }
+        }
     }
 }

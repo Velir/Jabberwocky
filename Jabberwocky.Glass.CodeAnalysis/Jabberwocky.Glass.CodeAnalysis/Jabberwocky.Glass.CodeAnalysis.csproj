@@ -33,6 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="GlassFactory\GlassFactoryBaseInterfaceTypesMatchAnalyzer.cs" />
+    <Compile Include="GlassFactory\GlassFactorySuspiciousPropertyAnalyzer.cs" />
     <Compile Include="GlassFactory\GlassFactoryTypeIsAbstractCodeFixProvider.cs" />
     <Compile Include="GlassFactory\GlassFactoryTypeIsAbstractAnalyzer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
