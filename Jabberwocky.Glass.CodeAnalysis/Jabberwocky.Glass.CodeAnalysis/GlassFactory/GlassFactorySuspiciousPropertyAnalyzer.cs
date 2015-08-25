@@ -49,7 +49,7 @@ namespace Jabberwocky.Glass.CodeAnalysis.GlassFactory
 		{
 			// we need to search through all backing fields of the parent class
 			var parentSymbol = propertySymbol.ContainingType;
-			var hasAutoBackingField = parentSymbol.GetMembers().OfType<IFieldSymbol>().Any(symbol => symbol.AssociatedSymbol.Equals(propertySymbol));
+			var hasAutoBackingField = parentSymbol.GetMembers().OfType<IFieldSymbol>().Any(symbol => propertySymbol.Equals(symbol.AssociatedSymbol));
 			var isImplementedMember = parentSymbol.AllInterfaces
 				.SelectMany(iface => iface.GetMembers(propertySymbol.Name))
 				.Any(ifaceMember => propertySymbol.Equals(parentSymbol.FindImplementationForInterfaceMember(ifaceMember)));
