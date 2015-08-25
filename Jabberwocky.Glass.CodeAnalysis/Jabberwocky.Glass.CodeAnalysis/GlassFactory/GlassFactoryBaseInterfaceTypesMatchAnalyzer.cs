@@ -3,6 +3,7 @@ using System.Linq;
 using Jabberwocky.Glass.CodeAnalysis.Util;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
+using static Jabberwocky.Glass.CodeAnalysis.Util.GlassFactoryAnalyzerUtil;
 
 namespace Jabberwocky.Glass.CodeAnalysis.GlassFactory
 {
@@ -51,8 +52,7 @@ namespace Jabberwocky.Glass.CodeAnalysis.GlassFactory
 			if (typeParam == null) return false;
 
 			var genericGlassType = namedTypeSymbol.BaseType.TypeArguments.FirstOrDefault();
-			return GlassFactoryAnalyzerUtil.GetFullyQualifiedTypeName(typeParam) ==
-			       GlassFactoryAnalyzerUtil.GetFullyQualifiedTypeName(genericGlassType);
+			return GetFullyQualifiedTypeName(typeParam) == GetFullyQualifiedTypeName(genericGlassType);
 		}
 	}
 }

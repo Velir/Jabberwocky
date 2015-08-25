@@ -9,8 +9,9 @@ using TestHelper;
 namespace Jabberwocky.Glass.CodeAnalysis.Test
 {
 	[TestClass]
-	public class UnitTest : CodeFixVerifier
+	public class GlassFactoryTypeIsAbstractTests : CodeFixVerifier
 	{
+		#region Glass Interface Factory Test Source
 		private const string GlassFactoryType_NotAbstract_TestBadSource = @"
 
 using System;
@@ -71,7 +72,8 @@ public interface IBaseType : IGlassBase
 {
 }
 
-";
+"; 
+		#endregion
 
 		[TestMethod]
 		public void GlassFactoryType_ImplementingClass_IsAbstract_Analysis()
