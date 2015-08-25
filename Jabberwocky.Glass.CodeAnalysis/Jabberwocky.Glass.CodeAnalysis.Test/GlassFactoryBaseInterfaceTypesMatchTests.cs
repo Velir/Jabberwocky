@@ -1,7 +1,5 @@
-﻿using System;
-using Jabberwocky.Glass.CodeAnalysis.GlassFactory;
+﻿using Jabberwocky.Glass.CodeAnalysis.GlassFactory;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestHelper;
@@ -139,16 +137,6 @@ public interface IBaseType : IGlassBase
 		public void GlassFactory_BaseInterface_TypesMatch_ExactMatchGenericParameter_Analysis()
 		{
 			VerifyCSharpDiagnostic(GlassFactory_BaseInterface_ExactMatchGenericParameter_Source);
-		}
-
-		public void GlassFactory_BaseInterface_TypesMatch_Fix()
-		{
-
-		}
-
-		protected override CodeFixProvider GetCSharpCodeFixProvider()
-		{
-			throw new NotImplementedException();
 		}
 
 		protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
