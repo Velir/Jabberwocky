@@ -1,10 +1,7 @@
 ﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using TestHelper;
-using Jabberwocky.Core.CodeAnalysis;
 using Jabberwocky.Core.CodeAnalysis.Caching;
 
 namespace Jabberwocky.Core.CodeAnalysis.Test

@@ -32,7 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Caching\CodeFixProvider.cs" />
     <Compile Include="Caching\Util\CacheAnalysisUtil.cs" />
     <Compile Include="Caching\Visitors\CacheValueAssignmentVisitor.cs" />
     <Compile Include="Caching\SyncCacheProviderNullValueAnalyzer.cs" />

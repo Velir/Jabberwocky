@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Jabberwocky.Core.CodeAnalysis.Caching.Util;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -105,7 +101,12 @@ namespace Jabberwocky.Core.CodeAnalysis.Caching.Visitors
 
 			if (node.Body.IsKind(SyntaxKind.IdentifierName))
 			{
+				var identifier = (IdentifierNameSyntax)node.Body;
 
+				foreach (var assignmentNode in CacheAnalysisUtil.GetNullAssignmentNodes(identifier, _context))
+				{
+					PossibleNullValues.Add(assignmentNode);
+				}
 			}
 
 			base.VisitSimpleLambdaExpression(node);
