@@ -17,15 +17,16 @@ namespace Jabberwocky.Core.CodeAnalysis.Caching.Visitors
 	public class ReturnValueWalker : CSharpSyntaxWalker
 	{
 		private readonly SyntaxNodeAnalysisContext _context;
-		private const uint MaxDepth = 1;
+		internal int MaxDepth { get; set; }
 
 		private uint FunctionDepth { get; set; }
 
 		public ICollection<SyntaxNode> PossibleNullValues = new List<SyntaxNode>();
 
-		public ReturnValueWalker(SyntaxNodeAnalysisContext context) : base(SyntaxWalkerDepth.Node)
+		public ReturnValueWalker(SyntaxNodeAnalysisContext context, int maxDepth = 1) : base(SyntaxWalkerDepth.Node)
 		{
 			_context = context;
+			MaxDepth = maxDepth;
 		}
 
 		public override void VisitReturnStatement(ReturnStatementSyntax node)
@@ -115,7 +116,13 @@ namespace Jabberwocky.Core.CodeAnalysis.Caching.Visitors
 		public override void VisitInvocationExpression(InvocationExpressionSyntax node)
 		{
 			FunctionDepth++;
+
+			// Need to grab the symbol, and evaluate the function
+			var methodDeclNode = CacheAnalysisUtil.GetMethodDeclarationNode(node, _context);
+			methodDeclNode?.Accept(this);
+
 			base.VisitInvocationExpression(node);
+
 			FunctionDepth--;
 		}
 	}

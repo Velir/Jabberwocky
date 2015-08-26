@@ -16,7 +16,7 @@ namespace Jabberwocky.Core.CodeAnalysis.Caching.Visitors
 		private bool _hasPossibleNullValue;
 		public bool HasPossibleNullValue => _hasPossibleNullValue || _nullValueWalker.PossibleNullValues.Any();
 
-		private ICollection<SyntaxNode> _possibleNullValues = new List<SyntaxNode>(); 
+		private readonly ICollection<SyntaxNode> _possibleNullValues = new List<SyntaxNode>(); 
 		public ICollection<SyntaxNode> PossibleNullValues => _possibleNullValues.Concat(_nullValueWalker.PossibleNullValues).ToList(); 
 
 		public CacheValueAssignmentVisitor(SyntaxNodeAnalysisContext context)
@@ -40,6 +40,13 @@ namespace Jabberwocky.Core.CodeAnalysis.Caching.Visitors
 
 		public override void VisitIdentifierName(IdentifierNameSyntax node)
 		{
+			// Is this a method invocation expression (anonymous delegate)?
+			var methodDeclNode = CacheAnalysisUtil.GetMethodDeclarationNode(node, _context);
+			if (methodDeclNode != null)
+			{
+				_nullValueWalker.Visit(methodDeclNode);
+			}
+
 			// For visiting a non-literal variable
 			// perform data-flow analysis
 			var possibleNullAssignments = CacheAnalysisUtil.GetNullAssignmentNodes(node, _context);
@@ -54,11 +61,13 @@ namespace Jabberwocky.Core.CodeAnalysis.Caching.Visitors
 
 		public override void VisitParenthesizedLambdaExpression(ParenthesizedLambdaExpressionSyntax node)
 		{
+			_nullValueWalker.MaxDepth = 2;
 			_nullValueWalker.Visit(node);
 		}
 
 		public override void VisitSimpleLambdaExpression(SimpleLambdaExpressionSyntax node)
 		{
+			_nullValueWalker.MaxDepth = 2;
 			_nullValueWalker.Visit(node);
 		}
 	}
