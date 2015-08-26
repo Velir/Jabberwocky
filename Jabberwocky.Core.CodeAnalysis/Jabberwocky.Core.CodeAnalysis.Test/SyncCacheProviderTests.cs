@@ -40,11 +40,92 @@ namespace Jabberwocky.Core.CodeAnalysis.Test
 
 ";
 
+		private const string SyncCache_LambdaWithNullReturnValue_Source = @"
+
+	using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Diagnostics;
+	using Jabberwocky.Core.Caching;
+
+	public class MainClass {
+		private readonly ISyncCacheProvider _syncCache;
+
+		public MainClass(ISyncCacheProvider syncCache) {
+			_syncCache = syncCache;
+		}
+
+		public void DoStuff() {
+			_syncCache.GetFromCache<string>(""key"", () => (string)null);
+		}
+	}
+
+";
+
+		private const string SyncCache_LambdaWithNullLiftedVariable_Source = @"
+
+	using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Diagnostics;
+	using Jabberwocky.Core.Caching;
+
+	public class MainClass {
+		private readonly ISyncCacheProvider _syncCache;
+
+		public MainClass(ISyncCacheProvider syncCache) {
+			_syncCache = syncCache;
+		}
+
+		public void DoStuff() {
+			string retVal = null;
+			_syncCache.GetFromCache<string>(""key"", () => retVal);
+			_syncCache.AddToCache<string>(""key"", retVal);
+		}
+	}
+
+";
+
+		private const string SyncCache_MethodInvocationWithPossibleNullReturnValue_Source = @"
+
+	using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Diagnostics;
+	using Jabberwocky.Core.Caching;
+
+	public class MainClass {
+		private readonly ISyncCacheProvider _syncCache;
+
+		public MainClass(ISyncCacheProvider syncCache) {
+			_syncCache = syncCache;
+		}
+
+		public void DoStuff() {
+			_syncCache.GetFromCache<string>(""key"", () => GetCacheValue());
+			_syncCache.GetFromCache<string>(""key"", GetCacheValue);
+		}
+
+		private static string GetCacheValue() {
+			int i = 0;
+			if (i % 5 == 0) return null;
+
+			return ""hello world"";
+		}
+	}
+
+";
+
 		#endregion
 
-		//No diagnostics expected to show up
 		[TestMethod]
-		public void TestMethod1()
+		public void SyncCacheProvider_BasicNullValues_Analysis()
 		{
 			// 19, 43
 			// 20, 41
@@ -74,57 +155,82 @@ namespace Jabberwocky.Core.CodeAnalysis.Test
 			VerifyCSharpDiagnostic(SyncCache_NullCacheValues_Source, expected1, expected2);
 		}
 
-		//Diagnostic and CodeFix both triggered and checked for
-		//[TestMethod]
-		public void TestMethod2()
+		[TestMethod]
+		public void SyncCacheProvider_CastExpressionNullValue_Analysis()
 		{
-			var test = @"
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Diagnostics;
-
-    namespace ConsoleApplication1
-    {
-        class TypeName
-        {   
-        }
-    }";
+			// 19, 43
 			var expected = new DiagnosticResult
 			{
-				Id = "JabberwockyCoreCodeAnalysis",
-				Message = String.Format("Type name '{0}' contains lowercase letters", "TypeName"),
+				Id = SyncCacheProviderNullValueAnalyzer.DiagnosticId,
+				Message = "The cached value cannot be null",
 				Severity = DiagnosticSeverity.Warning,
 				Locations =
 					new[] {
-							new DiagnosticResultLocation("Test0.cs", 11, 15)
+							new DiagnosticResultLocation("Test0.cs", 19, 43)
 						}
 			};
 
-			VerifyCSharpDiagnostic(test, expected);
-
-			var fixtest = @"
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Diagnostics;
-
-    namespace ConsoleApplication1
-    {
-        class TYPENAME
-        {   
-        }
-    }";
-			VerifyCSharpFix(test, fixtest);
+			VerifyCSharpDiagnostic(SyncCache_LambdaWithNullReturnValue_Source, expected);
 		}
 
-		protected override CodeFixProvider GetCSharpCodeFixProvider()
+		[TestMethod]
+		public void SyncCacheProvider_LiftedNullValue_Analysis()
 		{
-			return new JabberwockyCoreCodeAnalysisCodeFixProvider();
+			// 20, 43
+			// 21, 41
+			var expected1 = new DiagnosticResult
+			{
+				Id = SyncCacheProviderNullValueAnalyzer.DiagnosticId,
+				Message = "The cached value cannot be null",
+				Severity = DiagnosticSeverity.Warning,
+				Locations =
+					new[] {
+							new DiagnosticResultLocation("Test0.cs", 20, 43),
+                            new DiagnosticResultLocation("Test0.cs", 19, 11)
+						}
+			};
+			var expected2 = new DiagnosticResult
+			{
+				Id = SyncCacheProviderNullValueAnalyzer.DiagnosticId,
+				Message = "The cached value cannot be null",
+				Severity = DiagnosticSeverity.Warning,
+				Locations =
+					new[] {
+							new DiagnosticResultLocation("Test0.cs", 21, 41),
+							new DiagnosticResultLocation("Test0.cs", 19, 11)
+						}
+			};
+
+			VerifyCSharpDiagnostic(SyncCache_LambdaWithNullLiftedVariable_Source, expected1, expected2);
+		}
+
+		[TestMethod]
+		public void SyncCacheProvider_MethodInvocationWithPossibleNullValue_Analysis()
+		{
+			// 20, 43
+			// 21, 41
+			var expected1 = new DiagnosticResult
+			{
+				Id = SyncCacheProviderNullValueAnalyzer.DiagnosticId,
+				Message = "The cached value cannot be null",
+				Severity = DiagnosticSeverity.Warning,
+				Locations =
+					new[] {
+							new DiagnosticResultLocation("Test0.cs", 20, 43)
+						}
+			};
+			var expected2 = new DiagnosticResult
+			{
+				Id = SyncCacheProviderNullValueAnalyzer.DiagnosticId,
+				Message = "The cached value cannot be null",
+				Severity = DiagnosticSeverity.Warning,
+				Locations =
+					new[] {
+							new DiagnosticResultLocation("Test0.cs", 21, 41)
+						}
+			};
+
+			VerifyCSharpDiagnostic(SyncCache_MethodInvocationWithPossibleNullReturnValue_Source, expected1, expected2);
 		}
 
 		protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()

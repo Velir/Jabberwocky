@@ -1,28 +1,28 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Jabberwocky.Core.CodeAnalysis.Caching.Util;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Jabberwocky.Core.CodeAnalysis.Caching.Visitors
 {
 	public class CacheValueAssignmentVisitor : CSharpSyntaxVisitor
 	{
+		private readonly SyntaxNodeAnalysisContext _context;
 		private readonly ReturnValueWalker _nullValueWalker;
 
 		private bool _hasPossibleNullValue;
 		public bool HasPossibleNullValue => _hasPossibleNullValue || _nullValueWalker.PossibleNullValues.Any();
 
-		public ICollection<SyntaxNode> PossibleNullValues => _nullValueWalker.PossibleNullValues; 
+		private ICollection<SyntaxNode> _possibleNullValues = new List<SyntaxNode>(); 
+		public ICollection<SyntaxNode> PossibleNullValues => _possibleNullValues.Concat(_nullValueWalker.PossibleNullValues).ToList(); 
 
-		public CacheValueAssignmentVisitor()
+		public CacheValueAssignmentVisitor(SyntaxNodeAnalysisContext context)
 		{
-			_nullValueWalker = new ReturnValueWalker();
-		}
-
-		public override void Visit(SyntaxNode node)
-		{
-			base.Visit(node);
+			_context = context;
+			_nullValueWalker = new ReturnValueWalker(context);
 		}
 
 		public override void VisitAnonymousMethodExpression(AnonymousMethodExpressionSyntax node)
@@ -36,6 +36,20 @@ namespace Jabberwocky.Core.CodeAnalysis.Caching.Visitors
 			{
 				_hasPossibleNullValue = true;
 			}
+		}
+
+		public override void VisitIdentifierName(IdentifierNameSyntax node)
+		{
+			// For visiting a non-literal variable
+			// perform data-flow analysis
+			var possibleNullAssignments = CacheAnalysisUtil.GetNullAssignmentNodes(node, _context);
+			foreach (var assignment in possibleNullAssignments)
+			{
+				_hasPossibleNullValue = true;
+				_possibleNullValues.Add(assignment);
+			}
+
+			base.VisitIdentifierName(node);
 		}
 
 		public override void VisitParenthesizedLambdaExpression(ParenthesizedLambdaExpressionSyntax node)

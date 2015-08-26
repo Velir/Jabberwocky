@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Jabberwocky.Core.CodeAnalysis.Caching.Util;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace Jabberwocky.Core.CodeAnalysis.Caching.Visitors
 {
@@ -14,14 +16,16 @@ namespace Jabberwocky.Core.CodeAnalysis.Caching.Visitors
 	/// </summary>
 	public class ReturnValueWalker : CSharpSyntaxWalker
 	{
+		private readonly SyntaxNodeAnalysisContext _context;
 		private const uint MaxDepth = 1;
 
 		private uint FunctionDepth { get; set; }
 
 		public ICollection<SyntaxNode> PossibleNullValues = new List<SyntaxNode>();
 
-		public ReturnValueWalker() : base(SyntaxWalkerDepth.Node)
+		public ReturnValueWalker(SyntaxNodeAnalysisContext context) : base(SyntaxWalkerDepth.Node)
 		{
+			_context = context;
 		}
 
 		public override void VisitReturnStatement(ReturnStatementSyntax node)
@@ -63,17 +67,48 @@ namespace Jabberwocky.Core.CodeAnalysis.Caching.Visitors
 			base.VisitLiteralExpression(node);
 		}
 
+		public override void VisitIdentifierName(IdentifierNameSyntax node)
+		{
+			// For visiting a lifted variable name
+			//if (FunctionDepth <= MaxDepth && node != null)
+			//{
+
+			//	return;
+			//}
+
+			base.VisitIdentifierName(node);
+		}
+
 		public override void VisitParenthesizedLambdaExpression(ParenthesizedLambdaExpressionSyntax node)
 		{
 			FunctionDepth++;
+
+			if (node.Body.IsKind(SyntaxKind.IdentifierName))
+			{
+				var identifier = (IdentifierNameSyntax)node.Body;
+
+				foreach (var assignmentNode in CacheAnalysisUtil.GetNullAssignmentNodes(identifier, _context))
+				{
+					PossibleNullValues.Add(assignmentNode);
+				}
+			}
+
 			base.VisitParenthesizedLambdaExpression(node);
+
 			FunctionDepth--;
 		}
 
 		public override void VisitSimpleLambdaExpression(SimpleLambdaExpressionSyntax node)
 		{
 			FunctionDepth++;
+
+			if (node.Body.IsKind(SyntaxKind.IdentifierName))
+			{
+
+			}
+
 			base.VisitSimpleLambdaExpression(node);
+
 			FunctionDepth--;
 		}
 

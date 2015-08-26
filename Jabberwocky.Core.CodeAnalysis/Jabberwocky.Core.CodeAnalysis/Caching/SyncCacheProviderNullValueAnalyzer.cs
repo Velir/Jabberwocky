@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Linq.Expressions;
@@ -40,7 +41,7 @@ namespace Jabberwocky.Core.CodeAnalysis.Caching
 		{
 			var invocationNode = (InvocationExpressionSyntax)context.Node;
 
-			// DIs this a method invocation?
+			// Is this a method invocation?
 			IMethodSymbol methodSymbol = (IMethodSymbol)context.SemanticModel.GetSymbolInfo(invocationNode).Symbol;
 
 			if (methodSymbol == null) return;
@@ -71,18 +72,31 @@ namespace Jabberwocky.Core.CodeAnalysis.Caching
 			var argument = invocationNode.ArgumentList.Arguments[paramPosition];
 			var argExpression = argument.Expression;
 
-			var argumentVisitor = new CacheValueAssignmentVisitor();
+			var argumentVisitor = new CacheValueAssignmentVisitor(context);
 			argExpression.Accept(argumentVisitor);
 
 			if (argumentVisitor.HasPossibleNullValue)
 			{
-				CreateDiagnostic(context, argExpression.GetLocation());
+				var parentLocation = argExpression.GetLocation();
+
+				var otherLocations = argumentVisitor.PossibleNullValues
+					.Select(node => node.GetLocation())
+					.Where(loc => LocationIsNotDuplicateOfParent(loc, parentLocation));
+
+				CreateDiagnostic(context, parentLocation, otherLocations);
 			}
         }
 
-		private static void CreateDiagnostic(SyntaxNodeAnalysisContext context, Location location)
+		private static bool LocationIsNotDuplicateOfParent(Location loc, Location parentLocation)
 		{
-			var diagnostic = Diagnostic.Create(Rule, location);
+			var locSpan = loc.GetLineSpan();
+			var parentSpan = parentLocation.GetLineSpan();
+			return !(locSpan.StartLinePosition >= parentSpan.StartLinePosition && locSpan.EndLinePosition <= parentSpan.EndLinePosition);
+		}
+
+		private static void CreateDiagnostic(SyntaxNodeAnalysisContext context, Location location, IEnumerable<Location> otherLocations)
+		{
+			var diagnostic = Diagnostic.Create(Rule, location, otherLocations);
 			context.ReportDiagnostic(diagnostic);
 		}
 
