@@ -33,7 +33,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Caching\CodeFixProvider.cs" />
+    <Compile Include="Caching\Visitors\CacheValueAssignmentVisitor.cs" />
     <Compile Include="Caching\SyncCacheProviderNullValueAnalyzer.cs" />
+    <Compile Include="Caching\Visitors\ReturnValueWalker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>

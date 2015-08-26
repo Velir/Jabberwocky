@@ -2,6 +2,7 @@ using System;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Linq.Expressions;
+using Jabberwocky.Core.CodeAnalysis.Caching.Visitors;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -66,23 +67,16 @@ namespace Jabberwocky.Core.CodeAnalysis.Caching
 			if (paramSymbol == null) return;
 
 			// Parameter must either be constant, or Func<T> (includes method invocation, method body expression, or delegate/lambda)
-			// TODO: Need to parse the param expression... ie. constant/method body/delegate (should we use the visitor pattern?)
-			if (paramSymbol.Name == ValueParameterName)
+			var paramPosition = paramSymbol.Ordinal;
+			var argument = invocationNode.ArgumentList.Arguments[paramPosition];
+			var argExpression = argument.Expression;
+
+			var argumentVisitor = new CacheValueAssignmentVisitor();
+			argExpression.Accept(argumentVisitor);
+
+			if (argumentVisitor.HasPossibleNullValue)
 			{
-				var paramPosition = paramSymbol.Ordinal;
-				var argument = invocationNode.ArgumentList.Arguments[paramPosition];
-				if (argument.Expression is LiteralExpressionSyntax)
-				{
-					var litExpression = argument.Expression as LiteralExpressionSyntax;
-					if (litExpression.Kind() == SyntaxKind.NullLiteralExpression)
-					{
-						CreateDiagnostic(context, litExpression.GetLocation());
-					}
-				}
-			}
-			else if (paramSymbol.Name == CallbackParameterName)
-			{
-				
+				CreateDiagnostic(context, argExpression.GetLocation());
 			}
         }
 
@@ -90,17 +84,6 @@ namespace Jabberwocky.Core.CodeAnalysis.Caching
 		{
 			var diagnostic = Diagnostic.Create(Rule, location);
 			context.ReportDiagnostic(diagnostic);
-		}
-
-		private static bool ParamIsFuncType(IParameterSymbol paramSymbol)
-		{
-			// TODO: Not sure what the format should be yet for generic Func<>
-			return paramSymbol.ToDisplayString(_symbolDisplayFormat) == "Func";
-		}
-
-		private static bool ParamIsObjectType(SyntaxNodeAnalysisContext context, IParameterSymbol paramSymbol)
-		{
-			return paramSymbol.Type.Equals(context.SemanticModel.Compilation.GetSpecialType(SpecialType.System_Object));
 		}
 
 		private static bool DoesTypeImplementSyncProvider(ITypeSymbol symbol, ITypeSymbol cacheType)

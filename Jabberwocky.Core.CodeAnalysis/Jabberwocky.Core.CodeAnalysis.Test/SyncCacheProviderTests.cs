@@ -33,7 +33,7 @@ namespace Jabberwocky.Core.CodeAnalysis.Test
 		}
 
 		public void DoStuff() {
-			_syncCache.GetFromCache(""key"", () => null);
+			_syncCache.GetFromCache<object>(""key"", () => null);
 			_syncCache.AddToCache<object>(""key"", null);
 		}
 	}
@@ -46,10 +46,21 @@ namespace Jabberwocky.Core.CodeAnalysis.Test
 		[TestMethod]
 		public void TestMethod1()
 		{
-			// 19, 37
+			// 19, 43
 			// 20, 41
 
-			var expected = new DiagnosticResult
+			var expected1 = new DiagnosticResult
+			{
+				Id = SyncCacheProviderNullValueAnalyzer.DiagnosticId,
+				Message = "The cached value cannot be null",
+				Severity = DiagnosticSeverity.Warning,
+				Locations =
+					new[] {
+							new DiagnosticResultLocation("Test0.cs", 19, 43)
+						}
+			};
+
+			var expected2 = new DiagnosticResult
 			{
 				Id = SyncCacheProviderNullValueAnalyzer.DiagnosticId,
 				Message = "The cached value cannot be null",
@@ -60,7 +71,7 @@ namespace Jabberwocky.Core.CodeAnalysis.Test
 						}
 			};
 
-			VerifyCSharpDiagnostic(SyncCache_NullCacheValues_Source, expected);
+			VerifyCSharpDiagnostic(SyncCache_NullCacheValues_Source, expected1, expected2);
 		}
 
 		//Diagnostic and CodeFix both triggered and checked for
