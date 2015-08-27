@@ -1,5 +1,6 @@
 ﻿using Jabberwocky.Glass.CodeAnalysis.GlassFactory;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestHelper;
@@ -9,6 +10,11 @@ namespace Jabberwocky.Glass.CodeAnalysis.Test
 	[TestClass]
 	public class GlassFactorySuspiciousPropertyTests : CodeFixVerifier
 	{
+		private enum CodeFix
+		{
+			MakeAbstract = 0,
+			DefaultInitializer
+		}
 
 		#region Glass Factory BaseInterface Test Source
 
@@ -33,6 +39,82 @@ public abstract class IBaseTypeModel : BaseInterface<IBaseType>, ITestInterface
 {
 	public string Name { get; set; }
 	public abstract object Hi { get; }
+	public string World => ""hello"";
+	public string CustomProperty => ""Ok Bye"";
+}
+
+[GlassFactoryInterface]
+public interface ITestInterface {
+	string Name { get; }
+	object Hi { get; }
+	string World { get; }
+}
+
+public interface IBaseType : IGlassBase
+{
+}
+
+";
+
+		private const string GlassFactory_HasSuspiciousProperty_MakeAbstract_Fix = @"
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Diagnostics;
+using Jabberwocky.Glass.Factory;
+using Jabberwocky.Glass.Factory.Attributes;
+using Jabberwocky.Glass.Factory.Implementation;
+using Jabberwocky.Glass.Factory.Interfaces;
+using Jabberwocky.Glass.Factory.Interceptors;
+using Jabberwocky.Glass.Factory.Util;
+using Jabberwocky.Glass.Models;
+
+[GlassFactoryType(typeof (IBaseType))]
+public abstract class IBaseTypeModel : BaseInterface<IBaseType>, ITestInterface
+{
+	public abstract string Name { get; set; }
+	public abstract object Hi { get; }
+	public string World => ""hello"";
+	public string CustomProperty => ""Ok Bye"";
+}
+
+[GlassFactoryInterface]
+public interface ITestInterface {
+	string Name { get; }
+	object Hi { get; }
+	string World { get; }
+}
+
+public interface IBaseType : IGlassBase
+{
+}
+
+";
+
+		private const string GlassFactory_HasSuspiciousProperty_InitializeDefault_Fix = @"
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Diagnostics;
+using Jabberwocky.Glass.Factory;
+using Jabberwocky.Glass.Factory.Attributes;
+using Jabberwocky.Glass.Factory.Implementation;
+using Jabberwocky.Glass.Factory.Interfaces;
+using Jabberwocky.Glass.Factory.Interceptors;
+using Jabberwocky.Glass.Factory.Util;
+using Jabberwocky.Glass.Models;
+
+[GlassFactoryType(typeof (IBaseType))]
+public abstract class IBaseTypeModel : BaseInterface<IBaseType>, ITestInterface
+{
+	public string Name { get; set; } = default(string);
+    public abstract object Hi { get; }
 	public string World => ""hello"";
 	public string CustomProperty => ""Ok Bye"";
 }
@@ -111,6 +193,18 @@ public interface IBaseType : IGlassBase
 		}
 
 		[TestMethod]
+		public void GlassFactory_SuspiciousProperty_DefaultGetProperty_MakeAbstract_CodeFix()
+		{
+			VerifyCSharpFix(GlassFactory_HasSuspiciousProperty_Source, GlassFactory_HasSuspiciousProperty_MakeAbstract_Fix, (int?)CodeFix.MakeAbstract);
+		}
+
+		[TestMethod]
+		public void GlassFactory_SuspiciousProperty_DefaultGetProperty_InitializeDefaultValue_CodeFix()
+		{
+			VerifyCSharpFix(GlassFactory_HasSuspiciousProperty_Source, GlassFactory_HasSuspiciousProperty_InitializeDefault_Fix, (int?)CodeFix.DefaultInitializer);
+		}
+
+		[TestMethod]
 		public void GlassFactory_NoSuspiciousProperties_Analysis()
 		{
 			VerifyCSharpDiagnostic(GlassFactory_NoSuspiciousProperties_Source);
@@ -119,6 +213,11 @@ public interface IBaseType : IGlassBase
 		protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
 		{
 			return new GlassFactorySuspiciousPropertyAnalyzer();
+		}
+
+		protected override CodeFixProvider GetCSharpCodeFixProvider()
+		{
+			return new GlassFactorySuspiciousPropertyCodeFixProvider();
 		}
 	}
 }
