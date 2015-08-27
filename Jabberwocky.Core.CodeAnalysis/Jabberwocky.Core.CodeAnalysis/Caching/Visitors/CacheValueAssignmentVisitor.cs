@@ -25,6 +25,13 @@ namespace Jabberwocky.Core.CodeAnalysis.Caching.Visitors
 			_nullValueWalker = new ReturnValueWalker(context);
 		}
 
+		public override void DefaultVisit(SyntaxNode node)
+		{
+			// Fallback to walking the syntax tree
+			_nullValueWalker.Visit(node);
+			base.DefaultVisit(node);
+		}
+
 		public override void VisitAnonymousMethodExpression(AnonymousMethodExpressionSyntax node)
 		{
 			_nullValueWalker.Visit(node);

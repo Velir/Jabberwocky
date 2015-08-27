@@ -64,27 +64,27 @@ namespace Jabberwocky.Core.CodeAnalysis {
         /// <summary>
         ///   Looks up a localized string similar to Cached value cannot be null.
         /// </summary>
-        internal static string SyncCacheNullValueAnalyzerDescription {
+        internal static string CacheNullValueAnalyzerDescription {
             get {
-                return ResourceManager.GetString("SyncCacheNullValueAnalyzerDescription", resourceCulture);
+                return ResourceManager.GetString("CacheNullValueAnalyzerDescription", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to The cached value cannot be null.
         /// </summary>
-        internal static string SyncCacheNullValueAnalyzerMessageFormat {
+        internal static string CacheNullValueAnalyzerMessageFormat {
             get {
-                return ResourceManager.GetString("SyncCacheNullValueAnalyzerMessageFormat", resourceCulture);
+                return ResourceManager.GetString("CacheNullValueAnalyzerMessageFormat", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Cached value is null.
         /// </summary>
-        internal static string SyncCacheNullValueAnalyzerTitle {
+        internal static string CacheNullValueAnalyzerTitle {
             get {
-                return ResourceManager.GetString("SyncCacheNullValueAnalyzerTitle", resourceCulture);
+                return ResourceManager.GetString("CacheNullValueAnalyzerTitle", resourceCulture);
             }
         }
     }

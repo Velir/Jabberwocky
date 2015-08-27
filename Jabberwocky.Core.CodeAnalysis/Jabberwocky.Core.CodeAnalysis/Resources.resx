@@ -117,15 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="SyncCacheNullValueAnalyzerDescription" xml:space="preserve">
+  <data name="CacheNullValueAnalyzerDescription" xml:space="preserve">
     <value>Cached value cannot be null</value>
     <comment>An optional longer localizable description of the diagnostic.</comment>
   </data>
-  <data name="SyncCacheNullValueAnalyzerMessageFormat" xml:space="preserve">
+  <data name="CacheNullValueAnalyzerMessageFormat" xml:space="preserve">
     <value>The cached value cannot be null</value>
     <comment>The format-able message the diagnostic displays.</comment>
   </data>
-  <data name="SyncCacheNullValueAnalyzerTitle" xml:space="preserve">
+  <data name="CacheNullValueAnalyzerTitle" xml:space="preserve">
     <value>Cached value is null</value>
     <comment>The title of the diagnostic.</comment>
   </data>

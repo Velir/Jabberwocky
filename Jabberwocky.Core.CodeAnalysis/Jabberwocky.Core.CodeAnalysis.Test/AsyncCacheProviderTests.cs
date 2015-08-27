@@ -149,6 +149,117 @@ namespace Jabberwocky.Core.CodeAnalysis.Test
 
 ";
 
+		private const string AsyncCache_NullFuncCallback_Source = @"
+
+	using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+	using System.Threading.Tasks;
+    using System.Diagnostics;
+	using Jabberwocky.Core.Caching;
+
+	public class MainClass {
+		private readonly IAsyncCacheProvider _asyncCache;
+
+		public MainClass(IAsyncCacheProvider asyncCache) {
+			_asyncCache = asyncCache;
+		}
+
+		public void DoStuff() {
+			_asyncCache.GetFromCacheAsync<object>(""key"", (Func<string>) null);
+		}
+	}
+
+";
+
+		private const string AsyncCache_AsyncMethodExpressionInvocationWithPossibleNullReturnValue_Source = @"
+
+	using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+	using System.Threading;
+    using System.Threading.Tasks;
+    using System.Diagnostics;
+	using Jabberwocky.Core.Caching;
+
+	public class MainClass {
+		private readonly IAsyncCacheProvider _asyncCache;
+
+		public MainClass(IAsyncCacheProvider asyncCache) {
+			_asyncCache = asyncCache;
+		}
+
+		public void DoStuff() {
+			_asyncCache.GetFromCacheAsync<object>(""key"", GetValueAsync);
+		}
+
+		private async Task<string> GetValueAsync(CancellationToken ct) {
+			return null;
+		}
+	}
+
+";
+
+		private const string AsyncCache_AsyncLambdaCallbackWithAwaitNullValue_Source = @"
+
+	using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+	using System.Threading;
+    using System.Threading.Tasks;
+    using System.Diagnostics;
+	using Jabberwocky.Core.Caching;
+
+	public class MainClass {
+		private readonly IAsyncCacheProvider _asyncCache;
+
+		public MainClass(IAsyncCacheProvider asyncCache) {
+			_asyncCache = asyncCache;
+		}
+
+		public void DoStuff() {
+			_asyncCache.GetFromCacheAsync<string>(""key"", async ct => await GetValueAsync(ct));
+		}
+
+		private async Task<string> GetValueAsync(CancellationToken ct) {
+			return null;
+		}
+	}
+
+";
+
+		private const string AsyncCache_AsyncLambdaCallbackNoAwaitNullValue_Source = @"
+
+	using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+	using System.Threading;
+    using System.Threading.Tasks;
+    using System.Diagnostics;
+	using Jabberwocky.Core.Caching;
+
+	public class MainClass {
+		private readonly IAsyncCacheProvider _asyncCache;
+
+		public MainClass(IAsyncCacheProvider asyncCache) {
+			_asyncCache = asyncCache;
+		}
+
+		public void DoStuff() {
+			_asyncCache.GetFromCacheAsync<string>(""key"", ct => GetValueAsync(ct));
+		}
+
+		private async Task<string> GetValueAsync(CancellationToken ct) {
+			return null;
+		}
+	}
+
+";
+
 		#endregion
 
 		[TestMethod]
@@ -244,6 +355,81 @@ namespace Jabberwocky.Core.CodeAnalysis.Test
 			};
 
 			VerifyCSharpDiagnostic(AsyncCache_MethodExpressionInvocationWithPossibleNullReturnValue_Source, expected);
+		}
+
+		[TestMethod]
+		public void AsyncCacheProvider_NullFuncCallback_Analysis()
+		{
+			// 21, 49
+			var expected = new DiagnosticResult
+			{
+				Id = AsyncCacheProviderNullValueAnalyzer.DiagnosticId,
+				Message = "The cached value cannot be null",
+				Severity = DiagnosticSeverity.Warning,
+				Locations =
+					new[] {
+							new DiagnosticResultLocation("Test0.cs", 19, 49)
+						}
+			};
+
+			VerifyCSharpDiagnostic(AsyncCache_NullFuncCallback_Source, expected);
+		}
+
+		[TestMethod]
+		public void AsyncCacheProvider_AsyncMethodExpressionInvocationWithPossibleNullValue_Analysis()
+		{
+			// 20, 49
+			var expected = new DiagnosticResult
+			{
+				Id = AsyncCacheProviderNullValueAnalyzer.DiagnosticId,
+				Message = "The cached value cannot be null",
+				Severity = DiagnosticSeverity.Warning,
+				Locations =
+					new[] {
+							new DiagnosticResultLocation("Test0.cs", 20, 49),
+							new DiagnosticResultLocation("Test0.cs", 24, 4)
+                        }
+			};
+
+			VerifyCSharpDiagnostic(AsyncCache_AsyncMethodExpressionInvocationWithPossibleNullReturnValue_Source, expected);
+		}
+
+		[TestMethod]
+		public void AsyncCacheProvider_AsyncLambdaCallbackWithAwaitNullValue_Analysis()
+		{
+			// 20, 49
+			var expected = new DiagnosticResult
+			{
+				Id = AsyncCacheProviderNullValueAnalyzer.DiagnosticId,
+				Message = "The cached value cannot be null",
+				Severity = DiagnosticSeverity.Warning,
+				Locations =
+					new[] {
+							new DiagnosticResultLocation("Test0.cs", 20, 49),
+							new DiagnosticResultLocation("Test0.cs", 24, 4)
+						}
+			};
+
+			VerifyCSharpDiagnostic(AsyncCache_AsyncLambdaCallbackWithAwaitNullValue_Source, expected);
+		}
+
+		[TestMethod]
+		public void AsyncCacheProvider_AsyncLambdaCallbackNoAwaitNullValue_Analysis()
+		{
+			// 20, 49
+			var expected = new DiagnosticResult
+			{
+				Id = AsyncCacheProviderNullValueAnalyzer.DiagnosticId,
+				Message = "The cached value cannot be null",
+				Severity = DiagnosticSeverity.Warning,
+				Locations =
+					new[] {
+							new DiagnosticResultLocation("Test0.cs", 20, 49),
+							new DiagnosticResultLocation("Test0.cs", 24, 4)
+						}
+			};
+
+			VerifyCSharpDiagnostic(AsyncCache_AsyncLambdaCallbackNoAwaitNullValue_Source, expected);
 		}
 
 		protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()

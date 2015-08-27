@@ -36,7 +36,7 @@ namespace Jabberwocky.Core.CodeAnalysis.Caching.Util
 			if (methodSymbol == null) return null;
 
 			var syntaxRef = methodSymbol.DeclaringSyntaxReferences.FirstOrDefault();
-			var methodDeclNode = syntaxRef.GetSyntax(context.CancellationToken) as MethodDeclarationSyntax; // should be BaseMethodDeclarationSyntax?
+			var methodDeclNode = syntaxRef?.GetSyntax(context.CancellationToken) as MethodDeclarationSyntax; // should be BaseMethodDeclarationSyntax?
 
 			return methodDeclNode;
 		}
