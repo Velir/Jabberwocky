@@ -85,7 +85,8 @@ namespace Jabberwocky.Core.Tests.Utils
 				Assert.IsNull(lock2);
 
 				// Continue Task1 (verify that task2 threadstate is 'blocked')
-				SpinWait.SpinUntil(() => task2.ThreadState == ThreadState.WaitSleepJoin, TimeSpan.FromMilliseconds(100));
+				if (!SpinWait.SpinUntil(() => task2.ThreadState == ThreadState.WaitSleepJoin, TimeSpan.FromMilliseconds(100)))
+					Assert.Fail("Timeout expired trying to validate state of task2.");
 				Assert.AreEqual(ThreadState.WaitSleepJoin, task2.ThreadState);
 				mre1.Set();
 
@@ -183,7 +184,8 @@ namespace Jabberwocky.Core.Tests.Utils
 				Assert.IsNull(lock2);
 
 				// Continue Task1 (verify that task2 threadstate is 'blocked')
-				SpinWait.SpinUntil(() => task2.Status == TaskStatus.WaitingForActivation, TimeSpan.FromMilliseconds(100));
+				if (!SpinWait.SpinUntil(() => task2.Status == TaskStatus.WaitingForActivation, TimeSpan.FromMilliseconds(100)))
+					Assert.Fail("Timeout expired trying to validate state of task2.");
 				Assert.AreEqual(TaskStatus.WaitingForActivation, task2.Status);
 				mre1.Set();
 
