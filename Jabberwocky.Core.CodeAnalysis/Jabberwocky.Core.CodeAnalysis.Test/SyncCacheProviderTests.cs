@@ -30,8 +30,8 @@ namespace Jabberwocky.Core.CodeAnalysis.Test
 		}
 
 		public void DoStuff() {
-			_syncCache.GetFromCache<object>(""key"", () => null);
-			_syncCache.AddToCache<object>(""key"", null);
+			_syncCache.GetFromCache<object>(""key"", () => null);  // invalid
+			_syncCache.AddToCache<object>(""key"", null); // valid
 		}
 	}
 
@@ -80,8 +80,8 @@ namespace Jabberwocky.Core.CodeAnalysis.Test
 
 		public void DoStuff() {
 			string retVal = null;
-			_syncCache.GetFromCache<string>(""key"", () => retVal);
-			_syncCache.AddToCache<string>(""key"", retVal);
+			_syncCache.GetFromCache<string>(""key"", () => retVal);  // invalid
+			_syncCache.AddToCache<string>(""key"", retVal); // valid
 		}
 	}
 
@@ -157,7 +157,7 @@ namespace Jabberwocky.Core.CodeAnalysis.Test
 			// 19, 43
 			// 20, 41
 
-			var expected1 = new DiagnosticResult
+			var expected = new DiagnosticResult
 			{
 				Id = SyncCacheProviderNullValueAnalyzer.DiagnosticId,
 				Message = "The cached value cannot be null",
@@ -168,18 +168,7 @@ namespace Jabberwocky.Core.CodeAnalysis.Test
 						}
 			};
 
-			var expected2 = new DiagnosticResult
-			{
-				Id = SyncCacheProviderNullValueAnalyzer.DiagnosticId,
-				Message = "The cached value cannot be null",
-				Severity = DiagnosticSeverity.Warning,
-				Locations =
-					new[] {
-							new DiagnosticResultLocation("Test0.cs", 20, 41)
-						}
-			};
-
-			VerifyCSharpDiagnostic(SyncCache_NullCacheValues_Source, expected1, expected2);
+			VerifyCSharpDiagnostic(SyncCache_NullCacheValues_Source, expected);
 		}
 
 		[TestMethod]
@@ -204,8 +193,7 @@ namespace Jabberwocky.Core.CodeAnalysis.Test
 		public void SyncCacheProvider_LiftedNullValue_Analysis()
 		{
 			// 20, 43
-			// 21, 41
-			var expected1 = new DiagnosticResult
+			var expected = new DiagnosticResult
 			{
 				Id = SyncCacheProviderNullValueAnalyzer.DiagnosticId,
 				Message = "The cached value cannot be null",
@@ -216,19 +204,8 @@ namespace Jabberwocky.Core.CodeAnalysis.Test
                             new DiagnosticResultLocation("Test0.cs", 19, 11)
 						}
 			};
-			var expected2 = new DiagnosticResult
-			{
-				Id = SyncCacheProviderNullValueAnalyzer.DiagnosticId,
-				Message = "The cached value cannot be null",
-				Severity = DiagnosticSeverity.Warning,
-				Locations =
-					new[] {
-							new DiagnosticResultLocation("Test0.cs", 21, 41),
-							new DiagnosticResultLocation("Test0.cs", 19, 11)
-						}
-			};
 
-			VerifyCSharpDiagnostic(SyncCache_LambdaWithNullLiftedVariable_Source, expected1, expected2);
+			VerifyCSharpDiagnostic(SyncCache_LambdaWithNullLiftedVariable_Source, expected);
 		}
 
 		[TestMethod]

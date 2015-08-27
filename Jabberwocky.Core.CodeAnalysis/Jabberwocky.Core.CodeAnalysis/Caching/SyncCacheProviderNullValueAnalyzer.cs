@@ -17,6 +17,7 @@ namespace Jabberwocky.Core.CodeAnalysis.Caching
 		private const string SyncCacheProviderTypeName = "Jabberwocky.Core.Caching.ISyncCacheProvider";
 		private const string ValueParameterName = "value"; // is generic T where T : class
 		private const string CallbackParameterName = "callback"; // is Func<T> where T : class
+		private static readonly ISet<string> ValidMethodTargets = new HashSet<string> { "GetFromCache" }; 
 
 		// You can change these strings in the Resources.resx file. If you do not want your analyzer to be localize-able, you can use regular strings for Title and MessageFormat.
 		private static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.SyncCacheNullValueAnalyzerTitle), Resources.ResourceManager, typeof(Resources));
@@ -55,7 +56,7 @@ namespace Jabberwocky.Core.CodeAnalysis.Caching
 				: cacheType.GetMembers(methodSymbol.Name)
 					.FirstOrDefault(ifaceMember => methodSymbol.Equals(parentType.FindImplementationForInterfaceMember(ifaceMember)));
 
-			if (interfaceMethod == null) return;
+			if (interfaceMethod == null || !ValidMethodTargets.Contains(interfaceMethod.Name)) return;
 
 			// Given the interface method, we only care about the 'value' or 'callback' parameters
 			var paramSymbol =
