@@ -55,7 +55,7 @@ namespace Jabberwocky.Core.Utils.Extensions
 			public LambdaEqualityComparer(Func<T, T, bool> comparer)
 			{
 				if (comparer == null)
-					throw new ArgumentNullException("comparer");
+					throw new ArgumentNullException(nameof(comparer));
 				_innerComparer = comparer;
 			}
 

@@ -20,12 +20,12 @@ namespace Jabberwocky.WebApi.Handlers
 		{
 			if (content == null)
 			{
-				throw new ArgumentNullException("content");
+				throw new ArgumentNullException(nameof(content));
 			}
 
 			if (encodingType == null)
 			{
-				throw new ArgumentNullException("encodingType");
+				throw new ArgumentNullException(nameof(encodingType));
 			}
 
 			originalContent = content;

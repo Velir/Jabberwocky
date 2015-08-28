@@ -100,7 +100,7 @@ namespace Jabberwocky.Core.Utils
 		private static class LockManager
 		{
 			private static readonly Lazy<ConcurrentDictionary<string, LockState>> LazyLocks = new Lazy<ConcurrentDictionary<string, LockState>>();
-			internal static ConcurrentDictionary<string, LockState> Locks { get { return LazyLocks.Value; } }
+			internal static ConcurrentDictionary<string, LockState> Locks => LazyLocks.Value;
 		}
 
 		private sealed class LockObject : IDisposable
@@ -109,7 +109,7 @@ namespace Jabberwocky.Core.Utils
 			private readonly LockState _lockState;
 			private readonly string _key;
 
-			public bool IsValid { get { return _lockState.IsValid; } }
+			public bool IsValid => _lockState.IsValid;
 
 			public LockObject(string key, ConcurrentDictionary<string, LockState> container, LockState lockState)
 			{

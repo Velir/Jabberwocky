@@ -14,9 +14,9 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Models.Factory
 
 		public AutofacViewModelFactory(IComponentContext resolver, IRenderingContextService renderingContextService, ISitecoreContext context)
 		{
-			if (resolver == null) throw new ArgumentNullException("resolver");
-			if (renderingContextService == null) throw new ArgumentNullException("renderingContextService");
-			if (context == null) throw new ArgumentNullException("context");
+			if (resolver == null) throw new ArgumentNullException(nameof(resolver));
+			if (renderingContextService == null) throw new ArgumentNullException(nameof(renderingContextService));
+			if (context == null) throw new ArgumentNullException(nameof(context));
 			_resolver = resolver;
 			_renderingContextService = renderingContextService;
 			_context = context;

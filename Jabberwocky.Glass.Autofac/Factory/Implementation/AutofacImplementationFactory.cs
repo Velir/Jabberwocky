@@ -15,7 +15,7 @@ namespace Jabberwocky.Glass.Autofac.Factory.Implementation
 
 		public AutofacImplementationFactory(IComponentContext autofacContainer)
 		{
-			if (autofacContainer == null) throw new ArgumentNullException("autofacContainer");
+			if (autofacContainer == null) throw new ArgumentNullException(nameof(autofacContainer));
 			_autofacContainer = autofacContainer;
 		}
 

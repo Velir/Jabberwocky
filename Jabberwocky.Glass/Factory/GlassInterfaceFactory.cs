@@ -13,12 +13,11 @@ namespace Jabberwocky.Glass.Factory
 	{
 		private readonly IImplementationFactory _factory;
 		private readonly Func<ISitecoreService> _serviceFactory;
-		private readonly IDictionary<Type, IDictionary<string, Type>> _templateCache;
 
 		private static readonly string DefaultFallbackTemplateId = Guid.Empty.ToString();
 		private static readonly Guid[] DefaultBaseTemplateArray = new Guid[0];
 
-		public IDictionary<Type, IDictionary<string, Type>> TemplateCache { get { return _templateCache; } }
+		public IDictionary<Type, IDictionary<string, Type>> TemplateCache { get; }
 
 		/// <summary>
 		/// Maximum search depth for base-template traversal
@@ -27,18 +26,18 @@ namespace Jabberwocky.Glass.Factory
 
 		public GlassInterfaceFactory(ILookup<Type, GlassInterfaceMetadata> interfaceMappings, IImplementationFactory factory, Func<ISitecoreService> serviceFactory)
 		{
-			if (interfaceMappings == null) throw new ArgumentNullException("interfaceMappings");
-			if (factory == null) throw new ArgumentNullException("factory");
-			if (serviceFactory == null) throw new ArgumentNullException("serviceFactory");
+			if (interfaceMappings == null) throw new ArgumentNullException(nameof(interfaceMappings));
+			if (factory == null) throw new ArgumentNullException(nameof(factory));
+			if (serviceFactory == null) throw new ArgumentNullException(nameof(serviceFactory));
 
 			_factory = factory;
 			_serviceFactory = serviceFactory;
-			_templateCache = GenerateCache(interfaceMappings);
+			TemplateCache = GenerateCache(interfaceMappings);
 		}
 
 		public T GetItem<T>(IGlassBase model) where T : class
 		{
-			if (_templateCache.ContainsKey(typeof(T)))
+			if (TemplateCache.ContainsKey(typeof(T)))
 			{
 				var implType = GetItemFromInterface(model, typeof(T));
 

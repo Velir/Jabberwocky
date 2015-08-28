@@ -6,32 +6,16 @@ namespace Jabberwocky.Glass.Services
 {
 	public class SiteContextService : ISiteContextService
 	{
-		private SiteContext Site { get { return Sitecore.Context.Site; } }
+		private SiteContext Site => Sitecore.Context.Site;
 
-		public string CurrentSiteName
-		{
-			get { return Sitecore.Context.GetSiteName() ?? string.Empty; }
-		}
+		public string CurrentSiteName => Sitecore.Context.GetSiteName() ?? string.Empty;
 
-		public string StartPath
-		{
-			get { return Site != null ? Site.StartPath : string.Empty; }
-		}
+		public string StartPath => Site != null ? Site.StartPath : string.Empty;
 
-		public Language CurrentLanguage
-		{
-			get { return Sitecore.Context.Language; }
-		}
+		public Language CurrentLanguage => Sitecore.Context.Language;
 
-		public DeviceItem CurrentDevice
-		{
-			get { return Sitecore.Context.Device; }
-		}
+		public DeviceItem CurrentDevice => Sitecore.Context.Device;
 
-		public string LanguageName
-		{
-			get { return Sitecore.Context.Language.Name; }
-		}
-
+		public string LanguageName => Sitecore.Context.Language.Name;
 	}
 }

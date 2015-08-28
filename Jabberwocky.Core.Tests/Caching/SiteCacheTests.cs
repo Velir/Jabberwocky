@@ -11,10 +11,7 @@ namespace Jabberwocky.Core.Tests.Caching
 	{
 		private static readonly DateTimeOffset TestExpiration = DateTime.Now + TimeSpan.FromDays(1);
 
-		protected override ObjectCache InnerCache
-		{
-			get { return ((dynamic)DynamicWrapper.For(_cacheProvider))._internalCache; }
-		}
+		protected override ObjectCache InnerCache => ((dynamic)DynamicWrapper.For(_cacheProvider))._internalCache;
 
 		protected override SiteCache CreateTestProvider()
 		{

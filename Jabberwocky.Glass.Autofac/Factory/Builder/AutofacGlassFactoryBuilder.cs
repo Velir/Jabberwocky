@@ -18,7 +18,7 @@ namespace Jabberwocky.Glass.Autofac.Factory.Builder
 
 		public AutofacGlassFactoryBuilder(IConfigurationOptions options, IContainer container) : base(options)
 		{
-			if (container == null) throw new ArgumentNullException("container");
+			if (container == null) throw new ArgumentNullException(nameof(container));
 			_container = container;
 		}
 

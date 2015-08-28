@@ -26,7 +26,7 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 			where TConcreteReflectionActivatorData : ConcreteReflectionActivatorData
 		{
 			if (registration == null)
-				throw new ArgumentNullException("registration");
+				throw new ArgumentNullException(nameof(registration));
 
 			registration.ActivatorData.ImplementationType = ProxyGenerator.ProxyBuilder.CreateClassProxyType(registration.ActivatorData.ImplementationType, new Type[0], ProxyGenerationOptions.Default);
 			return registration.OnPreparing(e => e.Parameters = new Parameter[]
@@ -42,7 +42,7 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 		public static IRegistrationBuilder<TLimit, TConcreteReflectionActivatorData, TRegistrationStyle> CustomEnableClassInterceptors<TLimit, TConcreteReflectionActivatorData, TRegistrationStyle>(this IRegistrationBuilder<TLimit, TConcreteReflectionActivatorData, TRegistrationStyle> registration) where TConcreteReflectionActivatorData : ConcreteReflectionActivatorData
 		{
 			if (registration == null)
-				throw new ArgumentNullException("registration");
+				throw new ArgumentNullException(nameof(registration));
 
 			// Create a new proxy generator per call...
 			var proxyGenerator = new ProxyGenerator();
@@ -63,9 +63,9 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 		private static IEnumerable<Service> GetInterceptorServices(IComponentRegistration registration, Type implType)
 		{
 			if (registration == null)
-				throw new ArgumentNullException("registration");
+				throw new ArgumentNullException(nameof(registration));
 			if (implType == null)
-				throw new ArgumentNullException("implType");
+				throw new ArgumentNullException(nameof(implType));
 
 			IEnumerable<Service> enumerable = EmptyServices;
 			object obj;

@@ -8,15 +8,14 @@ namespace Jabberwocky.Glass.Factory.Implementation.Decorators
 	public class DebuggingDecorator : IImplementationFactory
 	{
 		private readonly IImplementationFactory _innerFactory;
-		private readonly bool _debuggingEnabled;
 
-		protected virtual bool IsDebuggingEnabled { get { return _debuggingEnabled; } }
+		protected virtual bool IsDebuggingEnabled { get; }
 
 		public DebuggingDecorator(IImplementationFactory innerFactory, bool debuggingEnabled)
 		{
-			if (innerFactory == null) throw new ArgumentNullException("innerFactory");
+			if (innerFactory == null) throw new ArgumentNullException(nameof(innerFactory));
 			_innerFactory = innerFactory;
-			_debuggingEnabled = debuggingEnabled;
+			IsDebuggingEnabled = debuggingEnabled;
 		}
 
 		public T Create<T, TModel>(Type t, TModel glassModel) where T : class

@@ -19,7 +19,7 @@ namespace Jabberwocky.Glass.Factory.Implementation
 
 		public ProxyImplementationFactory(Func<Type, object, FallbackInterceptor> interceptorFactory)
 		{
-			if (interceptorFactory == null) throw new ArgumentNullException("interceptorFactory");
+			if (interceptorFactory == null) throw new ArgumentNullException(nameof(interceptorFactory));
 			_interceptorFactory = interceptorFactory;
 		}
 

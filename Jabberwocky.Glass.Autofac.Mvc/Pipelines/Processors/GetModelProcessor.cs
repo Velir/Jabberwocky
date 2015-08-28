@@ -38,7 +38,7 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Pipelines.Processors
 
 		public GetModelProcessor(IViewModelFactory viewModelFactory)
 		{
-			if (viewModelFactory == null) throw new ArgumentNullException("viewModelFactory");
+			if (viewModelFactory == null) throw new ArgumentNullException(nameof(viewModelFactory));
 			_viewModelFactory = viewModelFactory;
 		}
 

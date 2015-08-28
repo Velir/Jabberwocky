@@ -13,14 +13,12 @@ namespace Jabberwocky.Glass.Factory.Builder
 {
 	public abstract class AbstractGlassFactoryBuilder : IGlassFactoryBuilder
 	{
-		private readonly IConfigurationOptions _options;
-
-		protected IConfigurationOptions Options { get { return _options; } }
+		protected IConfigurationOptions Options { get; }
 
 		protected AbstractGlassFactoryBuilder(IConfigurationOptions options)
 		{
-			if (options == null) throw new ArgumentNullException("options");
-			_options = options;
+			if (options == null) throw new ArgumentNullException(nameof(options));
+			Options = options;
 		}
 
 		public abstract IGlassInterfaceFactory BuildFactory(IImplementationFactory implFactory, Func<ISitecoreService> serviceFactory);

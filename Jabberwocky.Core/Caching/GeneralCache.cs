@@ -11,14 +11,11 @@ namespace Jabberwocky.Core.Caching
 
 		public GeneralCache(MemoryCache internalCache)
 		{
-			if (internalCache == null) throw new ArgumentNullException("internalCache");
+			if (internalCache == null) throw new ArgumentNullException(nameof(internalCache));
 			_internalCache = internalCache;
 		}
 
-		protected override ObjectCache Cache
-		{
-			get { return _internalCache; }
-		}
+		protected override ObjectCache Cache => _internalCache;
 
 		public override void EmptyCache()
 		{

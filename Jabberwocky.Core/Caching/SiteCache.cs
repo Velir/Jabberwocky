@@ -18,15 +18,9 @@ namespace Jabberwocky.Core.Caching
 		/// <remarks>
 		/// For use where IoC is not available
 		/// </remarks>
-		public static ICacheProvider Default
-		{
-			get { return SingletonCache.Value; }
-		}
+		public static ICacheProvider Default => SingletonCache.Value;
 
-		protected override ObjectCache Cache
-		{
-			get { return _internalCache; }
-		}
+		protected override ObjectCache Cache => _internalCache;
 
 		/// <summary>
 		/// Event handler to clear out the site cache

@@ -21,11 +21,11 @@ namespace Jabberwocky.Glass.Factory.Interceptors
 
 		public FallbackInterceptor(Type interfaceType, object model, IGlassTemplateCache templateCache, IImplementationFactory implementationFactory, ISitecoreService service)
 		{
-			if (interfaceType == null) throw new ArgumentNullException("interfaceType");
-			if (model == null) throw new ArgumentNullException("model");
-			if (templateCache == null) throw new ArgumentNullException("templateCache");
-			if (implementationFactory == null) throw new ArgumentNullException("implementationFactory");
-			if (service == null) throw new ArgumentNullException("service");
+			if (interfaceType == null) throw new ArgumentNullException(nameof(interfaceType));
+			if (model == null) throw new ArgumentNullException(nameof(model));
+			if (templateCache == null) throw new ArgumentNullException(nameof(templateCache));
+			if (implementationFactory == null) throw new ArgumentNullException(nameof(implementationFactory));
+			if (service == null) throw new ArgumentNullException(nameof(service));
 			_interfaceType = interfaceType;
 			_model = model;
 			_templateCache = templateCache;

@@ -9,7 +9,7 @@ namespace Jabberwocky.Glass.Factory.Interfaces
 
 		protected BaseInterface(T innerItem)
 		{
-			if (innerItem == null) throw new ArgumentNullException("innerItem");
+			if (innerItem == null) throw new ArgumentNullException(nameof(innerItem));
 			InnerItem = innerItem;
 		}
 	}

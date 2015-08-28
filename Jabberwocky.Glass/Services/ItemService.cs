@@ -13,7 +13,7 @@ namespace Jabberwocky.Glass.Services
 
 		public ItemService(ISitecoreService service)
 		{
-			if (service == null) throw new ArgumentNullException("service");
+			if (service == null) throw new ArgumentNullException(nameof(service));
 			_service = service;
 		}
 

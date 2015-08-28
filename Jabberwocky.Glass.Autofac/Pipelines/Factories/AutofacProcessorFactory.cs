@@ -12,7 +12,7 @@ namespace Jabberwocky.Glass.Autofac.Pipelines.Factories
 	/// </summary>
 	public class AutofacProcessorFactory : IFactory
 	{
-		protected static IContainer Container { get { return AutofacConfig.ServiceLocator; } }
+		protected static IContainer Container => AutofacConfig.ServiceLocator;
 
 		public virtual object GetObject(string identifier)
 		{

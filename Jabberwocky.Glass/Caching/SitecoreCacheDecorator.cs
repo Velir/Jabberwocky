@@ -26,15 +26,15 @@ namespace Jabberwocky.Glass.Caching
 		{
 			if (provider == null)
 			{
-				throw new ArgumentNullException("provider", "A valid ICacheProvider instance must be provided.");
+				throw new ArgumentNullException(nameof(provider), "A valid ICacheProvider instance must be provided.");
 			}
 			if (database == null)
 			{
-				throw new ArgumentNullException("database", "A valid ISitecoreService instance must be provided.");
+				throw new ArgumentNullException(nameof(database), "A valid ISitecoreService instance must be provided.");
 			}
 			if (siteService == null)
 			{
-				throw new ArgumentNullException("siteService");
+				throw new ArgumentNullException(nameof(siteService));
 			}
 			Provider = provider;
 			DatabaseName = database.Database.Name;

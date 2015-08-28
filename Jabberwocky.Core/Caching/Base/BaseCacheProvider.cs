@@ -36,8 +36,8 @@ namespace Jabberwocky.Core.Caching.Base
 		/// <returns></returns>
 		public virtual T GetFromCache<T>(string key, TimeSpan absoluteExpiration, Func<T> callback) where T : class
 		{
-			if (key == null) throw new ArgumentNullException("key");
-			if (callback == null) throw new ArgumentNullException("callback");
+			if (key == null) throw new ArgumentNullException(nameof(key));
+			if (callback == null) throw new ArgumentNullException(nameof(callback));
 
 			// First Get is optimistic
 			T cacheItem = Cache.Get(key) as T;
@@ -73,7 +73,7 @@ namespace Jabberwocky.Core.Caching.Base
 		/// <param name="value">The object to store in the cache</param>
 		public virtual void AddToCache<T>(string key, T value) where T : class
 		{
-			if (key == null) throw new ArgumentNullException("key");
+			if (key == null) throw new ArgumentNullException(nameof(key));
 
 			if (value == null)
 			{
@@ -93,7 +93,7 @@ namespace Jabberwocky.Core.Caching.Base
 		/// <returns>The requested object by key, or null if not found</returns>
 		public virtual T GetFromCache<T>(string key) where T : class
 		{
-			if (key == null) throw new ArgumentNullException("key");
+			if (key == null) throw new ArgumentNullException(nameof(key));
 
 			return Cache.Get(key) as T;
 		}
@@ -110,8 +110,8 @@ namespace Jabberwocky.Core.Caching.Base
 		public virtual async Task<T> GetFromCacheAsync<T>(string key, TimeSpan absoluteExpiration, Func<T> callback, CancellationToken token = default(CancellationToken))
 			where T : class
 		{
-			if (key == null) throw new ArgumentNullException("key");
-			if (callback == null) throw new ArgumentNullException("callback");
+			if (key == null) throw new ArgumentNullException(nameof(key));
+			if (callback == null) throw new ArgumentNullException(nameof(callback));
 
 			return await GetFromCacheAsync<T>(key, absoluteExpiration, ct => Task.FromResult(callback()), token);
 		}
@@ -124,8 +124,8 @@ namespace Jabberwocky.Core.Caching.Base
 		public virtual async Task<T> GetFromCacheAsync<T>(string key, TimeSpan absoluteExpiration, Func<CancellationToken, Task<T>> callback,
 			CancellationToken token = new CancellationToken()) where T : class
 		{
-			if (key == null) throw new ArgumentNullException("key");
-			if (callback == null) throw new ArgumentNullException("callback");
+			if (key == null) throw new ArgumentNullException(nameof(key));
+			if (callback == null) throw new ArgumentNullException(nameof(callback));
 
 			// First Get is optimistic
 			T cacheItem = Cache.Get(key) as T;
@@ -155,7 +155,7 @@ namespace Jabberwocky.Core.Caching.Base
 
 		public virtual Task AddToCacheAsync<T>(string key, T value, CancellationToken token = default(CancellationToken)) where T : class
 		{
-			if (key == null) throw new ArgumentNullException("key");
+			if (key == null) throw new ArgumentNullException(nameof(key));
 
 			if (value == null)
 			{
@@ -171,7 +171,7 @@ namespace Jabberwocky.Core.Caching.Base
 
 		public virtual Task<T> GetFromCacheAsync<T>(string key, CancellationToken token = default(CancellationToken)) where T : class
 		{
-			if (key == null) throw new ArgumentNullException("key");
+			if (key == null) throw new ArgumentNullException(nameof(key));
 
 			return Task.FromResult(Cache.Get(key) as T);
 		}

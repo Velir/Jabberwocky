@@ -228,16 +228,10 @@ namespace Jabberwocky.Glass.Tests.Factory
 		{
 			public abstract bool IsFallback { get; }
 
-			public bool IsNotFallback
-			{
-				get { return true; }
-			}
+			public bool IsNotFallback => true;
 
 			// Important for test: must be marked virtual
-			public virtual bool VirtualIsNotFallback
-			{
-				get { return true; }
-			}
+			public virtual bool VirtualIsNotFallback => true;
 
 			// Important for test: must be marked virtual
 			public virtual object VirtualNotImplementedMethod()
@@ -263,10 +257,7 @@ namespace Jabberwocky.Glass.Tests.Factory
 				_innerItem = innerItem;
 			}
 
-			public bool IsFallback
-			{
-				get { return true; }
-			}
+			public bool IsFallback => true;
 
 			public abstract bool IsNotFallback { get; }
 			public abstract bool VirtualIsNotFallback { get; }

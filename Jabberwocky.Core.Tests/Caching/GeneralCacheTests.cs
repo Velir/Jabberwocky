@@ -12,10 +12,7 @@ namespace Jabberwocky.Core.Tests.Caching
 
 		private static readonly DateTimeOffset TestExpiration = DateTime.Now + TimeSpan.FromDays(1);
 
-		protected override ObjectCache InnerCache
-		{
-			get { return _innerCache; }
-		}
+		protected override ObjectCache InnerCache => _innerCache;
 
 		protected override GeneralCache CreateTestProvider()
 		{

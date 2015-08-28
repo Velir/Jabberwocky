@@ -10,7 +10,7 @@ namespace Jabberwocky.Glass.Autofac.Tests.Pipelines.Processors
 
 		public TestProcessor(object testDependency)
 		{
-			if (testDependency == null) throw new ArgumentNullException("testDependency");
+			if (testDependency == null) throw new ArgumentNullException(nameof(testDependency));
 			_testDependency = testDependency;
 		}
 

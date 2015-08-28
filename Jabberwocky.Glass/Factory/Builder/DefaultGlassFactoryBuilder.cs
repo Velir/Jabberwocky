@@ -14,8 +14,8 @@ namespace Jabberwocky.Glass.Factory.Builder
 
 		public override IGlassInterfaceFactory BuildFactory(IImplementationFactory implFactory, Func<ISitecoreService> serviceFactory)
 		{
-			if (implFactory == null) throw new ArgumentNullException("implFactory");
-			if (serviceFactory == null) throw new ArgumentNullException("serviceFactory");
+			if (implFactory == null) throw new ArgumentNullException(nameof(implFactory));
+			if (serviceFactory == null) throw new ArgumentNullException(nameof(serviceFactory));
 
 			var assemblies = LoadAssemblies(Options).ToArray();
 			var interfaceTypes = LoadInterfaces(assemblies).ToArray();
