@@ -51,6 +51,7 @@
     <Compile Include="Cryptography\AesHmacCryptoService.cs" />
     <Compile Include="Cryptography\CryptoConfiguration.cs" />
     <Compile Include="Cryptography\IHmacCryptoService.cs" />
+    <Compile Include="Cryptography\Factory\DefaultCryptoServiceFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\ContractSerializerProvider.cs" />
     <Compile Include="Serialization\ISerializationProvider.cs" />

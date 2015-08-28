@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using Jabberwocky.Core.Cryptography.Internal;
 using Jabberwocky.Core.Serialization;
 
 namespace Jabberwocky.Core.Cryptography
@@ -17,10 +18,6 @@ namespace Jabberwocky.Core.Cryptography
 		protected ISerializationProvider SerializationProvider { get; }
 
 		/// <summary>
-		/// Initialization Vector for 256-bit cipher (128 bit blocks)
-		/// </summary>
-		//private static readonly byte[] SaltBytes = { 192, 152, 134, 159, 88, 125, 163, 34, 89, 44, 62, 121, 9, 6, 232, 33 }; // 16 bytes
-		/// <summary>
 		/// Symmetric Key size for 256-bit cipher
 		/// </summary>
 		private const int KeySize = 32;
@@ -28,6 +25,10 @@ namespace Jabberwocky.Core.Cryptography
 		/// AES cipher block-size
 		/// </summary>
 		private const int BlockSize = 128;
+		/// <summary>
+		/// Initialization Vector size
+		/// </summary>
+		private const int SaltSize = 16;
 
 		private byte[] SymmetricKey => DerivedBytes.SymmetricKey;
 		private byte[] HashKey => DerivedBytes.HashKey;
@@ -35,6 +36,11 @@ namespace Jabberwocky.Core.Cryptography
 
 		private readonly Lazy<KeySaltPair> _lazyDerivedBytes;
 		protected KeySaltPair DerivedBytes => _lazyDerivedBytes.Value;
+
+		public static AesHmacCryptoService Create(string secretKey, string digestKey, string initVector)
+		{
+			return DefaultCryptoServiceFactory.Create(secretKey, digestKey, initVector);
+		}
 
 		public AesHmacCryptoService(CryptoConfiguration config, ISerializationProvider serializationProvider)
 		{
@@ -46,6 +52,8 @@ namespace Jabberwocky.Core.Cryptography
 
 		public virtual string EncryptAndSignMessage(string message)
 		{
+			if (message == null) return null;
+
 			// Prepend a nonce to the message
 			var nonce = GenerateNonce();
 			var content = nonce.Concat(Encoding.UTF8.GetBytes(message)).ToArray();
@@ -59,24 +67,32 @@ namespace Jabberwocky.Core.Cryptography
 
 		public virtual string DecryptAndValidateMessage(string message)
 		{
-			var pieces = message.Split('|');
-			if (pieces.Length != 2) return null;
+			var pieces = message?.Split('|');
+			if (pieces?.Length != 2) return null;
 
-			var encryptedContent = Convert.FromBase64String(pieces[0]);
-			var hash = Convert.FromBase64String(pieces[1]);
+			try
+			{
+				var encryptedContent = Convert.FromBase64String(pieces[0]);
+				var hash = Convert.FromBase64String(pieces[1]);
 
-			// Validate that the signed hashes match before continuing
-			if (!hash.SequenceEqual(ComputeHash(encryptedContent))) return null;
+				// Validate that the signed hashes match before continuing
+				if (!hash.SequenceEqual(ComputeHash(encryptedContent))) return null;
 
-			var decryptedContent = CryptContent(encryptedContent, algorithm => algorithm.CreateDecryptor());
-			// Remove the nonce from the message
-			var messageContent = decryptedContent.Skip(BlockSize).ToArray();
+				var decryptedContent = CryptContent(encryptedContent, algorithm => algorithm.CreateDecryptor());
 
-			return Encoding.UTF8.GetString(messageContent);
+				// Remove the nonce from the message (by skipping BlockSize)
+				return Encoding.UTF8.GetString(decryptedContent, BlockSize, decryptedContent.Length - BlockSize);
+			}
+			catch (FormatException)
+			{
+				return null;
+			}
 		}
 
 		public virtual string EncryptAndSignMessage<T>(T message)
 		{
+			if (message == null) return null;
+
 			var content = SerializationProvider.SerializeObject(message);
 			return EncryptAndSignMessage(content);
 		}
@@ -130,7 +146,8 @@ namespace Jabberwocky.Core.Cryptography
 
 		private static KeySaltPair GenerateDerivedBytes(CryptoConfiguration config)
 		{
-			var saltBytes = Encoding.UTF8.GetBytes(config.InitializationVector);
+			var saltBytes = new byte[SaltSize];
+			Encoding.UTF8.GetBytes(config.InitializationVector, 0, config.InitializationVector.Length, saltBytes, 0);
 
 			using (var derivePassword = new Rfc2898DeriveBytes(config.SecretKey, saltBytes))
 			{
