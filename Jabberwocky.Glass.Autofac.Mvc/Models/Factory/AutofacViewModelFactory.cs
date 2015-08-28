@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Concurrent;
+using System.Linq;
 using Autofac;
+using Autofac.Core;
 using Glass.Mapper.Sc;
 using Jabberwocky.Glass.Autofac.Mvc.Services;
 using Jabberwocky.Glass.Models;
@@ -8,6 +11,8 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Models.Factory
 {
 	public class AutofacViewModelFactory : IViewModelFactory
 	{
+		private static readonly ConcurrentDictionary<Type, Type> ViewModelTypeCache = new ConcurrentDictionary<Type, Type>();
+
 		private readonly IComponentContext _resolver;
 		private readonly ISitecoreContext _context;
 		private readonly IRenderingContextService _renderingContextService;
@@ -29,22 +34,63 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Models.Factory
 
 		public object Create(Type model)
 		{
-			var viewModel = _resolver.ResolveOptional(model);
+			var glassModel = GetGlassModel();
+			var glassModelType = GetGlassModelTypeFromGenericparam(model);
+			var viewModel = _resolver.ResolveOptional(model, GetModelConstructorParam(glassModelType, glassModel));
 
 			var glassViewModel = viewModel as InjectableGlassViewModelBase;
 			if (glassViewModel != null)
 			{
-				glassViewModel.InternalModel = GetGlassModel();
+				glassViewModel.InternalModel = glassModel;
 			}
 
 			return viewModel;
+		}
+
+		private static Parameter[] GetModelConstructorParam(Type glassModelType, IGlassBase glassModel)
+		{
+			return glassModel == null || glassModelType == null
+				? new Parameter[0]
+				: new Parameter[] { new TypedParameter(glassModelType, glassModel) };
+		}
+
+		internal static Type InternalGetGlassModelTypeFromGenericParam(Type viewModel)
+		{
+			if (viewModel.IsGenericType && !typeof(GlassViewModel<>).IsAssignableFrom(viewModel.GetGenericTypeDefinition()))
+				return null;
+
+			Func<Type, Type> findBaseType = null;
+			findBaseType = baseType =>
+			{
+				var @base = baseType?.BaseType;
+
+				if (@base != null && !@base.IsGenericType)
+				{
+					return findBaseType(@base);
+				}
+
+				// recursive call
+				return @base?.GetGenericTypeDefinition() == typeof(GlassViewModel<>)
+					? @base
+					: @base == null
+						? null
+						: findBaseType(@base);
+			};
+
+			var baseGlassViewModelType = findBaseType(viewModel);
+			return baseGlassViewModelType.GenericTypeArguments.First();
+		}
+
+		private Type GetGlassModelTypeFromGenericparam(Type viewModel)
+		{
+			return ViewModelTypeCache.GetOrAdd(viewModel, InternalGetGlassModelTypeFromGenericParam);
 		}
 
 		private IGlassBase GetGlassModel()
 		{
 			var rendering = _renderingContextService.GetCurrentRendering();
 
-			if (rendering == null || string.IsNullOrEmpty(rendering.DataSource))
+			if (string.IsNullOrEmpty(rendering?.DataSource))
 			{
 				return _context.GetCurrentItem<IGlassBase>(inferType: true);
 			}
