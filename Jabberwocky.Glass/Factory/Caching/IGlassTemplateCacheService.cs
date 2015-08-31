@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Glass.Mapper.Sc;
 using Jabberwocky.Glass.Factory.Util;
 
-namespace Jabberwocky.Glass.Factory
+namespace Jabberwocky.Glass.Factory.Caching
 {
-	public interface IGlassTemplateCache
+	public interface IGlassTemplateCacheService
 	{
 		IDictionary<Type, IDictionary<string, Type>> TemplateCache { get; }
 

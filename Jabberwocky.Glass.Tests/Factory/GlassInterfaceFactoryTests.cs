@@ -5,13 +5,13 @@ using Glass.Mapper.Sc;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using Jabberwocky.Glass.Factory;
 using Jabberwocky.Glass.Factory.Attributes;
+using Jabberwocky.Glass.Factory.Caching;
 using Jabberwocky.Glass.Factory.Implementation;
 using Jabberwocky.Glass.Factory.Interceptors;
 using Jabberwocky.Glass.Factory.Util;
 using Jabberwocky.Glass.Models;
 using NSubstitute;
 using NUnit.Framework;
-using Jabberwocky.Glass.Factory.Interfaces;
 
 namespace Jabberwocky.Glass.Tests.Factory
 {
@@ -20,6 +20,7 @@ namespace Jabberwocky.Glass.Tests.Factory
 	{
 		private ISitecoreService _mockService;
 		private IImplementationFactory _implFactory;
+		private IGlassTemplateCacheService _templateCache;
 
 		private ILookup<Type, GlassInterfaceMetadata> _interfaceMappings;
 
@@ -34,7 +35,7 @@ namespace Jabberwocky.Glass.Tests.Factory
 		public void Initialize()
 		{
 			_mockService = Substitute.For<ISitecoreService>();
-			
+
 			var typeDictionary = new Dictionary<Type, IEnumerable<GlassInterfaceMetadata>>
 			{
 				// Type of Glass Factory Interface (and associated 'abstract' implementations)
@@ -65,10 +66,12 @@ namespace Jabberwocky.Glass.Tests.Factory
 				.ToLookup(pair => pair.Key, pair => pair.Value);
 
 			// Tightly-coupled test dependency... hmm
-			_implFactory = new ProxyImplementationFactory((t, model) => new FallbackInterceptor(t, model, _glassFactory, _implFactory, _mockService));
+			_implFactory = new ProxyImplementationFactory((t, model) => new FallbackInterceptor(t, model, _glassFactory.TemplateCacheService, _implFactory, _mockService));
+
+			_templateCache = new GlassTemplateCacheService(_interfaceMappings);
 
 			// System Under Test
-			_glassFactory = new GlassInterfaceFactory(_interfaceMappings, _implFactory, () => _mockService);
+			_glassFactory = new GlassInterfaceFactory(_templateCache, _implFactory, () => _mockService);
 		}
 
 		[Test]

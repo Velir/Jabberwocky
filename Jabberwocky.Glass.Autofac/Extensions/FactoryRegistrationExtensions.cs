@@ -1,13 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Autofac;
 using Glass.Mapper.Sc;
 using Jabberwocky.Glass.Autofac.Factory.Builder;
 using Jabberwocky.Glass.Autofac.Factory.Implementation;
 using Jabberwocky.Glass.Factory;
+using Jabberwocky.Glass.Factory.Builder;
+using Jabberwocky.Glass.Factory.Caching;
+using Jabberwocky.Glass.Factory.Caching.Providers;
 using Jabberwocky.Glass.Factory.Configuration;
 using Jabberwocky.Glass.Factory.Implementation;
 using Jabberwocky.Glass.Factory.Implementation.Decorators;
 using Jabberwocky.Glass.Factory.Interceptors;
+using Jabberwocky.Glass.Factory.Util;
 
 namespace Jabberwocky.Glass.Autofac.Extensions
 {
@@ -48,19 +54,24 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 
 			builder.RegisterType<FallbackInterceptor>();
 
+			builder.RegisterType<DefaultGlassTypeLoader>().As<IGlassTypesLoader>();
+
 			builder.RegisterType<AutofacImplementationFactory>().Named<IImplementationFactory>("defaultImplementationFactory");
 			builder.RegisterDecorator<IImplementationFactory>(
 				(c, provider) => new DebuggingDecorator(provider, options.IsDebugEnabled), "defaultImplementationFactory");
 
-			builder.Register(c => new AutofacGlassFactoryBuilder(options, c.Resolve<IContainer>()))
-				.As<AutofacGlassFactoryBuilder>();
+			builder.RegisterType<AutofacGlassFactoryBuilder>().AsSelf();
+			builder.Register(c => c.Resolve<AutofacGlassFactoryBuilder>(new TypedParameter(typeof(IConfigurationOptions), options)))
+				.As<IGlassFactoryBuilder>();
 
-			builder.Register(c => c.Resolve<AutofacGlassFactoryBuilder>().BuildFactory(c.Resolve<IImplementationFactory>(), c.Resolve<Func<ISitecoreService>>()))
+			builder.Register(c => c.Resolve<IGlassFactoryBuilder>().BuildFactory())
 				.As<IGlassInterfaceFactory>()
 				.SingleInstance();
 
-			builder.Register(c => c.Resolve<IGlassInterfaceFactory>() as IGlassTemplateCache)
-				.As<IGlassTemplateCache>()
+			builder.Register<Func<ILookup<Type, GlassInterfaceMetadata>, IGlassTemplateCacheService>>(c => lookup => new GlassTemplateCacheService(lookup))
+				.As<Func<ILookup<Type, GlassInterfaceMetadata>, IGlassTemplateCacheService>>();
+            builder.Register(c => ((GlassInterfaceFactory)c.Resolve<IGlassInterfaceFactory>()).TemplateCacheService)
+				.As<IGlassTemplateCacheService>()
 				.SingleInstance();
 
 			return builder;

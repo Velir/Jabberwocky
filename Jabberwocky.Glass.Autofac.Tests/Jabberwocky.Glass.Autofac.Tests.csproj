@@ -76,6 +76,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Extensions\FactoryRegistrationExtensionsTests.cs" />
     <Compile Include="Factory\Builder\AutofacGlassFactoryBuilderTests.cs" />
     <Compile Include="Pipelines\Pipelines\AutofacProcessorFactoryTests.cs" />
     <Compile Include="Pipelines\Processors\TestProcessor.cs" />

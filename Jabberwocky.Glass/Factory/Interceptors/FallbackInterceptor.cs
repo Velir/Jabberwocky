@@ -5,6 +5,7 @@ using Castle.DynamicProxy;
 using Glass.Mapper.Sc;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using Jabberwocky.Glass.Factory.Attributes;
+using Jabberwocky.Glass.Factory.Caching;
 using Jabberwocky.Glass.Factory.Implementation;
 using Jabberwocky.Glass.Factory.Util;
 
@@ -15,11 +16,11 @@ namespace Jabberwocky.Glass.Factory.Interceptors
 		private readonly Type _interfaceType;
 		private readonly object _model;
 
-		private readonly IGlassTemplateCache _templateCache;
+		private readonly IGlassTemplateCacheService _templateCache;
 		private readonly IImplementationFactory _implementationFactory;
 		private readonly ISitecoreService _service;
 
-		public FallbackInterceptor(Type interfaceType, object model, IGlassTemplateCache templateCache, IImplementationFactory implementationFactory, ISitecoreService service)
+		public FallbackInterceptor(Type interfaceType, object model, IGlassTemplateCacheService templateCache, IImplementationFactory implementationFactory, ISitecoreService service)
 		{
 			if (interfaceType == null) throw new ArgumentNullException(nameof(interfaceType));
 			if (model == null) throw new ArgumentNullException(nameof(model));

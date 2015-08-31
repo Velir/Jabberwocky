@@ -1,27 +1,32 @@
 ﻿using System;
-using System.Linq;
 using Glass.Mapper.Sc;
+using Jabberwocky.Glass.Factory.Caching;
+using Jabberwocky.Glass.Factory.Caching.Providers;
 using Jabberwocky.Glass.Factory.Configuration;
 using Jabberwocky.Glass.Factory.Implementation;
+using Jabberwocky.Glass.Factory.Interceptors;
 
 namespace Jabberwocky.Glass.Factory.Builder
 {
 	public class DefaultGlassFactoryBuilder : AbstractGlassFactoryBuilder
 	{
-		public DefaultGlassFactoryBuilder(IConfigurationOptions options) : base(options)
+		private readonly Func<ISitecoreService> _serviceFactory;
+
+		public DefaultGlassFactoryBuilder(IConfigurationOptions options, Func<ISitecoreService> serviceFactory) : base(options)
 		{
+			if (serviceFactory == null) throw new ArgumentNullException(nameof(serviceFactory));
+			_serviceFactory = serviceFactory;
 		}
 
-		public override IGlassInterfaceFactory BuildFactory(IImplementationFactory implFactory, Func<ISitecoreService> serviceFactory)
+		public override IGlassInterfaceFactory BuildFactory()
 		{
-			if (implFactory == null) throw new ArgumentNullException(nameof(implFactory));
-			if (serviceFactory == null) throw new ArgumentNullException(nameof(serviceFactory));
+			IImplementationFactory implFactory = null;
 
-			var assemblies = LoadAssemblies(Options).ToArray();
-			var interfaceTypes = LoadInterfaces(assemblies).ToArray();
-			var implementedTypes = LoadImplementations(assemblies, interfaceTypes);
+			var implementedTypes = new DefaultGlassTypeLoader().LoadImplementations(Options.Assemblies);
+			var templateCache = new GlassTemplateCacheService(implementedTypes);
+			implFactory = new ProxyImplementationFactory((t, model) => new FallbackInterceptor(t, model, templateCache, implFactory, _serviceFactory()));
 
-			return new GlassInterfaceFactory(implementedTypes, implFactory, serviceFactory);
+			return new GlassInterfaceFactory(templateCache, implFactory, _serviceFactory);
 		}
 	}
 }

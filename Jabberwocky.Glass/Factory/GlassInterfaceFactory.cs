@@ -2,37 +2,35 @@
 using System.Collections.Generic;
 using System.Linq;
 using Glass.Mapper.Sc;
-using Glass.Mapper.Sc.Configuration.Attributes;
+using Jabberwocky.Glass.Factory.Caching;
 using Jabberwocky.Glass.Factory.Implementation;
 using Jabberwocky.Glass.Factory.Util;
 using Jabberwocky.Glass.Models;
 
 namespace Jabberwocky.Glass.Factory
 {
-	public class GlassInterfaceFactory : IGlassInterfaceFactory, IGlassTemplateCache
+	public class GlassInterfaceFactory : IGlassInterfaceFactory
 	{
+		private readonly IGlassTemplateCacheService _templateCache;
 		private readonly IImplementationFactory _factory;
 		private readonly Func<ISitecoreService> _serviceFactory;
 
-		private static readonly string DefaultFallbackTemplateId = Guid.Empty.ToString();
-		private static readonly Guid[] DefaultBaseTemplateArray = new Guid[0];
-
-		public IDictionary<Type, IDictionary<string, Type>> TemplateCache { get; }
+		public IDictionary<Type, IDictionary<string, Type>> TemplateCache => _templateCache.TemplateCache;
 
 		/// <summary>
-		/// Maximum search depth for base-template traversal
+		/// Gets the template cache service used by this instance
 		/// </summary>
-		private const int MaxDepth = 2;
+		internal IGlassTemplateCacheService TemplateCacheService => _templateCache;
 
-		public GlassInterfaceFactory(ILookup<Type, GlassInterfaceMetadata> interfaceMappings, IImplementationFactory factory, Func<ISitecoreService> serviceFactory)
+		public GlassInterfaceFactory(IGlassTemplateCacheService templateCache, IImplementationFactory factory, Func<ISitecoreService> serviceFactory)
 		{
-			if (interfaceMappings == null) throw new ArgumentNullException(nameof(interfaceMappings));
+			if (templateCache == null) throw new ArgumentNullException(nameof(templateCache));
 			if (factory == null) throw new ArgumentNullException(nameof(factory));
 			if (serviceFactory == null) throw new ArgumentNullException(nameof(serviceFactory));
 
+			_templateCache = templateCache;
 			_factory = factory;
 			_serviceFactory = serviceFactory;
-			TemplateCache = GenerateCache(interfaceMappings);
 		}
 
 		public T GetItem<T>(IGlassBase model) where T : class
@@ -76,7 +74,7 @@ namespace Jabberwocky.Glass.Factory
 			// No exact match... Try base templates (up to configurable depth)
 			using (ISitecoreService service = _serviceFactory())
 			{
-				foreach (Guid baseTemplateId in GetBaseTemplates(service.GetItem<IBaseTemplates>(item._Id), service))
+				foreach (Guid baseTemplateId in _templateCache.GetBaseTemplates(service.GetItem<IBaseTemplates>(item._Id), service))
 				{
 					string templateId = baseTemplateId.ToString();
 					if (itemInterfaces.ContainsKey(templateId))
@@ -87,51 +85,6 @@ namespace Jabberwocky.Glass.Factory
 			}
 
 			return null;
-		}
-
-		public IEnumerable<Guid> GetBaseTemplates(IBaseTemplates item, ISitecoreService service, int depth = MaxDepth)
-		{
-			return InternalGetBaseTemplates(item, service, depth).Concat(new[] {new Guid(DefaultFallbackTemplateId)});
-		}
-
-		private IEnumerable<Guid> InternalGetBaseTemplates(IBaseTemplates item, ISitecoreService service, int depth)
-		{
-			if (item == null || depth <= 0) return DefaultBaseTemplateArray;
-
-			var baseTemplates = item.TemplateBaseTemplates ?? item.BaseTemplates;
-			baseTemplates = baseTemplates == null ? null : baseTemplates.ToArray();
-			if (baseTemplates == null || !baseTemplates.Any()) return DefaultBaseTemplateArray;
-
-			// Breadth first search (recursive)
-			return baseTemplates.Concat(baseTemplates.SelectMany(guid => InternalGetBaseTemplates(service.GetItem<IBaseTemplates>(guid), service, depth - 1)));
-		}
-
-		private IDictionary<Type, IDictionary<string, Type>> GenerateCache(ILookup<Type, GlassInterfaceMetadata> interfaceMappings)
-		{
-			var dictionary = new Dictionary<Type, IDictionary<string, Type>>();
-
-			foreach (var mappingGroup in interfaceMappings)
-			{
-				var innerDictionary = new Dictionary<string, Type>(StringComparer.InvariantCultureIgnoreCase);
-
-				// Key: Factory Interface type
-				dictionary.Add(mappingGroup.Key, innerDictionary);
-
-				foreach (var metadata in mappingGroup)
-				{
-					var sitecoreAttribute = metadata.GlassType.GetCustomAttributes(typeof(SitecoreTypeAttribute), false).FirstOrDefault() as SitecoreTypeAttribute;
-					var templateId = metadata.IsFallback
-							? DefaultFallbackTemplateId
-							: sitecoreAttribute == null ? null : sitecoreAttribute.TemplateId;
-
-					if (!string.IsNullOrEmpty(templateId))
-					{
-						innerDictionary.Add(templateId, metadata.ImplementationType);
-					}
-				}
-			}
-
-			return dictionary;
 		}
 	}
 }
