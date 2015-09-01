@@ -260,6 +260,36 @@ namespace Jabberwocky.Core.CodeAnalysis.Test
 
 ";
 
+		private const string AsyncCache_AsyncLambdaCallbackWithAwaitNoNullValue_Source = @"
+
+	using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+	using System.Threading;
+    using System.Threading.Tasks;
+    using System.Diagnostics;
+	using Jabberwocky.Core.Caching;
+
+	public class MainClass {
+		private readonly IAsyncCacheProvider _asyncCache;
+
+		public MainClass(IAsyncCacheProvider asyncCache) {
+			_asyncCache = asyncCache;
+		}
+
+		public async Task DoStuff() {
+			var a = await _asyncCache.GetFromCacheAsync<string>(""key"", TimeSpan.FromSeconds(1), async ct => await GetValueAsync(ct).ConfigureAwait(false)).ConfigureAwait(false);
+		}
+
+		private async Task<string> GetValueAsync(CancellationToken ct) {
+			var retVal = null;
+			return ""hello world"";
+		}
+	}
+
+";
+
 		#endregion
 
 		[TestMethod]
@@ -430,6 +460,12 @@ namespace Jabberwocky.Core.CodeAnalysis.Test
 			};
 
 			VerifyCSharpDiagnostic(AsyncCache_AsyncLambdaCallbackNoAwaitNullValue_Source, expected);
+		}
+
+		[TestMethod]
+		public void AsyncCacheProvider_AsyncLambdaCallbackWithAwaitNoNullValue_Analysis()
+		{
+			VerifyCSharpDiagnostic(AsyncCache_AsyncLambdaCallbackWithAwaitNoNullValue_Source);
 		}
 
 		protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()

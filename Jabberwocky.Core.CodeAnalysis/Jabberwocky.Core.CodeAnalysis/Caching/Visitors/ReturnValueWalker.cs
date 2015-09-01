@@ -55,7 +55,8 @@ namespace Jabberwocky.Core.CodeAnalysis.Caching.Visitors
 
 		public override void VisitLiteralExpression(LiteralExpressionSyntax node)
 		{
-			if (node.IsKind(SyntaxKind.NullLiteralExpression))
+			// This has to be a top-level function in order to be a valid null-value
+			if (FunctionDepth <= 1 && node.IsKind(SyntaxKind.NullLiteralExpression))
 			{
 				PossibleNullValues.Add(node);
 				return;
