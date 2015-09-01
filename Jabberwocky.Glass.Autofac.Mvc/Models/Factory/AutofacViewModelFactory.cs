@@ -78,7 +78,7 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Models.Factory
 			};
 
 			var baseGlassViewModelType = findBaseType(viewModel);
-			return baseGlassViewModelType.GenericTypeArguments.First();
+			return baseGlassViewModelType?.GenericTypeArguments.First();
 		}
 
 		private Type GetGlassModelTypeFromGenericparam(Type viewModel)

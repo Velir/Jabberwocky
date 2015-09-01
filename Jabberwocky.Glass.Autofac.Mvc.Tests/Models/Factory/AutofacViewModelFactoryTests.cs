@@ -55,6 +55,13 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Tests.Models.Factory
 		}
 
 		[Test]
+		public void GetGlassModelTypeFromGenericParam_NoInheritViewModel_ReturnsNull()
+		{
+			var genericType = AutofacViewModelFactory.InternalGetGlassModelTypeFromGenericParam(typeof(NoInheritViewModel));
+			Assert.IsNull(genericType);
+		}
+
+		[Test]
 		public void Create_InjectableGlassViewModel_SetsInternalModel()
 		{
 			var viewModel = new InjectableViewModel();
@@ -88,6 +95,11 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Tests.Models.Factory
 
 		private class InjectableViewModel : GlassViewModel<IGlassBase>
 		{
+		}
+
+		private class NoInheritViewModel
+		{
+			
 		}
 
 		#endregion
