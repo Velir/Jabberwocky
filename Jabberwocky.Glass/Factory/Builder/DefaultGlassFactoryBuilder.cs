@@ -1,7 +1,7 @@
 ﻿using System;
 using Glass.Mapper.Sc;
+using Jabberwocky.Glass.Factory.Builder.Loader;
 using Jabberwocky.Glass.Factory.Caching;
-using Jabberwocky.Glass.Factory.Caching.Providers;
 using Jabberwocky.Glass.Factory.Configuration;
 using Jabberwocky.Glass.Factory.Implementation;
 using Jabberwocky.Glass.Factory.Interceptors;
@@ -23,10 +23,10 @@ namespace Jabberwocky.Glass.Factory.Builder
 			IImplementationFactory implFactory = null;
 
 			var implementedTypes = new DefaultGlassTypeLoader().LoadImplementations(Options.Assemblies);
-			var templateCache = new GlassTemplateCacheService(implementedTypes);
+			var templateCache = new GlassTemplateCacheService(implementedTypes, _serviceFactory);
 			implFactory = new ProxyImplementationFactory((t, model) => new FallbackInterceptor(t, model, templateCache, implFactory, _serviceFactory()));
 
-			return new GlassInterfaceFactory(templateCache, implFactory, _serviceFactory);
+			return new GlassInterfaceFactory(templateCache, implFactory);
 		}
 	}
 }

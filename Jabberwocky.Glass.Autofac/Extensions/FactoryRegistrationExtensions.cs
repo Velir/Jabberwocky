@@ -7,8 +7,8 @@ using Jabberwocky.Glass.Autofac.Factory.Builder;
 using Jabberwocky.Glass.Autofac.Factory.Implementation;
 using Jabberwocky.Glass.Factory;
 using Jabberwocky.Glass.Factory.Builder;
+using Jabberwocky.Glass.Factory.Builder.Loader;
 using Jabberwocky.Glass.Factory.Caching;
-using Jabberwocky.Glass.Factory.Caching.Providers;
 using Jabberwocky.Glass.Factory.Configuration;
 using Jabberwocky.Glass.Factory.Implementation;
 using Jabberwocky.Glass.Factory.Implementation.Decorators;
@@ -68,7 +68,7 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 				.As<IGlassInterfaceFactory>()
 				.SingleInstance();
 
-			builder.Register<Func<ILookup<Type, GlassInterfaceMetadata>, IGlassTemplateCacheService>>(c => lookup => new GlassTemplateCacheService(lookup))
+			builder.Register<Func<ILookup<Type, GlassInterfaceMetadata>, IGlassTemplateCacheService>>(c => lookup => new GlassTemplateCacheService(lookup, c.Resolve<Func<ISitecoreService>>()))
 				.As<Func<ILookup<Type, GlassInterfaceMetadata>, IGlassTemplateCacheService>>();
             builder.Register(c => ((GlassInterfaceFactory)c.Resolve<IGlassInterfaceFactory>()).TemplateCacheService)
 				.As<IGlassTemplateCacheService>()

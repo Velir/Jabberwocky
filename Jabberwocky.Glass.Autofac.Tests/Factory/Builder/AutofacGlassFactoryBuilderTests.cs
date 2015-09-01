@@ -1,10 +1,8 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 using Autofac;
-using Glass.Mapper.Sc;
 using Jabberwocky.Glass.Autofac.Factory.Builder;
+using Jabberwocky.Glass.Factory.Builder.Loader;
 using Jabberwocky.Glass.Factory.Caching;
-using Jabberwocky.Glass.Factory.Caching.Providers;
 using Jabberwocky.Glass.Factory.Configuration;
 using Jabberwocky.Glass.Factory.Implementation;
 using NSubstitute;
@@ -16,7 +14,6 @@ namespace Jabberwocky.Glass.Autofac.Tests.Factory.Builder
 	public class AutofacGlassFactoryBuilderTests
 	{
 		private IImplementationFactory _mockImplFactory;
-		private ISitecoreService _mockService;
 		private IGlassTemplateCacheService _mockCache;
 		private IGlassTypesLoader _mockTypeLoader;
 
@@ -34,11 +31,10 @@ namespace Jabberwocky.Glass.Autofac.Tests.Factory.Builder
 			_mockContainer = Substitute.For<IContainer>();
 
 			_mockImplFactory = Substitute.For<IImplementationFactory>();
-			_mockService = Substitute.For<ISitecoreService>();
 			_mockCache = Substitute.For<IGlassTemplateCacheService>();
 			_mockTypeLoader = Substitute.For<IGlassTypesLoader>();
 
-			_builder = new AutofacGlassFactoryBuilder(_mockOptions, _mockContainer, () => _mockService, lookup => _mockCache, _mockTypeLoader, _mockImplFactory);
+			_builder = new AutofacGlassFactoryBuilder(_mockOptions, _mockContainer, lookup => _mockCache, _mockTypeLoader, _mockImplFactory);
 		}
 
 		[Test]

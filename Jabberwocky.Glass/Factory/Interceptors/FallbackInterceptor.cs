@@ -8,6 +8,7 @@ using Jabberwocky.Glass.Factory.Attributes;
 using Jabberwocky.Glass.Factory.Caching;
 using Jabberwocky.Glass.Factory.Implementation;
 using Jabberwocky.Glass.Factory.Util;
+using Jabberwocky.Glass.Models;
 
 namespace Jabberwocky.Glass.Factory.Interceptors
 {
@@ -72,19 +73,12 @@ namespace Jabberwocky.Glass.Factory.Interceptors
 			if (sitecoreAttribute == null) return;
 
 			var templateId = sitecoreAttribute.TemplateId;
-
-			var templateItem = _service.GetItem<IBaseTemplates>(new Guid(templateId));
-			var templateMapping = _templateCache.TemplateCache[_interfaceType];
-
-			var matchingId = _templateCache.GetBaseTemplates(templateItem, _service)
-				.Select(guid => guid.ToString())
-				.FirstOrDefault(templateMapping.ContainsKey);
+			var templateItem = _service.GetItem<IGlassBase>(new Guid(templateId));
+			var matchingType = _templateCache.GetImplementingTypeForItem(templateItem, _interfaceType);
 
 			// This can happen if we fail to find an eligible base template with a corresponding implementation
 			// In this case, don't do anything -> invocation maps to default value
-			if (matchingId == null) return;
-
-			var matchingType = templateMapping[matchingId];
+			if (matchingType == null) return;
 
 			var fallbackImpl = _implementationFactory.Create(matchingType, _interfaceType, _model);
 			var invocationTarget = invocation.MethodInvocationTarget;

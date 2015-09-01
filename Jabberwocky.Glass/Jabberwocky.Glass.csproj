@@ -64,8 +64,8 @@
     <Compile Include="Factory\Builder\DefaultGlassFactoryBuilder.cs" />
     <Compile Include="Factory\Builder\IGlassFactoryBuilder.cs" />
     <Compile Include="Factory\Caching\GlassTemplateCacheService.cs" />
-    <Compile Include="Factory\Caching\Providers\DefaultGlassTypeLoader.cs" />
-    <Compile Include="Factory\Caching\Providers\IGlassTypesLoader.cs" />
+    <Compile Include="Factory\Builder\Loader\DefaultGlassTypeLoader.cs" />
+    <Compile Include="Factory\Builder\Loader\IGlassTypesLoader.cs" />
     <Compile Include="Factory\Configuration\ConfigurationOptions.cs" />
     <Compile Include="Factory\Configuration\IConfigurationOptions.cs" />
     <Compile Include="Factory\Exceptions\ImplementationMismatchException.cs" />

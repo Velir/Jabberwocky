@@ -68,10 +68,10 @@ namespace Jabberwocky.Glass.Tests.Factory
 			// Tightly-coupled test dependency... hmm
 			_implFactory = new ProxyImplementationFactory((t, model) => new FallbackInterceptor(t, model, _glassFactory.TemplateCacheService, _implFactory, _mockService));
 
-			_templateCache = new GlassTemplateCacheService(_interfaceMappings);
+			_templateCache = new GlassTemplateCacheService(_interfaceMappings, () => _mockService);
 
 			// System Under Test
-			_glassFactory = new GlassInterfaceFactory(_templateCache, _implFactory, () => _mockService);
+			_glassFactory = new GlassInterfaceFactory(_templateCache, _implFactory);
 		}
 
 		[Test]

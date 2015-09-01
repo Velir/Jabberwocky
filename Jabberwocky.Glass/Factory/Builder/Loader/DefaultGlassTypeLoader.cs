@@ -6,7 +6,7 @@ using Castle.Core.Internal;
 using Jabberwocky.Glass.Factory.Attributes;
 using Jabberwocky.Glass.Factory.Util;
 
-namespace Jabberwocky.Glass.Factory.Caching.Providers
+namespace Jabberwocky.Glass.Factory.Builder.Loader
 {
 	public class DefaultGlassTypeLoader : IGlassTypesLoader
 	{

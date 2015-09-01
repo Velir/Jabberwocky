@@ -2,12 +2,11 @@
 using System.Linq;
 using Autofac;
 using Autofac.Extras.DynamicProxy2;
-using Glass.Mapper.Sc;
 using Jabberwocky.Glass.Autofac.Extensions;
 using Jabberwocky.Glass.Factory;
 using Jabberwocky.Glass.Factory.Builder;
+using Jabberwocky.Glass.Factory.Builder.Loader;
 using Jabberwocky.Glass.Factory.Caching;
-using Jabberwocky.Glass.Factory.Caching.Providers;
 using Jabberwocky.Glass.Factory.Configuration;
 using Jabberwocky.Glass.Factory.Implementation;
 using Jabberwocky.Glass.Factory.Interceptors;
@@ -18,24 +17,20 @@ namespace Jabberwocky.Glass.Autofac.Factory.Builder
 	public class AutofacGlassFactoryBuilder : AbstractGlassFactoryBuilder
 	{
 		private readonly IContainer _container;
-		private readonly Func<ISitecoreService> _serviceFactory;
 		private readonly Func<ILookup<Type, GlassInterfaceMetadata>, IGlassTemplateCacheService> _templateCacheFactory;
 		private readonly IGlassTypesLoader _typeLoader;
 		private readonly IImplementationFactory _implFactory;
 
-		public AutofacGlassFactoryBuilder(IConfigurationOptions options, 
-			IContainer container, Func<ISitecoreService> serviceFactory, 
+		public AutofacGlassFactoryBuilder(IConfigurationOptions options, IContainer container,
 			Func<ILookup<Type, GlassInterfaceMetadata>, IGlassTemplateCacheService> templateCacheFactory, 
 			IGlassTypesLoader typeLoader, IImplementationFactory implFactory) 
 			: base(options)
 		{
 			if (container == null) throw new ArgumentNullException(nameof(container));
-			if (serviceFactory == null) throw new ArgumentNullException(nameof(serviceFactory));
 			if (templateCacheFactory == null) throw new ArgumentNullException(nameof(templateCacheFactory));
 			if (typeLoader == null) throw new ArgumentNullException(nameof(typeLoader));
 			if (implFactory == null) throw new ArgumentNullException(nameof(implFactory));
 			_container = container;
-			_serviceFactory = serviceFactory;
 			_templateCacheFactory = templateCacheFactory;
 			_typeLoader = typeLoader;
 			_implFactory = implFactory;
@@ -59,7 +54,7 @@ namespace Jabberwocky.Glass.Autofac.Factory.Builder
 			// Update existing container with new registrations
 			builder.Update(_container);
 
-			return new GlassInterfaceFactory(templateCache, _implFactory, _serviceFactory);
+			return new GlassInterfaceFactory(templateCache, _implFactory);
 		}
 	}
 }

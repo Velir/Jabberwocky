@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Jabberwocky.Glass.Factory.Util;
 
-namespace Jabberwocky.Glass.Factory.Caching.Providers
+namespace Jabberwocky.Glass.Factory.Builder.Loader
 {
 	public interface IGlassTypesLoader
 	{
