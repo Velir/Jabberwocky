@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Aspects\Strategies\GlassInterfaceFactoryStrategy.cs" />
     <Compile Include="Attributes\AutowireServiceAttribute.cs" />
     <Compile Include="Extensions\AutofacRegistrationExtensions.cs" />
     <Compile Include="Extensions\AutowireRegistrationExtensions.cs" />
@@ -88,6 +89,10 @@
     <Compile Include="Util\AutofacConfig.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Jabberwocky.Autofac\Jabberwocky.Autofac.csproj">
+      <Project>{315DCFFB-97B4-43E5-9ECF-3EDC7E32C93F}</Project>
+      <Name>Jabberwocky.Autofac</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Jabberwocky.Core\Jabberwocky.Core.csproj">
       <Project>{79F22272-B90E-4461-BAEE-92AE1A6C28BC}</Project>
       <Name>Jabberwocky.Core</Name>
