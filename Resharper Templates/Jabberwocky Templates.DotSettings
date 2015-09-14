@@ -1,0 +1,26 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=C81DA3CAEDA52840B1BFBC30FB5CA256/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=C81DA3CAEDA52840B1BFBC30FB5CA256/Shortcut/@EntryValue">gif</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=C81DA3CAEDA52840B1BFBC30FB5CA256/Description/@EntryValue">Glass Interface Factory model</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=C81DA3CAEDA52840B1BFBC30FB5CA256/Text/@EntryValue">[Jabberwocky.Glass.Factory.Attributes.GlassFactoryTypeAttribute(typeof ($model$))]&#xD;
+public abstract class $name$ : Jabberwocky.Glass.Factory.Interfaces.BaseInterface&lt;$model$&gt;, $factoryInterface$$END$&#xD;
+{&#xD;
+	protected $name$($model$ innerItem) : base(innerItem)&#xD;
+	{&#xD;
+	}&#xD;
+}</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=C81DA3CAEDA52840B1BFBC30FB5CA256/Reformat/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=C81DA3CAEDA52840B1BFBC30FB5CA256/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=C81DA3CAEDA52840B1BFBC30FB5CA256/Categories/=Jabberwocky/@EntryIndexedValue">Jabberwocky</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=C81DA3CAEDA52840B1BFBC30FB5CA256/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=C81DA3CAEDA52840B1BFBC30FB5CA256/Scope/=C3001E7C0DA78E4487072B7E050D86C5/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=C81DA3CAEDA52840B1BFBC30FB5CA256/Scope/=C3001E7C0DA78E4487072B7E050D86C5/Type/@EntryValue">InCSharpFile</s:String>
+	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=C81DA3CAEDA52840B1BFBC30FB5CA256/Scope/=C3001E7C0DA78E4487072B7E050D86C5/CustomProperties/=minimumLanguageVersion/@EntryIndexedValue">6.0</s:String>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=C81DA3CAEDA52840B1BFBC30FB5CA256/Field/=name/@KeyIndexDefined">True</s:Boolean>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=C81DA3CAEDA52840B1BFBC30FB5CA256/Field/=name/InitialRange/@EntryValue">1</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=C81DA3CAEDA52840B1BFBC30FB5CA256/Field/=name/Order/@EntryValue">0</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=C81DA3CAEDA52840B1BFBC30FB5CA256/Field/=model/@KeyIndexDefined">True</s:Boolean>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=C81DA3CAEDA52840B1BFBC30FB5CA256/Field/=model/InitialRange/@EntryValue">2</s:Int64>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=C81DA3CAEDA52840B1BFBC30FB5CA256/Field/=model/Order/@EntryValue">1</s:Int64>
+	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=C81DA3CAEDA52840B1BFBC30FB5CA256/Field/=factoryInterface/@KeyIndexDefined">True</s:Boolean>
+	<s:Int64 x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=C81DA3CAEDA52840B1BFBC30FB5CA256/Field/=factoryInterface/Order/@EntryValue">2</s:Int64></wpf:ResourceDictionary>
