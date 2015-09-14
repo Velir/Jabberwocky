@@ -15,12 +15,12 @@ namespace Jabberwocky.Autofac.Extras.MiniProfiler
 	{
 
 		public MiniProfilerModule(params string[] assemblies)
-			: this(new MiniProfilerConfiguration(assemblies))
+			: this(new MiniProfilerConfiguration(assemblies, assemblies))
 		{
 		}
 
 		public MiniProfilerModule(IProxyStrategy[] strategies, params string[] assemblies)
-			: this(new MiniProfilerConfiguration(assemblies, strategies: strategies))
+			: this(new MiniProfilerConfiguration(assemblies, assemblies, strategies: strategies))
 		{
 		}
 
