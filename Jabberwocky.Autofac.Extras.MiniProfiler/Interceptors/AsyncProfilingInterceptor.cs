@@ -9,6 +9,8 @@ namespace Jabberwocky.Autofac.Extras.MiniProfiler.Interceptors
 {
 	public class AsyncProfilingInterceptor : IInterceptor
 	{
+		private const string UnknownType = "UNKNOWNTYPE";
+
 		public void Intercept(IInvocation invocation)
 		{
 			var profiler = Profiler.Current;
@@ -19,12 +21,13 @@ namespace Jabberwocky.Autofac.Extras.MiniProfiler.Interceptors
 			}
 
 			var returnType = invocation.Method.ReturnType;
+			var typeName = invocation.TargetType?.Name ?? invocation.Proxy?.GetType().FullName ?? UnknownType;
 
 			// We only care about Tasks (Task or Task<>)... note that this is NOT aware of other async-aware members (ie. *Awaiter)
 			if (returnType == typeof(Task) || (returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(Task<>)))
 			{
 				// If we get here, we're async
-				var timing = profiler.Step(invocation.TargetType.Name + ":" + invocation.Method.Name) as Timing;
+				var timing = profiler.Step(typeName + ":" + invocation.Method.Name) as Timing;
 
 				// start time
 				var stopWatch = new Stopwatch();
@@ -57,7 +60,7 @@ namespace Jabberwocky.Autofac.Extras.MiniProfiler.Interceptors
 			else
 			{
 				// We're a synchronous operation, so just proceed
-				using (profiler.Step(invocation.TargetType.Name + ":" + invocation.Method.Name))
+				using (profiler.Step(typeName + ":" + invocation.Method.Name))
 				{
 					invocation.Proceed();
 				}
