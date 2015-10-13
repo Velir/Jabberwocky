@@ -34,9 +34,22 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 		/// <returns></returns>
 		public static ContainerBuilder RegisterConcreteGlassModelsAsInterfacesAndSelf(this ContainerBuilder builder, params string[] assemblyNames)
 		{
-			builder.RegisterType<LazyObjectInterceptor>().AsSelf().ExternallyOwned();
+			var assemblies = assemblyNames.Select(Assembly.Load).ToArray();
+			return RegisterConcreteGlassModelsAsInterfacesAndSelf(builder, assemblies);
+		}
 
-			var assemblies = assemblyNames.Select(Assembly.Load);
+		/// <summary>
+		/// Registers concrete Glass Models, including lazy variations
+		/// </summary>
+		/// <remarks>
+		/// Note that this does not register interface-based Glass Models, as those do not require DI
+		/// </remarks>
+		/// <param name="builder"></param>
+		/// <param name="assemblies"></param>
+		/// <returns></returns>
+		public static ContainerBuilder RegisterConcreteGlassModelsAsInterfacesAndSelf(this ContainerBuilder builder, params Assembly[] assemblies)
+		{
+			builder.RegisterType<LazyObjectInterceptor>().AsSelf().ExternallyOwned();
 
 			foreach (var type in assemblies.SelectMany(a => a.ExportedTypes).Where(type => typeof(GlassBase).IsAssignableFrom(type)))
 			{
@@ -49,7 +62,7 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 
 					builder.RegisterType(type)
 						.PreserveExistingDefaults()
-						.Named(interfaceType.FullName + ":lazy", interfaceType)	// Registering named lazy INTERFACE type
+						.Named(interfaceType.FullName + ":lazy", interfaceType) // Registering named lazy INTERFACE type
 							.EnableInterfaceInterceptors()
 						.InterceptedBy(typeof(LazyObjectInterceptor))
 						.ExternallyOwned();
@@ -59,7 +72,7 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 
 				builder.RegisterType(type)
 					.PreserveExistingDefaults()
-					.Named(type.FullName + ":lazy", type)	// Registering named lazy CONCRETE type
+					.Named(type.FullName + ":lazy", type)   // Registering named lazy CONCRETE type
 						.CustomEnableClassInterceptors()
 					.InterceptedBy(typeof(LazyObjectInterceptor))
 					.ExternallyOwned();
