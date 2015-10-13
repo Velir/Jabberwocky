@@ -112,7 +112,9 @@
     <Compile Include="Views\CustomGlassView.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App_Config\Include\Jabberwocky.Glass.Autofac.Mvc.config" />
+    <None Include="App_Config\Include\Jabberwocky.Glass.Autofac.Mvc.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

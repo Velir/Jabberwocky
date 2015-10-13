@@ -1,165 +1,140 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web.Compilation;
+using Glass.Mapper.Sc.ModelCache;
+using Jabberwocky.Glass.Autofac.Pipelines.Processors;
+using Sitecore.Data;
+using Sitecore.Diagnostics;
+using Sitecore.Mvc.Pipelines.Response.GetModel;
+using Glass.Mapper;
+using Jabberwocky.Glass.Autofac.Mvc.Models.Factory;
+using Sitecore.Data.Items;
 
 namespace Jabberwocky.Glass.Autofac.Mvc.Pipelines.Processors
 {
-	//public class GetModelFromViewProcessor : GetModelProcessor
-	//{
-	//	private readonly IModelCacheManager modelCacheManager;
+	public class GetModelFromViewProcessor : ProcessorBase<GetModelArgs>
+	{
+		private readonly IModelCacheManager _modelCacheManager;
+		private readonly IViewModelFactory _viewModelFactory;
 
-	//	public GetModelFromView()
-	//		: this(new ModelCacheManager())
-	//	{
-	//		ContextName = Context.DefaultContextName;
-	//	}
+		public GetModelFromViewProcessor(IModelCacheManager modelCacheManager, IViewModelFactory viewModelFactory)
+		{
+			if (modelCacheManager == null) throw new ArgumentNullException(nameof(modelCacheManager));
+			if (viewModelFactory == null) throw new ArgumentNullException(nameof(viewModelFactory));
+			_modelCacheManager = modelCacheManager;
+			_viewModelFactory = viewModelFactory;
 
-	//	public GetModelFromView(IModelCacheManager modelCacheManager)
-	//	{
-	//		this.modelCacheManager = modelCacheManager;
-	//	}
+			ContextName = Context.DefaultContextName;
+		}
 
-	//	/// <summary>
-	//	/// Gets or sets the name of the context.
-	//	/// </summary>
-	//	/// <value>
-	//	/// The name of the context.
-	//	/// </value>
-	//	public string ContextName { get; set; }
+		/// <summary>
+		/// Gets or sets the name of the context.
+		/// </summary>
+		/// <value>
+		/// The name of the context.
+		/// </value>
+		public string ContextName { get; set; }
+		
+		protected override void Run(GetModelArgs args)
+		{
+			if (!IsValidForProcessing(args))
+			{
+				return;
+			}
 
+			string path = GetViewPath(args);
 
-	//	public override void Process(GetModelArgs args)
-	//	{
-	//		if (!IsValidForProcessing(args))
-	//		{
-	//			return;
-	//		}
+			if (string.IsNullOrWhiteSpace(path))
+			{
+				return;
+			}
 
-	//		string path = GetViewPath(args);
+			string cacheKey = _modelCacheManager.GetKey(path);
+			Type modelType = _modelCacheManager.Get(cacheKey);
 
-	//		if (string.IsNullOrWhiteSpace(path))
-	//		{
-	//			return;
-	//		}
+			if (modelType == typeof(NullModel))
+			{
+				// The model has been attempted before and is not useful
+				return;
+			}
 
-	//		string cacheKey = modelCacheManager.GetKey(path);
-	//		Type modelType = modelCacheManager.Get(cacheKey);
+			// The model type hasn't been found before or has been cleared.
+			if (modelType == null)
+			{
+				modelType = GetModel(args, path);
 
-	//		if (modelType == typeof(NullModel))
-	//		{
-	//			// The model has been attempted before and is not useful
-	//			return;
-	//		}
+				_modelCacheManager.Add(cacheKey, modelType);
 
-	//		// The model type hasn't been found before or has been cleared.
-	//		if (modelType == null)
-	//		{
-	//			modelType = GetModel(args, path);
+				if (modelType == typeof(NullModel))
+				{
+					// This is not the type we are looking for
+					return;
+				}
+			}
 
-	//			modelCacheManager.Add(cacheKey, modelType);
+			args.Result = _viewModelFactory.Create(modelType); ;
+		}
 
-	//			if (modelType == typeof(NullModel))
-	//			{
-	//				// This is not the type we are looking for
-	//				return;
-	//			}
-	//		}
+		private string GetPathFromLayout(
+			Database db,
+			ID layoutId)
+		{
+			Item layout = db.GetItem(layoutId);
 
-	//		ISitecoreContext scContext = SitecoreContext.GetFromHttpContext(ContextName);
+			return layout != null
+				? layout["path"]
+				: null;
+		}
 
-	//		Rendering renderingItem = args.Rendering;
+		private string GetViewPath(GetModelArgs args)
+		{
+			string path = args.Rendering.RenderingItem.InnerItem["path"];
 
-	//		object model = null;
+			if (string.IsNullOrWhiteSpace(path) && args.Rendering.RenderingType == "Layout")
+			{
+				path = GetPathFromLayout(args.PageContext.Database, new ID(args.Rendering.LayoutId));
+			}
+			return path;
+		}
 
-	//		if (renderingItem.DataSource.HasValue())
-	//		{
-	//			var item = scContext.Database.GetItem(renderingItem.DataSource);
-	//			model = scContext.CreateType(modelType, item, false, false, null);
-	//		}
-	//		else if (renderingItem.RenderingItem.DataSource.HasValue())
-	//		{
-	//			var item = scContext.Database.GetItem(renderingItem.RenderingItem.DataSource);
-	//			model = scContext.CreateType(modelType, item, false, false, null);
-	//		}
-	//		else if (renderingItem.Item != null)
-	//		{
-	//			/**
- //            * Issues #82:
- //            * Check Item before defaulting to the current item.
- //            */
-	//			model = scContext.CreateType(modelType, renderingItem.Item, false, false, null);
-	//		}
-	//		else
-	//		{
-	//			model = scContext.GetCurrentItem(modelType);
-	//		}
+		private Type GetModel(GetModelArgs args, string path)
+		{
+			Type compiledViewType = BuildManager.GetCompiledType(path);
+			Type baseType = compiledViewType.BaseType;
 
-	//		args.Result = model;
-	//	}
+			if (baseType == null || !baseType.IsGenericType)
+			{
+				Log.Error(string.Format(
+					"View {0} compiled type {1} base type {2} does not have a single generic argument.",
+					args.Rendering.RenderingItem.InnerItem["path"],
+					compiledViewType,
+					baseType), this);
+				return typeof(NullModel);
+			}
 
-	//	private string GetPathFromLayout(
-	//		Database db,
-	//		ID layoutId)
-	//	{
-	//		Item layout = db.GetItem(layoutId);
+			Type proposedType = baseType.GetGenericArguments()[0];
+			return proposedType == typeof(object)
+				? typeof(NullModel)
+				: proposedType;
+		}
 
-	//		return layout != null
-	//			? layout["path"]
-	//			: null;
-	//	}
+		private static bool IsValidForProcessing(GetModelArgs args)
+		{
+			if (args.Result != null)
+			{
+				return false;
+			}
 
-	//	private string GetViewPath(GetModelArgs args)
-	//	{
-	//		string path = args.Rendering.RenderingItem.InnerItem["path"];
+			if (!String.IsNullOrEmpty(args.Rendering.RenderingItem.InnerItem["Model"]))
+			{
+				return false;
+			}
 
-	//		if (string.IsNullOrWhiteSpace(path) && args.Rendering.RenderingType == "Layout")
-	//		{
-	//			path = GetPathFromLayout(args.PageContext.Database, new ID(args.Rendering.LayoutId));
-	//		}
-	//		return path;
-	//	}
-
-	//	private Type GetModel(GetModelArgs args, string path)
-	//	{
-	//		Type compiledViewType = BuildManager.GetCompiledType(path);
-	//		Type baseType = compiledViewType.BaseType;
-
-	//		if (baseType == null || !baseType.IsGenericType)
-	//		{
-	//			Log.Error(string.Format(
-	//				"View {0} compiled type {1} base type {2} does not have a single generic argument.",
-	//				args.Rendering.RenderingItem.InnerItem["path"],
-	//				compiledViewType,
-	//				baseType), this);
-	//			return typeof(NullModel);
-	//		}
-
-	//		Type proposedType = baseType.GetGenericArguments()[0];
-	//		return proposedType == typeof(object)
-	//			? typeof(NullModel)
-	//			: proposedType;
-	//	}
-
-	//	private static bool IsValidForProcessing(GetModelArgs args)
-	//	{
-	//		if (args.Result != null)
-	//		{
-	//			return false;
-	//		}
-
-	//		if (!String.IsNullOrEmpty(args.Rendering.RenderingItem.InnerItem["Model"]))
-	//		{
-	//			return false;
-	//		}
-
-	//		return args.Rendering.RenderingType == "Layout" ||
-	//			   args.Rendering.RenderingType == "View" ||
-	//			   args.Rendering.RenderingType == "r" ||
-	//			   args.Rendering.RenderingType == String.Empty;
-	//	}
-	//}
+			return args.Rendering.RenderingType == "Layout" ||
+				   args.Rendering.RenderingType == "View" ||
+				   args.Rendering.RenderingType == "r" ||
+				   args.Rendering.RenderingType == String.Empty;
+		}
+	}
 
 	public class NullModel
 	{

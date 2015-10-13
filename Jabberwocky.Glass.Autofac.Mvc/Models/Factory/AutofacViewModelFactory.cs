@@ -89,17 +89,28 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Models.Factory
 		private IGlassBase GetGlassModel()
 		{
 			var rendering = _renderingContextService.GetCurrentRendering();
-
-			if (string.IsNullOrEmpty(rendering?.DataSource))
+			if (rendering == null)
 			{
-				return _context.GetCurrentItem<IGlassBase>(inferType: true);
+				throw new InvalidOperationException("This processor can only be executed in an MVC rendering context.");
 			}
 
-			// Depending on if the datasource is a GUID vs Path, use the correct overload
-			Guid dataSourceGuid;
-			return Guid.TryParse(rendering.DataSource, out dataSourceGuid)
-				? _context.GetItem<IGlassBase>(dataSourceGuid, inferType: true)
-				: _context.GetItem<IGlassBase>(rendering.DataSource, inferType: true);
+			if (!string.IsNullOrEmpty(rendering.DataSource))
+			{
+				// Depending on if the datasource is a GUID vs Path, use the correct overload
+				Guid dataSourceGuid;
+				return Guid.TryParse(rendering.DataSource, out dataSourceGuid)
+					? _context.GetItem<IGlassBase>(dataSourceGuid, inferType: true)
+					: _context.GetItem<IGlassBase>(rendering.DataSource, inferType: true);
+			}
+
+			// Try to get from the Static Item
+			var staticItem = rendering.Item;
+			if (staticItem != null)
+			{
+				return _context.GetItem<IGlassBase>(staticItem.ID.Guid, inferType: true);
+			}
+
+			return _context.GetCurrentItem<IGlassBase>(inferType: true);
 		}
 	}
 }
