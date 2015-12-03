@@ -47,12 +47,22 @@ namespace Jabberwocky.Glass.Factory.Caching
 
 		public Type GetImplementingTypeForItem(IGlassBase item, Type interfaceType)
 		{
+			return GetImplementingTypeForTemplate(item._TemplateId, interfaceType);
+		}
+
+		public Type GetImplementingTypeForTemplate(Guid templateId, Type interfaceType)
+		{
 			if (!TemplateCache.ContainsKey(interfaceType))
 			{
 				return null;
 			}
 
-			var templateKey = item._TemplateId.ToString();
+			return InnerGetImplementingTypeForTemplate(templateId, interfaceType, MaxDepth);
+		}
+
+		private Type InnerGetImplementingTypeForTemplate(Guid templateId, Type interfaceType, int depth)
+		{
+			var templateKey = templateId.ToString();
 
 			var itemInterfaces = TemplateCache[interfaceType];
 			if (itemInterfaces.ContainsKey(templateKey))
@@ -67,7 +77,7 @@ namespace Jabberwocky.Glass.Factory.Caching
 				// Otherwise, search for match, and update 1st-level cache
 				using (var service = _serviceFactory())
 				{
-					foreach (Guid baseTemplateId in GetBaseTemplates(service.GetItem<IBaseTemplates>(item._Id), service, MaxDepth))
+					foreach (Guid baseTemplateId in GetBaseTemplates(service.GetItem<IBaseTemplates>(templateId), service, depth))
 					{
 						string templateIdString = baseTemplateId.ToString();
 						if (itemInterfaces.ContainsKey(templateIdString))
@@ -79,21 +89,40 @@ namespace Jabberwocky.Glass.Factory.Caching
 
 				return null;
 			});
-
 		}
 
-		internal IEnumerable<Guid> GetBaseTemplates(IBaseTemplates item, ISitecoreService service, int depth = DefaultDepth)
+		public Type GetFallbackImplementingTypeForTemplate(Guid templateId, Type interfaceType)
 		{
-			return InternalGetBaseTemplates(item, service, new HashSet<Guid>(), depth).Concat(new[] { new Guid(DefaultFallbackTemplateId) });
+			if (!TemplateCache.ContainsKey(interfaceType))
+			{
+				return null;
+			}
+
+			using (var service = _serviceFactory())
+			{
+				var currentTemplate = service.GetItem<IBaseTemplates>(templateId);
+
+				return GetBaseTemplates(currentTemplate, service, depth: MaxDepth)
+					.Select(guid => InnerGetImplementingTypeForTemplate(guid, interfaceType, 1))
+					.FirstOrDefault(type => type != null);
+			}
 		}
 
-		private IEnumerable<Guid> InternalGetBaseTemplates(IBaseTemplates item, ISitecoreService service, HashSet<Guid> visitedSet, int depth)
+		internal IEnumerable<Guid> GetBaseTemplates(IBaseTemplates item, ISitecoreService service, int depth = DefaultDepth, bool ignoreTemplate = false)
+		{
+			return InternalGetBaseTemplates(item, service, new HashSet<Guid>(), depth, ignoreTemplate).Concat(new[] { new Guid(DefaultFallbackTemplateId) });
+		}
+
+		private IEnumerable<Guid> InternalGetBaseTemplates(IBaseTemplates item, ISitecoreService service, HashSet<Guid> visitedSet, int depth, bool ignoreTemplate = false)
 		{
 			if (item == null || depth <= 0) return DefaultBaseTemplateArray;
 
-			var baseTemplates = (item.TemplateBaseTemplates ?? item.BaseTemplates)?.Where(id => !visitedSet.Contains(id)).ToArray();
-			if (baseTemplates == null || !baseTemplates.Any()) return DefaultBaseTemplateArray;
-
+			// Check direct 'template' field, then base-templates, before finally recursing
+			var baseTemplates = new[] { item.Template }
+				.Concat((item.TemplateBaseTemplates ?? item.BaseTemplates) ?? Enumerable.Empty<Guid>())
+				.Where(id => !visitedSet.Contains(id))
+				.ToArray();
+			
 			foreach (var id in baseTemplates)
 			{
 				// prevent traversal of cycles

@@ -27,6 +27,8 @@ namespace Jabberwocky.Glass.Tests.Factory
 		private const string FakeTemplateString = "6C1F0868-7542-4B77-BAA7-4BB9CFBE60F3";
 		private const string FakeEmptyBaseTemplate = "EFA3C0E7-F03B-494F-A0D9-C33B3B27E4AF";
 		private const string FakeTemplateWithBase = "34BCA8F1-8F4E-4983-957C-0B18F0CD5C3F";
+		private const string FakeNoDirectWithBaseTemplate = "15BCA8F1-8F4E-4983-957C-0B18F0CD5C3F";
+		private const string FakeIntermediateTemplate = "92BCF3F1-8F4E-4983-957C-0B18F0CD5C3F";
 
 		// SUT
 		private GlassInterfaceFactory _glassFactory;
@@ -56,6 +58,12 @@ namespace Jabberwocky.Glass.Tests.Factory
 							ImplementationType = typeof (IInheritedTemplateModel),
 							IsFallback = false
 						},
+						new GlassInterfaceMetadata
+						{
+							GlassType = typeof (IIntermediateTemplate),
+							ImplementationType = typeof(IIntermediateTemplateModel),
+							IsFallback = false
+						}
 					}
 				}
 			};
@@ -66,7 +74,7 @@ namespace Jabberwocky.Glass.Tests.Factory
 				.ToLookup(pair => pair.Key, pair => pair.Value);
 
 			// Tightly-coupled test dependency... hmm
-			_implFactory = new ProxyImplementationFactory((t, model) => new FallbackInterceptor(t, model, _glassFactory.TemplateCacheService, _implFactory, _mockService));
+			_implFactory = new ProxyImplementationFactory((t, model) => new FallbackInterceptor(t, model, _glassFactory.TemplateCacheService, _implFactory));
 
 			_templateCache = new GlassTemplateCacheService(_interfaceMappings, () => _mockService);
 
@@ -139,7 +147,6 @@ namespace Jabberwocky.Glass.Tests.Factory
 		[Test]
 		public void GlassFactory_DepthFirstBaseTemplateSearch_ReturnsMatchBeforeFallbackImplementation()
 		{
-
 			var mockItem = Substitute.For<ITemplateWithBase>();
 			{
 				mockItem._Id = Guid.NewGuid();
@@ -148,8 +155,9 @@ namespace Jabberwocky.Glass.Tests.Factory
 				var templateItem = Substitute.For<IBaseTemplates>();
 				templateItem.BaseTemplates.Returns(ci => mockItem._BaseTemplates.ToArray());
 				templateItem.TemplateBaseTemplates.Returns(ci => mockItem._BaseTemplates.ToArray());
+				templateItem.Template.Returns(Guid.NewGuid());
 
-				_mockService.GetItem<IBaseTemplates>(mockItem._Id).Returns(templateItem);
+				_mockService.GetItem<IBaseTemplates>(mockItem._TemplateId).Returns(templateItem);
 			}
 
 			{
@@ -160,8 +168,9 @@ namespace Jabberwocky.Glass.Tests.Factory
 				var templateItem = Substitute.For<IBaseTemplates>();
 				templateItem.BaseTemplates.Returns(ci => mockItem._BaseTemplates.ToArray());
 				templateItem.TemplateBaseTemplates.Returns(ci => mockItem._BaseTemplates.ToArray());
+				templateItem.Template.Returns(Guid.NewGuid());
 
-				_mockService.GetItem<IBaseTemplates>(item._Id).Returns(templateItem);
+				_mockService.GetItem<IBaseTemplates>(item._TemplateId).Returns(templateItem);
 			}
 
 			{
@@ -172,13 +181,82 @@ namespace Jabberwocky.Glass.Tests.Factory
 				var templateItem = Substitute.For<IBaseTemplates>();
 				templateItem.BaseTemplates.Returns(ci => mockItem._BaseTemplates.ToArray());
 				templateItem.TemplateBaseTemplates.Returns(ci => mockItem._BaseTemplates.ToArray());
+				templateItem.Template.Returns(Guid.NewGuid());
 
-				_mockService.GetItem<IBaseTemplates>(item._Id).Returns(templateItem);
+				_mockService.GetItem<IBaseTemplates>(item._TemplateId).Returns(templateItem);
 			}
 
 			var testItem = _glassFactory.GetItem<ITestInterface>(mockItem);
 			Assert.IsNotNull(testItem);
 			Assert.IsTrue(testItem.VirtualIsNotFallback);
+		}
+
+		[Test]
+		public void GlassFactory_FallbackBehavior_WillSelectDepthFirstImplementation()
+		{
+			// Key notes about this test:
+			// 1. Validates fallback behavior
+			// 2. Fallback selection aglorithm will select next concrete (non-abstract) implementation of GlassFactoryType model's template hierarchy,
+			//	  and not the initial Glass model's template hierarchy.  This is desirable to more closely mimic standard object-oriented inheritance...
+			// 3. However, it is an open question if we want to make this configurable (is there a need?)
+
+			var mockItem = Substitute.For<INoMatchWithBase>();
+			{
+				var nonExistentId = new Guid("2E812B94-0C52-41C8-8DF7-66B512933391");
+
+				mockItem._Id = Guid.NewGuid();
+				mockItem._TemplateId.Returns(nonExistentId); // no direct match, or even nested match
+				mockItem._BaseTemplates.Returns(new[] { new Guid(FakeEmptyBaseTemplate), new Guid(FakeTemplateString) });
+				var templateItem = Substitute.For<IBaseTemplates>();
+				templateItem.BaseTemplates.Returns(ci => mockItem._BaseTemplates.ToArray());
+				templateItem.TemplateBaseTemplates.Returns(ci => mockItem._BaseTemplates.ToArray());
+				templateItem.Template.Returns(new Guid(FakeIntermediateTemplate)); // This template will be used for initial model
+
+				_mockService.GetItem<IBaseTemplates>(mockItem._TemplateId).Returns(templateItem);
+			}
+
+			{
+				var item = Substitute.For<IIntermediateTemplate>();
+				item._Id = Guid.NewGuid();
+				item._TemplateId.Returns(new Guid(FakeIntermediateTemplate));  // matching template
+				item._BaseTemplates.Returns(new Guid[0]);
+				var templateItem = Substitute.For<IBaseTemplates>();
+				templateItem.BaseTemplates.Returns(ci => mockItem._BaseTemplates.ToArray());
+				templateItem.TemplateBaseTemplates.Returns(ci => mockItem._BaseTemplates.ToArray());
+				templateItem.Template.Returns(Guid.NewGuid());
+
+				_mockService.GetItem<IBaseTemplates>(item._TemplateId).Returns(templateItem);
+			}
+
+			{
+				var item = Substitute.For<IEmptyBaseTemplate>();
+				item._Id = Guid.NewGuid();
+				item._TemplateId.Returns(new Guid(FakeEmptyBaseTemplate));  // matching template
+				item._BaseTemplates.Returns(new Guid[0]);
+				var templateItem = Substitute.For<IBaseTemplates>();
+				templateItem.BaseTemplates.Returns(ci => mockItem._BaseTemplates.ToArray());
+				templateItem.TemplateBaseTemplates.Returns(ci => mockItem._BaseTemplates.ToArray());
+				templateItem.Template.Returns(Guid.NewGuid());
+
+				_mockService.GetItem<IBaseTemplates>(item._TemplateId).Returns(templateItem);
+			}
+
+			{
+				var item = Substitute.For<IInheritedTemplate>();
+				item._Id = Guid.NewGuid();
+				item._TemplateId.Returns(new Guid(FakeTemplateString)); // matching template
+				item._BaseTemplates.Returns(new Guid[0]);
+				var templateItem = Substitute.For<IBaseTemplates>();
+				templateItem.BaseTemplates.Returns(ci => mockItem._BaseTemplates.ToArray());
+				templateItem.TemplateBaseTemplates.Returns(ci => mockItem._BaseTemplates.ToArray());
+				templateItem.Template.Returns(Guid.NewGuid());
+
+				_mockService.GetItem<IBaseTemplates>(item._TemplateId).Returns(templateItem);
+			}
+
+			var testItem = _glassFactory.GetItem<ITestInterface>(mockItem);
+			Assert.IsNotNull(testItem);
+			Assert.IsTrue(testItem.IsFallback); // Should fallback to IInheritedTemplateModel -> BaseType
 		}
 
 		private ITestInterface GetItemWithFallback()
@@ -196,6 +274,18 @@ namespace Jabberwocky.Glass.Tests.Factory
 		// No templateID (or even attribute!)
 		public interface IBaseType : IGlassBase
 		{
+		}
+
+		// Fake base template with no direct match (but match on base template)
+		[SitecoreType(TemplateId = FakeNoDirectWithBaseTemplate)]
+		public interface INoMatchWithBase : IIntermediateTemplate, IInheritedTemplate
+		{
+		}
+
+		[SitecoreType(TemplateId = FakeIntermediateTemplate)]
+		public interface IIntermediateTemplate : IBaseType
+		{
+
 		}
 
 		// Fake base template
@@ -224,6 +314,8 @@ namespace Jabberwocky.Glass.Tests.Factory
 
 			// Generic method with constraint
 			T GetGenericItem<T>() where T : new();
+
+			object DontCallMe();
 		}
 
 		[GlassFactoryType(typeof (IInheritedTemplate))]
@@ -249,6 +341,11 @@ namespace Jabberwocky.Glass.Tests.Factory
 			}
 
 			public abstract T GetGenericItem<T>() where T : new();
+
+			public object DontCallMe()
+			{
+				return new object();
+			}
 		}
 
 		[GlassFactoryType(typeof (IBaseType))]
@@ -278,6 +375,26 @@ namespace Jabberwocky.Glass.Tests.Factory
 			{
 				return new T();
 			}
+
+			public object DontCallMe()
+			{
+				Assert.Fail("I should never be called");
+				return null;
+			}
+		}
+
+		[GlassFactoryType(typeof(IIntermediateTemplate))]
+		public abstract class IIntermediateTemplateModel : ITestInterface
+		{
+			public abstract bool IsNotFallback { get; } 
+			public abstract bool IsFallback { get; }
+			public abstract bool VirtualIsNotFallback { get; }
+
+			public abstract T GetGenericItem<T>() where T : new();
+			public abstract object NonVirtualNotImplementedMethod();
+			public abstract object VirtualNotImplementedMethod();
+
+			public abstract object DontCallMe();
 		}
 
 		#endregion

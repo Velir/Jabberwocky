@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Linq;
 using System.Reflection;
 using Castle.DynamicProxy;
-using Glass.Mapper.Sc;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using Jabberwocky.Glass.Factory.Attributes;
 using Jabberwocky.Glass.Factory.Caching;
 using Jabberwocky.Glass.Factory.Implementation;
-using Jabberwocky.Glass.Factory.Util;
-using Jabberwocky.Glass.Models;
 
 namespace Jabberwocky.Glass.Factory.Interceptors
 {
@@ -19,20 +15,17 @@ namespace Jabberwocky.Glass.Factory.Interceptors
 
 		private readonly IGlassTemplateCacheService _templateCache;
 		private readonly IImplementationFactory _implementationFactory;
-		private readonly ISitecoreService _service;
 
-		public FallbackInterceptor(Type interfaceType, object model, IGlassTemplateCacheService templateCache, IImplementationFactory implementationFactory, ISitecoreService service)
+		public FallbackInterceptor(Type interfaceType, object model, IGlassTemplateCacheService templateCache, IImplementationFactory implementationFactory)
 		{
 			if (interfaceType == null) throw new ArgumentNullException(nameof(interfaceType));
 			if (model == null) throw new ArgumentNullException(nameof(model));
 			if (templateCache == null) throw new ArgumentNullException(nameof(templateCache));
 			if (implementationFactory == null) throw new ArgumentNullException(nameof(implementationFactory));
-			if (service == null) throw new ArgumentNullException(nameof(service));
 			_interfaceType = interfaceType;
 			_model = model;
 			_templateCache = templateCache;
 			_implementationFactory = implementationFactory;
-			_service = service;
 		}
 
 		public void Intercept(IInvocation invocation)
@@ -72,9 +65,8 @@ namespace Jabberwocky.Glass.Factory.Interceptors
 			// If this is a final fallback type that is not associated with a direct Sitecore template
 			if (sitecoreAttribute == null) return;
 
-			var templateId = sitecoreAttribute.TemplateId;
-			var templateItem = _service.GetItem<IGlassBase>(new Guid(templateId));
-			var matchingType = _templateCache.GetImplementingTypeForItem(templateItem, _interfaceType);
+			var templateId = new Guid(sitecoreAttribute.TemplateId);
+			var matchingType = _templateCache.GetFallbackImplementingTypeForTemplate(templateId, _interfaceType);
 
 			// This can happen if we fail to find an eligible base template with a corresponding implementation
 			// In this case, don't do anything -> invocation maps to default value
