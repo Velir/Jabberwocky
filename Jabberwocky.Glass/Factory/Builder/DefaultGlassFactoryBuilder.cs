@@ -24,7 +24,7 @@ namespace Jabberwocky.Glass.Factory.Builder
 
 			var implementedTypes = new DefaultGlassTypeLoader().LoadImplementations(Options.Assemblies);
 			var templateCache = new GlassTemplateCacheService(implementedTypes, _serviceFactory);
-			implFactory = new ProxyImplementationFactory((t, model) => new FallbackInterceptor(t, model, templateCache, implFactory, _serviceFactory()));
+			implFactory = new ProxyImplementationFactory((t, model) => new FallbackInterceptor(t, model, templateCache, implFactory));
 
 			return new GlassInterfaceFactory(templateCache, implFactory);
 		}

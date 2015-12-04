@@ -15,5 +15,8 @@ namespace Jabberwocky.Glass.Factory.Util
 		// Use this for template items
 		[SitecoreField("__Base template")]
 		IEnumerable<Guid> TemplateBaseTemplates { get; }
+
+		[SitecoreInfo(SitecoreInfoType.TemplateId)]
+		Guid Template { get; }
 	}
 }
