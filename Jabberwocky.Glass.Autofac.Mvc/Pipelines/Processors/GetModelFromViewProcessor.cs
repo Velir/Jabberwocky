@@ -34,7 +34,7 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Pipelines.Processors
 		/// </value>
 		public string ContextName { get; set; }
 		
-		protected override void Run(GetModelArgs args)
+		protected internal override void Run(GetModelArgs args)
 		{
 			if (!IsValidForProcessing(args))
 			{

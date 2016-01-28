@@ -14,13 +14,13 @@ namespace Jabberwocky.Glass.Autofac.Pipelines.Factories
 	{
 		protected static IContainer Container => AutofacConfig.ServiceLocator;
 
-		public virtual object GetObject(string identifier)
+        public virtual object GetObject(string identifier)
 		{
 			var type = ResolveType(identifier);
 			if (type == null) return null;
 
 			// Includes Pipeline specific registrations that override existing defaults
-			var scope = Container.BeginLifetimeScope(ConfigureRegistrationOverrides);
+            var scope = CreateLifetimeScope();
 			try
 			{
 				var processor = scope.Resolve(type);
@@ -42,6 +42,20 @@ namespace Jabberwocky.Glass.Autofac.Pipelines.Factories
 
 			return null;
 		}
+
+	    protected virtual ILifetimeScope CreateLifetimeScope()
+	    {
+            if (Container == null)
+                throw new InvalidOperationException($"The '{nameof(Container)}' property was null. Ensure that the AutofacConfig.{nameof(AutofacConfig.ServiceLocator)} has been assigned.");
+
+	        using (var scope = Container.BeginLifetimeScope())
+	        {
+	            var existingScopeProvider = scope.ResolveOptional<ILifetimeScopeFactory>();
+	            var scopeResolver = existingScopeProvider?.GetCurrentLifetimeScope() ?? Container;
+                
+                return scopeResolver.BeginLifetimeScope(ConfigureRegistrationOverrides);
+	        }
+        }
 
 		protected virtual void ConfigureRegistrationOverrides(ContainerBuilder builder)
 		{
