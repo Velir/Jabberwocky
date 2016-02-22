@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Autofac;
+using Jabberwocky.Glass.Autofac.Pipelines.Factories;
+using Jabberwocky.Glass.Autofac.Pipelines.Factories.Providers;
 using Jabberwocky.Glass.Autofac.Pipelines.Processors;
 
 namespace Jabberwocky.Glass.Autofac.Extensions
@@ -14,6 +17,7 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 		private const string MasterDatabaseName = "master";
 
 		private const string JabberwockyMvcDll = "Jabberwocky.Glass.Autofac.Mvc";
+	    private const string JabberwockyWebApiDll = "Jabberwocky.Glass.Autofac.WebApi";
 
 		/// <summary>
 		/// Registers any custom Sitecore Pipeline Processors that implement the IProcessor interface 
@@ -38,10 +42,15 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 		/// </returns>
 		public static ContainerBuilder RegisterProcessors(this ContainerBuilder builder, params Assembly[] assemblies)
 		{
-			var asm = new[] {TryLoadAssembly(JabberwockyMvcDll)}.Concat(assemblies).Where(a => a != null).Distinct().ToArray();
+			var asm = new[] { JabberwockyMvcDll, JabberwockyWebApiDll }.Select(TryLoadAssembly).Concat(assemblies).Where(a => a != null).Distinct().ToArray();
 
+            // Register processors
 			builder.RegisterAssemblyTypes(asm).AsClosedTypesOf(typeof(IProcessor<>));
-			
+
+            // Register internals for Lifetime Scope resolution
+		    builder.RegisterAssemblyTypes(asm).AssignableTo<ILifetimeScopeProvider>().As<ILifetimeScopeProvider>();
+            builder.Register(c => new DefaultLifetimeScopeFactory(c.Resolve<IEnumerable<ILifetimeScopeProvider>>())).As<ILifetimeScopeFactory>();
+
 			return builder;
 		}
 

@@ -42,7 +42,7 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Pipelines.Processors
 			_viewModelFactory = viewModelFactory;
 		}
 
-		protected override void Run(GetModelArgs args)
+		protected internal override void Run(GetModelArgs args)
 		{
 			if (args.Result != null) return;
 
