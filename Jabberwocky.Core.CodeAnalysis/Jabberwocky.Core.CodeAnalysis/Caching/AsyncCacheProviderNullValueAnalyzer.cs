@@ -7,7 +7,7 @@ namespace Jabberwocky.Core.CodeAnalysis.Caching
 	[DiagnosticAnalyzer(LanguageNames.CSharp)]
 	public class AsyncCacheProviderNullValueAnalyzer : BaseCacheProviderNullValueAnalyzer
 	{
-		public const string DiagnosticId = "JabberwockyCoreCodeAnalysis.AsyncCacheProvider.NullValue";
+		public const string DiagnosticId = "JabberwockyCoreCodeAnalysisAsyncCacheProviderNullValue";
 
 		public override string Id => DiagnosticId;
 		public override string AnalysisTypeTarget => "Jabberwocky.Core.Caching.IAsyncCacheProvider";

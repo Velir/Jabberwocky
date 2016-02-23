@@ -11,7 +11,7 @@ namespace Jabberwocky.Glass.CodeAnalysis.GlassFactory
 	[DiagnosticAnalyzer(LanguageNames.CSharp)]
 	public class GlassFactorySuspiciousPropertyAnalyzer : DiagnosticAnalyzer
 	{
-		public const string DiagnosticId = "JabberwockyGlassCodeAnalysis.GlassInterfaceFactory.SuspiciousProperty";
+		public const string DiagnosticId = "JabberwockyGlassCodeAnalysisGlassInterfaceFactorySuspiciousProperty";
 		private static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.SuspiciousPropertyTitle), Resources.ResourceManager, typeof(Resources));
 		private static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.SuspiciousPropertyMessageFormat), Resources.ResourceManager, typeof(Resources));
 		private static readonly LocalizableString Description = new LocalizableResourceString(nameof(Resources.SuspiciousPropertyDescription), Resources.ResourceManager, typeof(Resources));

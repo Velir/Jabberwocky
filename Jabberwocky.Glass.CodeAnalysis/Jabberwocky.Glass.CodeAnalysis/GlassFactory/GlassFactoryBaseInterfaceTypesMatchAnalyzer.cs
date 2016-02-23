@@ -11,7 +11,7 @@ namespace Jabberwocky.Glass.CodeAnalysis.GlassFactory
 	[DiagnosticAnalyzer(LanguageNames.CSharp)]
 	public class GlassFactoryBaseInterfaceTypesMatchAnalyzer : DiagnosticAnalyzer
 	{
-		public const string DiagnosticId = "JabberwockyGlassCodeAnalysis.BaseInterface.TypesMatch";
+		public const string DiagnosticId = "JabberwockyGlassCodeAnalysisBaseInterfaceTypesMatch";
 		internal static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.BaseInterfaceTitle), Resources.ResourceManager, typeof(Resources));
 		internal static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.BaseInterfaceMessageFormat), Resources.ResourceManager, typeof(Resources));
 		private static readonly LocalizableString Description = new LocalizableResourceString(nameof(Resources.BaseInterfaceDescription), Resources.ResourceManager, typeof(Resources));
