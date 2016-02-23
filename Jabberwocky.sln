@@ -58,6 +58,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jabberwocky.Autofac.Extras.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jabberwocky.Glass.Autofac.WebApi", "Jabberwocky.Glass.Autofac.WebApi\Jabberwocky.Glass.Autofac.WebApi.csproj", "{86B4E810-DCA7-4510-BA2B-EC1DDA9CB7FE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jabberwocky.Autofac.Tests", "Jabberwocky.Autofac.Tests\Jabberwocky.Autofac.Tests.csproj", "{87913926-895A-422B-B462-EF685DCAE215}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -136,6 +138,10 @@ Global
 		{86B4E810-DCA7-4510-BA2B-EC1DDA9CB7FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86B4E810-DCA7-4510-BA2B-EC1DDA9CB7FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86B4E810-DCA7-4510-BA2B-EC1DDA9CB7FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87913926-895A-422B-B462-EF685DCAE215}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87913926-895A-422B-B462-EF685DCAE215}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87913926-895A-422B-B462-EF685DCAE215}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87913926-895A-422B-B462-EF685DCAE215}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -162,5 +168,6 @@ Global
 		{338A9D71-3ED1-4E69-AC1B-E5033846B3A4} = {FF1D41BA-5DE4-49CC-8CFF-08B1BF700C3D}
 		{44DB88AB-C38E-4CAE-ADA0-BC64778A1D4A} = {338A9D71-3ED1-4E69-AC1B-E5033846B3A4}
 		{86B4E810-DCA7-4510-BA2B-EC1DDA9CB7FE} = {FF1D41BA-5DE4-49CC-8CFF-08B1BF700C3D}
+		{87913926-895A-422B-B462-EF685DCAE215} = {7EF6690B-FB53-4BC9-A915-93E893FE3225}
 	EndGlobalSection
 EndGlobal

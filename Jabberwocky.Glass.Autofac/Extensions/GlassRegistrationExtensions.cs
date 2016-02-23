@@ -4,6 +4,7 @@ using System.Reflection;
 using Autofac;
 using Autofac.Extras.DynamicProxy2;
 using Glass.Mapper.Sc;
+using Jabberwocky.Autofac.Extensions;
 using Jabberwocky.Core.Utils.Extensions;
 using Jabberwocky.Glass.Autofac.Glass;
 using Jabberwocky.Glass.Models;
@@ -102,15 +103,15 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 				builder.Register((c, p) =>
 				{
 					var overriddenDbParam = p.OfType<TypedParameter>().FirstOrDefault(@param => @param.Type == typeof(string));
-					var overriddenDb = overriddenDbParam != null ? overriddenDbParam.Value as string : null;
+					var overriddenDb = overriddenDbParam?.Value as string;
 
 					if (!string.IsNullOrEmpty(overriddenDb))
 					{
 						return new SitecoreService(overriddenDb);
 					}
 
-					var context = c.Resolve<ISitecoreContext>();
-					return context != null && context.Database != null && context.Database.Name != CoreDatabaseName
+					var context = c.ResolveWithoutExceptions<ISitecoreContext>();
+					return context?.Database != null && context.Database.Name != CoreDatabaseName
 						? (ISitecoreService)context
 						: new SitecoreService(DefaultDatabaseName);
 				}).As<ISitecoreService>().ExternallyOwned();
