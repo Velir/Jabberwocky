@@ -1,12 +1,10 @@
 ﻿using Autofac;
 using Autofac.Core;
-using Glass.Mapper.Sc;
 using Jabberwocky.Glass.Autofac.Mvc.Models;
 using Jabberwocky.Glass.Autofac.Mvc.Models.Factory;
 using Jabberwocky.Glass.Autofac.Mvc.Services;
 using Jabberwocky.Glass.Models;
 using NSubstitute;
-using NSubstitute.Core;
 using NUnit.Framework;
 using Sitecore.Mvc.Presentation;
 
@@ -17,7 +15,6 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Tests.Models.Factory
     {
         private AutofacViewModelFactory _sut;
         private IComponentContext _resolver;
-        private ISitecoreContext _sitecoreContext;
         private IRenderingContextService _renderingContextService;
 
         [SetUp]
@@ -25,12 +22,11 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Tests.Models.Factory
         {
             _resolver = Substitute.For<IComponentContext>();
             _renderingContextService = Substitute.For<IRenderingContextService>();
-            _sitecoreContext = Substitute.For<ISitecoreContext>();
 
             IComponentRegistration retVal;
             _resolver.ComponentRegistry.TryGetRegistration(null, out retVal).ReturnsForAnyArgs(true);
 
-            _sut = new AutofacViewModelFactory(_resolver, _renderingContextService, _sitecoreContext);
+            _sut = new AutofacViewModelFactory(_resolver, _renderingContextService);
         }
 
         [Test]
@@ -86,7 +82,7 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Tests.Models.Factory
             var viewModel = new InjectableViewModel();
             var glassModel = Substitute.For<IGlassBase>();
             _resolver.ResolveOptional(typeof(object), new Parameter[0]).ReturnsForAnyArgs(viewModel);
-            _sitecoreContext.GetCurrentItem<IGlassBase>(inferType: true).Returns(glassModel);
+            _renderingContextService.GetCurrentRenderingDatasource<IGlassBase>().ReturnsForAnyArgs(glassModel);
 
             var resolvedModel = _sut.Create<InjectableViewModel>();
 
@@ -104,7 +100,7 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Tests.Models.Factory
             var glassModel = Substitute.For<IGlassBase>();
             var renderingModel = Substitute.For<IRenderingTemplate>();
             _resolver.ResolveOptional(typeof(object), new Parameter[0]).ReturnsForAnyArgs(viewModel);
-            _sitecoreContext.GetCurrentItem<IGlassBase>(inferType: true).Returns(glassModel);
+            _renderingContextService.GetCurrentRenderingDatasource<IGlassBase>().ReturnsForAnyArgs(glassModel);
             _renderingContextService.GetCurrentRenderingParameters(typeof(IRenderingTemplate))
                 .ReturnsForAnyArgs(renderingModel);
 
@@ -125,7 +121,7 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Tests.Models.Factory
             var renderingModel = Substitute.For<IRenderingTemplate>();
             _resolver.ResolveOptional(typeof(object), new Parameter[0])
                 .ReturnsForAnyArgs(ci => new ConstructorViewModel(GetValue<IRenderingTemplate>(ci[1], 1), GetValue<IGlassBase>(ci[1], 0)));
-            _sitecoreContext.GetCurrentItem<IGlassBase>(inferType: true).Returns(glassModel);
+            _renderingContextService.GetCurrentRenderingDatasource<IGlassBase>().ReturnsForAnyArgs(glassModel);
             _renderingContextService.GetCurrentRenderingParameters(typeof(IRenderingTemplate))
                 .ReturnsForAnyArgs(renderingModel);
 
