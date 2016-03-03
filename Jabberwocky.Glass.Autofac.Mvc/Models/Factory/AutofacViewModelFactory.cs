@@ -109,7 +109,9 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Models.Factory
 
         private object GetRenderingParamModel(Type renderingParamType)
         {
-            return _renderingContextService.GetCurrentRenderingParameters(renderingParamType);
+            return renderingParamType == null 
+                ? null
+                : _renderingContextService.GetCurrentRenderingParameters(renderingParamType);
         }
 
         private IGlassBase GetGlassModel(Type viewModelType)
