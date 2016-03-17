@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Autofac.Core;
 using Jabberwocky.Glass.Autofac.Mvc.Models;
+using Jabberwocky.Glass.Autofac.Mvc.Models.Attributes;
 using Jabberwocky.Glass.Autofac.Mvc.Models.Factory;
 using Jabberwocky.Glass.Autofac.Mvc.Services;
 using Jabberwocky.Glass.Models;
@@ -133,6 +134,42 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Tests.Models.Factory
             resolvedModel.AssertThatCctorInstancesAreSameAsProperties();
         }
 
+        [Test]
+        public void Create_WithNestedDatasourceAttribute_Never_UsesAppropriateDatasource()
+        {
+            var mockRendering = Substitute.For<Rendering>();
+            _renderingContextService.GetCurrentRendering().Returns(mockRendering);
+
+            var viewModel = new NeverFallbackViewModel();
+            var glassModel = Substitute.For<IGlassBase>();
+            _resolver.ResolveOptional(typeof(object), new Parameter[0]).ReturnsForAnyArgs(viewModel);
+            _renderingContextService.GetCurrentRenderingDatasource<IGlassBase>(DatasourceNestingOptions.Never).Returns(glassModel);
+
+            var resolvedModel = _sut.Create<NeverFallbackViewModel>();
+
+            Assert.AreSame(viewModel, resolvedModel);
+            Assert.AreSame(glassModel, viewModel.GlassModel);
+            _renderingContextService.Received().GetCurrentRenderingDatasource<IGlassBase>(DatasourceNestingOptions.Never);
+        }
+
+        [Test]
+        public void Create_WithNestedDatasourceAttribute_Always_UsesAppropriateDatasource()
+        {
+            var mockRendering = Substitute.For<Rendering>();
+            _renderingContextService.GetCurrentRendering().Returns(mockRendering);
+
+            var viewModel = new AlwaysFallbackViewModel();
+            var glassModel = Substitute.For<IGlassBase>();
+            _resolver.ResolveOptional(typeof(object), new Parameter[0]).ReturnsForAnyArgs(viewModel);
+            _renderingContextService.GetCurrentRenderingDatasource<IGlassBase>(DatasourceNestingOptions.Always).Returns(glassModel);
+
+            var resolvedModel = _sut.Create<AlwaysFallbackViewModel>();
+
+            Assert.AreSame(viewModel, resolvedModel);
+            Assert.AreSame(glassModel, viewModel.GlassModel);
+            _renderingContextService.Received().GetCurrentRenderingDatasource<IGlassBase>(DatasourceNestingOptions.Always);
+        }
+
         private T GetValue<T>(object ci, int index)
         {
             var @params = (Parameter[])ci;
@@ -190,6 +227,16 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Tests.Models.Factory
                 Assert.AreSame(_renderingModel, RenderingParameters);
                 Assert.AreSame(_datasourceModel, GlassModel);
             }
+        }
+
+        [DisableNestedDatasource]
+        private class NeverFallbackViewModel : GlassViewModel<IGlassBase>
+        {
+        }
+
+        [AllowNestedDatasource]
+        private class AlwaysFallbackViewModel : GlassViewModel<IGlassBase>
+        {
         }
 
         #endregion
