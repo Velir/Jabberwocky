@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Linq;
+using System.Reflection;
 using Autofac;
 using Autofac.Core;
-using Glass.Mapper.Sc;
+using Jabberwocky.Glass.Autofac.Mvc.Models.Attributes;
 using Jabberwocky.Glass.Autofac.Mvc.Services;
 using Jabberwocky.Glass.Models;
 
@@ -14,17 +15,14 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Models.Factory
         private static readonly ConcurrentDictionary<Type, TypeTuple?> ViewModelTypeCache = new ConcurrentDictionary<Type, TypeTuple?>();
 
         private readonly IComponentContext _resolver;
-        private readonly ISitecoreContext _context;
         private readonly IRenderingContextService _renderingContextService;
 
-        public AutofacViewModelFactory(IComponentContext resolver, IRenderingContextService renderingContextService, ISitecoreContext context)
+        public AutofacViewModelFactory(IComponentContext resolver, IRenderingContextService renderingContextService)
         {
             if (resolver == null) throw new ArgumentNullException(nameof(resolver));
             if (renderingContextService == null) throw new ArgumentNullException(nameof(renderingContextService));
-            if (context == null) throw new ArgumentNullException(nameof(context));
             _resolver = resolver;
             _renderingContextService = renderingContextService;
-            _context = context;
         }
 
         public TModel Create<TModel>() where TModel : class
@@ -34,7 +32,7 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Models.Factory
 
         public object Create(Type model)
         {
-            var glassModel = GetGlassModel();
+            var glassModel = GetGlassModel(model);
             var glassModelType = GetGlassModelTypeFromGenericParam(model);
             var renderingParamType = GetRenderingModelTypeFromGenericParam(model);
             var renderingParamModel = GetRenderingParamModel(renderingParamType);
@@ -116,31 +114,18 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Models.Factory
                 : _renderingContextService.GetCurrentRenderingParameters(renderingParamType);
         }
 
-        private IGlassBase GetGlassModel()
+        private IGlassBase GetGlassModel(Type viewModelType)
         {
-            var rendering = _renderingContextService.GetCurrentRendering();
-            if (rendering == null)
+            var datasourceConfigAttr = viewModelType.GetCustomAttribute<ConfigureDatasourceAttribute>();
+            var config = DatasourceNestingOptions.Default;
+            if (datasourceConfigAttr != null)
             {
-                throw new InvalidOperationException("This processor can only be executed in an MVC rendering context.");
+                config = datasourceConfigAttr.Config == DatasourceResolution.AllowNesting
+                    ? DatasourceNestingOptions.Always
+                    : DatasourceNestingOptions.Never;
             }
 
-            if (!string.IsNullOrEmpty(rendering.DataSource))
-            {
-                // Depending on if the datasource is a GUID vs Path, use the correct overload
-                Guid dataSourceGuid;
-                return Guid.TryParse(rendering.DataSource, out dataSourceGuid)
-                    ? _context.GetItem<IGlassBase>(dataSourceGuid, inferType: true)
-                    : _context.GetItem<IGlassBase>(rendering.DataSource, inferType: true);
-            }
-
-            // Try to get from the Static Item
-            var staticItem = rendering.Item;
-            if (staticItem != null)
-            {
-                return _context.GetItem<IGlassBase>(staticItem.ID.Guid, inferType: true);
-            }
-
-            return _context.GetCurrentItem<IGlassBase>(inferType: true);
+            return _renderingContextService.GetCurrentRenderingDatasource<IGlassBase>(config);
         }
 
         internal struct TypeTuple

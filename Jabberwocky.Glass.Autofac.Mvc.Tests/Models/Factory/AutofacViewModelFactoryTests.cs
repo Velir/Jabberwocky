@@ -1,12 +1,11 @@
 ﻿using Autofac;
 using Autofac.Core;
-using Glass.Mapper.Sc;
 using Jabberwocky.Glass.Autofac.Mvc.Models;
+using Jabberwocky.Glass.Autofac.Mvc.Models.Attributes;
 using Jabberwocky.Glass.Autofac.Mvc.Models.Factory;
 using Jabberwocky.Glass.Autofac.Mvc.Services;
 using Jabberwocky.Glass.Models;
 using NSubstitute;
-using NSubstitute.Core;
 using NUnit.Framework;
 using Sitecore.Mvc.Presentation;
 
@@ -17,7 +16,6 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Tests.Models.Factory
     {
         private AutofacViewModelFactory _sut;
         private IComponentContext _resolver;
-        private ISitecoreContext _sitecoreContext;
         private IRenderingContextService _renderingContextService;
 
         [SetUp]
@@ -25,12 +23,11 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Tests.Models.Factory
         {
             _resolver = Substitute.For<IComponentContext>();
             _renderingContextService = Substitute.For<IRenderingContextService>();
-            _sitecoreContext = Substitute.For<ISitecoreContext>();
 
             IComponentRegistration retVal;
             _resolver.ComponentRegistry.TryGetRegistration(null, out retVal).ReturnsForAnyArgs(true);
 
-            _sut = new AutofacViewModelFactory(_resolver, _renderingContextService, _sitecoreContext);
+            _sut = new AutofacViewModelFactory(_resolver, _renderingContextService);
         }
 
         [Test]
@@ -86,7 +83,7 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Tests.Models.Factory
             var viewModel = new InjectableViewModel();
             var glassModel = Substitute.For<IGlassBase>();
             _resolver.ResolveOptional(typeof(object), new Parameter[0]).ReturnsForAnyArgs(viewModel);
-            _sitecoreContext.GetCurrentItem<IGlassBase>(inferType: true).Returns(glassModel);
+            _renderingContextService.GetCurrentRenderingDatasource<IGlassBase>().ReturnsForAnyArgs(glassModel);
 
             var resolvedModel = _sut.Create<InjectableViewModel>();
 
@@ -104,7 +101,7 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Tests.Models.Factory
             var glassModel = Substitute.For<IGlassBase>();
             var renderingModel = Substitute.For<IRenderingTemplate>();
             _resolver.ResolveOptional(typeof(object), new Parameter[0]).ReturnsForAnyArgs(viewModel);
-            _sitecoreContext.GetCurrentItem<IGlassBase>(inferType: true).Returns(glassModel);
+            _renderingContextService.GetCurrentRenderingDatasource<IGlassBase>().ReturnsForAnyArgs(glassModel);
             _renderingContextService.GetCurrentRenderingParameters(typeof(IRenderingTemplate))
                 .ReturnsForAnyArgs(renderingModel);
 
@@ -125,7 +122,7 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Tests.Models.Factory
             var renderingModel = Substitute.For<IRenderingTemplate>();
             _resolver.ResolveOptional(typeof(object), new Parameter[0])
                 .ReturnsForAnyArgs(ci => new ConstructorViewModel(GetValue<IRenderingTemplate>(ci[1], 1), GetValue<IGlassBase>(ci[1], 0)));
-            _sitecoreContext.GetCurrentItem<IGlassBase>(inferType: true).Returns(glassModel);
+            _renderingContextService.GetCurrentRenderingDatasource<IGlassBase>().ReturnsForAnyArgs(glassModel);
             _renderingContextService.GetCurrentRenderingParameters(typeof(IRenderingTemplate))
                 .ReturnsForAnyArgs(renderingModel);
 
@@ -135,6 +132,42 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Tests.Models.Factory
             Assert.AreSame(renderingModel, resolvedModel.RenderingParameters);
 
             resolvedModel.AssertThatCctorInstancesAreSameAsProperties();
+        }
+
+        [Test]
+        public void Create_WithNestedDatasourceAttribute_Never_UsesAppropriateDatasource()
+        {
+            var mockRendering = Substitute.For<Rendering>();
+            _renderingContextService.GetCurrentRendering().Returns(mockRendering);
+
+            var viewModel = new NeverFallbackViewModel();
+            var glassModel = Substitute.For<IGlassBase>();
+            _resolver.ResolveOptional(typeof(object), new Parameter[0]).ReturnsForAnyArgs(viewModel);
+            _renderingContextService.GetCurrentRenderingDatasource<IGlassBase>(DatasourceNestingOptions.Never).Returns(glassModel);
+
+            var resolvedModel = _sut.Create<NeverFallbackViewModel>();
+
+            Assert.AreSame(viewModel, resolvedModel);
+            Assert.AreSame(glassModel, viewModel.GlassModel);
+            _renderingContextService.Received().GetCurrentRenderingDatasource<IGlassBase>(DatasourceNestingOptions.Never);
+        }
+
+        [Test]
+        public void Create_WithNestedDatasourceAttribute_Always_UsesAppropriateDatasource()
+        {
+            var mockRendering = Substitute.For<Rendering>();
+            _renderingContextService.GetCurrentRendering().Returns(mockRendering);
+
+            var viewModel = new AlwaysFallbackViewModel();
+            var glassModel = Substitute.For<IGlassBase>();
+            _resolver.ResolveOptional(typeof(object), new Parameter[0]).ReturnsForAnyArgs(viewModel);
+            _renderingContextService.GetCurrentRenderingDatasource<IGlassBase>(DatasourceNestingOptions.Always).Returns(glassModel);
+
+            var resolvedModel = _sut.Create<AlwaysFallbackViewModel>();
+
+            Assert.AreSame(viewModel, resolvedModel);
+            Assert.AreSame(glassModel, viewModel.GlassModel);
+            _renderingContextService.Received().GetCurrentRenderingDatasource<IGlassBase>(DatasourceNestingOptions.Always);
         }
 
         private T GetValue<T>(object ci, int index)
@@ -194,6 +227,16 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Tests.Models.Factory
                 Assert.AreSame(_renderingModel, RenderingParameters);
                 Assert.AreSame(_datasourceModel, GlassModel);
             }
+        }
+
+        [DisableNestedDatasource]
+        private class NeverFallbackViewModel : GlassViewModel<IGlassBase>
+        {
+        }
+
+        [AllowNestedDatasource]
+        private class AlwaysFallbackViewModel : GlassViewModel<IGlassBase>
+        {
         }
 
         #endregion
