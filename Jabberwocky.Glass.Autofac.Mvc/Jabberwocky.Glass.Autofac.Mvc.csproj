@@ -103,6 +103,9 @@
     <Compile Include="Attributes\ValidateFormHandlerAttribute.cs" />
     <Compile Include="Attributes\ValidHttpPostAttribute.cs" />
     <Compile Include="Extensions\MvcRegistrationExtensions.cs" />
+    <Compile Include="Models\Attributes\AllowNestedDatasourceAttribute.cs" />
+    <Compile Include="Models\Attributes\ConfigureDatasourceAttribute.cs" />
+    <Compile Include="Models\Attributes\DisableNestedDatasourceAttribute.cs" />
     <Compile Include="Models\Factory\IViewModelFactory.cs" />
     <Compile Include="Models\Factory\AutofacViewModelFactory.cs" />
     <Compile Include="Models\GlassViewModel.cs" />
