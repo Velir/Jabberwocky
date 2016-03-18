@@ -1,4 +1,5 @@
-﻿using Sitecore.Mvc.Presentation;
+﻿using System;
+using Sitecore.Mvc.Presentation;
 
 namespace Jabberwocky.Glass.Autofac.Mvc.Services
 {
@@ -6,5 +7,9 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Services
 	{
 		//TODO: Rendering looks testable, but evaluate if we should return this directly or not
 		Rendering GetCurrentRendering();
+
+	    T GetCurrentRenderingParameters<T>() where T : class;
+
+	    object GetCurrentRenderingParameters(Type renderingParamType);
 	}
 }

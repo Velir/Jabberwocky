@@ -2,6 +2,8 @@
 {
 	public abstract class InjectableGlassViewModelBase
 	{
-		internal object InternalModel;
+		internal object InternalDatasourceModel;
+
+	    internal object InternalRenderingParameterModel;
 	}
 }
