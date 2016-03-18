@@ -2,6 +2,7 @@
 using System.Runtime.Caching;
 using System.Threading.Tasks;
 using Jabberwocky.Core.Caching;
+using Jabberwocky.Core.Caching.Base;
 using NUnit.Framework;
 
 namespace Jabberwocky.Core.Tests.Caching
@@ -99,10 +100,22 @@ namespace Jabberwocky.Core.Tests.Caching
 			Assert.IsTrue(InnerCache.Contains(key));
 			Assert.AreSame(obj, InnerCache.Get(key));
 		}
-		
-		// ASYNC
 
-		[Test, ExpectedException(typeof(ArgumentNullException))]
+        [Test]
+	    public virtual void GetFromCache_NullValue_Successful()
+	    {
+	        const string key = "key";
+	        string retVal = null;
+	        Assert.DoesNotThrow(() => retVal = _cacheProvider.GetFromCache<string>(key, () => null));
+            Assert.IsNull(retVal);  
+
+            // Validate that the null value was stored as a 'NullCacheEntry'
+            Assert.IsNotNull(InnerCache.Get(key) as NullCacheEntry);
+	    }
+
+        // ASYNC
+
+        [Test, ExpectedException(typeof(ArgumentNullException))]
 		public virtual async Task GetFromCacheAsync_NullKey_ReturnsNull()
 		{
 			await _cacheProvider.GetFromCacheAsync<object>(null);
@@ -167,5 +180,16 @@ namespace Jabberwocky.Core.Tests.Caching
 			Assert.IsTrue(InnerCache.Contains(key));
 			Assert.AreSame(obj, InnerCache.Get(key));
 		}
-	}
+
+        [Test]
+        public virtual async Task GetFromCacheAsync_NullValue_Successful()
+        {
+            const string key = "key";
+            string retVal = await _cacheProvider.GetFromCacheAsync<string>(key, () => null);
+            Assert.IsNull(retVal);
+
+            // Validate that the null value was stored as a 'NullCacheEntry'
+            Assert.IsNotNull(InnerCache.Get(key) as NullCacheEntry);
+        }
+    }
 }
