@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Caching\Base\NullCacheEntry.cs" />
     <Compile Include="Caching\GeneralCache.cs" />
     <Compile Include="Caching\Base\BaseCacheProvider.cs" />
     <Compile Include="Caching\IAsyncCacheProvider.cs" />
