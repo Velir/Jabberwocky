@@ -8,6 +8,8 @@ namespace Jabberwocky.Core.Caching.Base
 {
 	public abstract class BaseCacheProvider : ICacheProvider
 	{
+        private static readonly NullCacheEntry DefaultCacheEntry = new NullCacheEntry();
+
 		protected abstract ObjectCache Cache { get; }
 
 		public abstract void EmptyCache();
@@ -40,10 +42,10 @@ namespace Jabberwocky.Core.Caching.Base
 			if (callback == null) throw new ArgumentNullException(nameof(callback));
 
 			// First Get is optimistic
-			T cacheItem = Cache.Get(key) as T;
-			if (cacheItem != null)
+			object cacheItem = Cache.Get(key);
+			if (cacheItem is T || cacheItem is NullCacheEntry)
 			{
-				return cacheItem;
+				return cacheItem as T;
 			}
 
 			// Second Get tries again from Cache (just in case we were pre-empted by another thread's Add).
@@ -60,13 +62,14 @@ namespace Jabberwocky.Core.Caching.Base
 				var item = Cache.Get(key) as T;
 				value = item ?? callback();
 				var expiry = absoluteExpiration == TimeSpan.Zero ? ObjectCache.InfiniteAbsoluteExpiration : DateTime.UtcNow.Add(absoluteExpiration);
-				Cache.Add(key, value, expiry);
+				Cache.Add(key, (object) value ?? DefaultCacheEntry, expiry);
 			}
 			return value;
 		}
 
 		/// <summary>
-		/// Adds an object to the cache; if it already exists, it will overwrite the existing item.
+		/// Adds an object to the cache; if it already exists, it will overwrite the existing item. 
+		/// If 'value' is null, any existing cache item will be removed.
 		/// </summary>
 		/// <typeparam name="T">A reference type</typeparam>
 		/// <param name="key">The cache key, must be unique for each object</param>
@@ -128,10 +131,10 @@ namespace Jabberwocky.Core.Caching.Base
 			if (callback == null) throw new ArgumentNullException(nameof(callback));
 
 			// First Get is optimistic
-			T cacheItem = Cache.Get(key) as T;
-			if (cacheItem != null)
+			object cacheItem = Cache.Get(key);
+			if (cacheItem is T || cacheItem is NullCacheEntry)
 			{
-				return cacheItem;
+				return cacheItem as T;
 			}
 
 			// Second Get tries again from Cache (just in case we were pre-empted by another thread's Add).
@@ -148,7 +151,7 @@ namespace Jabberwocky.Core.Caching.Base
 				var item = Cache.Get(key) as T;
 				value = item ?? await callback(token).ConfigureAwait(false);
 				var expiry = absoluteExpiration == TimeSpan.Zero ? ObjectCache.InfiniteAbsoluteExpiration : DateTime.UtcNow.Add(absoluteExpiration);
-				Cache.Add(key, value, expiry);
+				Cache.Add(key, (object) value ?? DefaultCacheEntry, expiry);
 			}
 			return value;
 		}
