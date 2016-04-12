@@ -32,8 +32,15 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.2.0")]
-[assembly: AssemblyFileVersion("1.0.2.0")]
+[assembly: AssemblyVersion("1.1.0.0")]
+[assembly: AssemblyFileVersion("1.1.0.0")]
 
 [assembly: InternalsVisibleTo("Jabberwocky.Glass.Autofac.Mvc")]
 [assembly: InternalsVisibleTo("Jabberwocky.Glass.Autofac.WebApi")]
+
+// Forwarded Types:
+#pragma warning disable 612
+[assembly: TypeForwardedTo(typeof(Jabberwocky.Glass.Autofac.Attributes.LifetimeScope))]
+[assembly: TypeForwardedTo(typeof(Jabberwocky.Glass.Autofac.Attributes.AutowireServiceAttribute))]
+[assembly: TypeForwardedTo(typeof(Jabberwocky.Glass.Autofac.Extensions.AutowireRegistrationExtensions))]
+#pragma warning restore 612
