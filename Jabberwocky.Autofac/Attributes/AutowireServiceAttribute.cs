@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Jabberwocky.Glass.Autofac.Attributes
+namespace Jabberwocky.Autofac.Attributes
 {
-	public enum LifetimeScope
+    public enum LifetimeScope
 	{
 		/// <summary>
 		/// Transient behavior; instance per dependency
@@ -15,7 +15,7 @@ namespace Jabberwocky.Glass.Autofac.Attributes
 		/// <summary>
 		///  For Web-based scenarios; instance per web request
 		/// </summary>
-		PerRequest,	// TODO: Do we need this (ie, can this be covered by 'PerScope')? Might be beneficial in some cases...
+		PerRequest,
 		/// <summary>
 		/// Externally owned; will not be tracked by the container
 		/// </summary>
