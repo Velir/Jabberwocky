@@ -34,6 +34,10 @@
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Autofac.Extras.AggregateService, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.Extras.AggregateService.3.0.4\lib\net40\Autofac.Extras.AggregateService.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Autofac.Extras.DynamicProxy2, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.Extras.DynamicProxy2.3.0.5\lib\net40\Autofac.Extras.DynamicProxy2.dll</HintPath>
       <Private>True</Private>
@@ -53,7 +57,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Aspects\Attributes\AspectAttribute.cs" />
+    <Compile Include="Attributes\AutowireServiceAttribute.cs" />
+    <Compile Include="Extensions\AutowireRegistrationExtensions.cs" />
     <Compile Include="Extensions\ResolutionExtensions.cs" />
+    <Compile Include="Internals\AssemblyConstants.cs" />
+    <Compile Include="Internals\ForwardedTypes\AutofacTypes.cs" />
     <Compile Include="Modules\Aspected\AspectInterceptionModule.cs" />
     <Compile Include="Modules\Aspected\Configuration\AspectConfiguration.cs" />
     <Compile Include="Modules\Aspected\Configuration\InterceptionContext.cs" />
@@ -63,7 +71,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
