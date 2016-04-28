@@ -8,7 +8,14 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Pipelines.Factories.Providers
     {
         public ILifetimeScope GetLifetimeScope()
         {
-            return AutofacDependencyResolver.Current?.RequestLifetimeScope;
+            try
+            {
+                return AutofacDependencyResolver.Current?.RequestLifetimeScope;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }
