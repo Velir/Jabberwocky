@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Reflection;
 using System.Web.Mvc;
 
-namespace Jabberwocky.Glass.Autofac.Mvc.Attributes
+namespace Jabberwocky.Glass.Mvc.Attributes
 {
 	[AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
 	public class HttpGetOrInvalidHttpPostAttribute : ActionMethodSelectorAttribute

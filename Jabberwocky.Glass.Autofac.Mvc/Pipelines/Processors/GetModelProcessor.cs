@@ -1,7 +1,7 @@
 ﻿using System;
 using Glass.Mapper.Sc.Configuration.Attributes;
-using Jabberwocky.Glass.Autofac.Mvc.Models.Factory;
 using Jabberwocky.Glass.Autofac.Pipelines.Processors;
+using Jabberwocky.Glass.Mvc.Models.Factory;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Mvc.Configuration;

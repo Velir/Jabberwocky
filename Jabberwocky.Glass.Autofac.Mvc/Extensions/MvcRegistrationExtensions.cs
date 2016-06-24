@@ -5,7 +5,8 @@ using Glass.Mapper.Sc;
 using Glass.Mapper.Sc.ModelCache;
 using Jabberwocky.Glass.Autofac.Mvc.Models;
 using Jabberwocky.Glass.Autofac.Mvc.Models.Factory;
-using Jabberwocky.Glass.Autofac.Mvc.Services;
+using Jabberwocky.Glass.Mvc.Models.Factory;
+using Jabberwocky.Glass.Mvc.Services;
 
 namespace Jabberwocky.Glass.Autofac.Mvc.Extensions
 {
