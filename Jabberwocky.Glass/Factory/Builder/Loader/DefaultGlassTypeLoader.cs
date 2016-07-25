@@ -29,7 +29,8 @@ namespace Jabberwocky.Glass.Factory.Builder.Loader
 			{
 				GlassType = GetGlassType(tuple.Abstract),
 				ImplementationType = tuple.Abstract,
-				IsFallback = GetIsFallback(tuple.Abstract)
+				IsFallback = GetIsFallback(tuple.Abstract),
+				ZIndex = GetZIndex(tuple.Abstract)
 			});
 		}
 
@@ -56,6 +57,12 @@ namespace Jabberwocky.Glass.Factory.Builder.Loader
 		{
 			var customAttribute = abstractType.GetCustomAttribute<GlassFactoryTypeAttribute>(); // overload: true?
 			return customAttribute.Type;
+		}
+
+		protected static int GetZIndex(Type abstractType)
+		{
+			var customAttribute = abstractType.GetCustomAttribute<GlassFactoryTypeAttribute>(); // overload: true?
+			return customAttribute.ZIndex;
 		}
 
 		private static Assembly LoadAssembly(string assemblyName)

@@ -49,20 +49,31 @@ namespace Jabberwocky.Glass.Tests.Factory
 						{
 							GlassType = typeof (IBaseType),
 							ImplementationType = typeof (IBaseTypeModel),
-							IsFallback = true
+							IsFallback = true,
+							ZIndex = 0
+						},
+						// Actual sitecore template type, inherits BaseType
+						new GlassInterfaceMetadata
+						{
+							GlassType = typeof (IInheritedTemplate),
+							ImplementationType = typeof (IInheritedTemplateLowerPriorityModel),
+							IsFallback = false,
+							ZIndex = 0
 						},
 						// Actual sitecore template type, inherits BaseType
 						new GlassInterfaceMetadata
 						{
 							GlassType = typeof (IInheritedTemplate),
 							ImplementationType = typeof (IInheritedTemplateModel),
-							IsFallback = false
+							IsFallback = false,
+							ZIndex = 1
 						},
 						new GlassInterfaceMetadata
 						{
 							GlassType = typeof (IIntermediateTemplate),
 							ImplementationType = typeof(IIntermediateTemplateModel),
-							IsFallback = false
+							IsFallback = false,
+							ZIndex = 0
 						}
 					}
 				}
@@ -259,6 +270,25 @@ namespace Jabberwocky.Glass.Tests.Factory
 			Assert.IsTrue(testItem.IsFallback); // Should fallback to IInheritedTemplateModel -> BaseType
 		}
 
+		[Test]
+		public void GlassFactory_ZIndexBehavior_WillHigherPriorityImplementation()
+		{
+			// Key notes about this test:
+			// 1. Validates fallback behavior
+			// 2. Fallback selection aglorithm will select next concrete (non-abstract) implementation of GlassFactoryType model's template hierarchy,
+			//	  and not the initial Glass model's template hierarchy.  This is desirable to more closely mimic standard object-oriented inheritance...
+			// 3. However, it is an open question if we want to make this configurable (is there a need?)
+
+			var mockItem = Substitute.For<IInheritedTemplate>();
+			mockItem._Id = Guid.NewGuid();
+			mockItem._TemplateId.Returns(new Guid(FakeTemplateString)); // matching template
+			mockItem._BaseTemplates.Returns(new Guid[0]);
+
+			var testItem = _glassFactory.GetItem<ITestInterface>(mockItem);
+			Assert.IsNotNull(testItem);
+			Assert.AreEqual("IInheritedTemplateModel", testItem.ZIndexTest); // Should fallback to IInheritedTemplateModel -> BaseType
+		}
+
 		private ITestInterface GetItemWithFallback()
 		{
 			var mockItem = Substitute.For<IBaseType>();
@@ -316,9 +346,11 @@ namespace Jabberwocky.Glass.Tests.Factory
 			T GetGenericItem<T>() where T : new();
 
 			object DontCallMe();
+
+			string ZIndexTest { get; }
 		}
 
-		[GlassFactoryType(typeof (IInheritedTemplate))]
+		[GlassFactoryType(typeof (IInheritedTemplate), ZIndex = 1)]
 		public abstract class IInheritedTemplateModel : ITestInterface
 		{
 			public abstract bool IsFallback { get; }
@@ -346,6 +378,40 @@ namespace Jabberwocky.Glass.Tests.Factory
 			{
 				return new object();
 			}
+
+			public string ZIndexTest => typeof(IInheritedTemplateModel).Name;
+		}
+
+		[GlassFactoryType(typeof(IInheritedTemplate))]
+		public abstract class IInheritedTemplateLowerPriorityModel : ITestInterface
+		{
+			public abstract bool IsFallback { get; }
+
+			public bool IsNotFallback => true;
+
+			// Important for test: must be marked virtual
+			public virtual bool VirtualIsNotFallback => true;
+
+			// Important for test: must be marked virtual
+			public virtual object VirtualNotImplementedMethod()
+			{
+				throw new NotImplementedException();
+			}
+
+			// Important for test: must NOT be marked virtual
+			public object NonVirtualNotImplementedMethod()
+			{
+				throw new NotImplementedException();
+			}
+
+			public abstract T GetGenericItem<T>() where T : new();
+
+			public object DontCallMe()
+			{
+				return new object();
+			}
+
+			public string ZIndexTest => typeof(IInheritedTemplateLowerPriorityModel).Name;
 		}
 
 		[GlassFactoryType(typeof (IBaseType))]
@@ -381,6 +447,8 @@ namespace Jabberwocky.Glass.Tests.Factory
 				Assert.Fail("I should never be called");
 				return null;
 			}
+
+			public string ZIndexTest => typeof(IBaseTypeModel).Name;
 		}
 
 		[GlassFactoryType(typeof(IIntermediateTemplate))]
@@ -395,6 +463,7 @@ namespace Jabberwocky.Glass.Tests.Factory
 			public abstract object VirtualNotImplementedMethod();
 
 			public abstract object DontCallMe();
+			public abstract string ZIndexTest { get; }
 		}
 
 		#endregion
