@@ -11,10 +11,12 @@ namespace Jabberwocky.Glass.Factory.Attributes
 	{
 		public Type Type { get; set; }
 		public bool IsFallback { get; set; }
+		public int ZIndex { get; set; }
 
 		public GlassFactoryTypeAttribute(Type type)
 		{
 			Type = type;
+			ZIndex = 0;
 		}
 	}
 }

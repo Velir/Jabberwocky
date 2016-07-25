@@ -34,7 +34,7 @@ namespace Jabberwocky.Glass.Factory.Caching
 		/// <summary>
 		/// 'Static' cache of Glass Factory Interface types to corresponding mapping of Template -> Implementations
 		/// </summary>
-		protected internal IDictionary<Type, IDictionary<string, Type>> TemplateCache { get; }
+		protected internal IDictionary<Type, IDictionary<string, GlassInterfaceMetadata>> TemplateCache { get; }
 
 
 		public GlassTemplateCacheService(ILookup<Type, GlassInterfaceMetadata> interfaceMappings, Func<ISitecoreService> serviceFactory)
@@ -68,7 +68,7 @@ namespace Jabberwocky.Glass.Factory.Caching
 			if (itemInterfaces.ContainsKey(templateKey))
 			{
 				// We found an exact match...
-				return itemInterfaces[templateKey];
+				return itemInterfaces[templateKey].ImplementationType;
 			}
 
 			// If no exact match exists, attempt to resolve from 1st-level cache
@@ -82,7 +82,7 @@ namespace Jabberwocky.Glass.Factory.Caching
 						string templateIdString = baseTemplateId.ToString();
 						if (itemInterfaces.ContainsKey(templateIdString))
 						{
-							return itemInterfaces[templateIdString];
+							return itemInterfaces[templateIdString].ImplementationType;
 						}
 					}
 				}
@@ -133,13 +133,13 @@ namespace Jabberwocky.Glass.Factory.Caching
 			return baseTemplates.Concat(baseTemplates.SelectMany(guid => InternalGetBaseTemplates(service.GetItem<IBaseTemplates>(guid), service, visitedSet, depth - 1)));
 		}
 
-		private IDictionary<Type, IDictionary<string, Type>> GenerateCache(ILookup<Type, GlassInterfaceMetadata> interfaceMappings)
+		private IDictionary<Type, IDictionary<string, GlassInterfaceMetadata>> GenerateCache(ILookup<Type, GlassInterfaceMetadata> interfaceMappings)
 		{
-			var dictionary = new Dictionary<Type, IDictionary<string, Type>>();
+			var dictionary = new Dictionary<Type, IDictionary<string, GlassInterfaceMetadata>>();
 
 			foreach (var mappingGroup in interfaceMappings)
 			{
-				var innerDictionary = new Dictionary<string, Type>(StringComparer.InvariantCultureIgnoreCase);
+				var innerDictionary = new Dictionary<string, GlassInterfaceMetadata>(StringComparer.InvariantCultureIgnoreCase);
 
 				// Key: Factory Interface type
 				dictionary.Add(mappingGroup.Key, innerDictionary);
@@ -153,7 +153,18 @@ namespace Jabberwocky.Glass.Factory.Caching
 
 					if (!string.IsNullOrEmpty(templateId))
 					{
-						innerDictionary.Add(templateId, metadata.ImplementationType);
+						if (innerDictionary.ContainsKey(templateId))
+						{
+							var implementation = innerDictionary[templateId];
+							if (metadata.ZIndex > implementation.ZIndex)
+							{
+								innerDictionary[templateId] = metadata;
+							}
+						}
+						else
+						{
+							innerDictionary.Add(templateId, metadata);
+						}
 					}
 				}
 			}
