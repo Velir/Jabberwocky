@@ -21,5 +21,11 @@ namespace Jabberwocky.Glass.Factory.Util
 		/// </summary>
 		/// <returns></returns>
 		public bool IsFallback { get; internal set; }
+
+		/// <summary>
+		/// The priority for this abstract implementation type to determine if it will be used when multiple implementations for this GlassType exist.
+		/// </summary>
+		/// <returns></returns>
+		public int ZIndex { get; internal set; }
 	}
 }
