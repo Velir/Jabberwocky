@@ -45,6 +45,7 @@ namespace Jabberwocky.Core.Cryptography
 		public AesHmacCryptoService(CryptoConfiguration config, ISerializationProvider serializationProvider)
 		{
 			if (serializationProvider == null) throw new ArgumentNullException(nameof(serializationProvider));
+			if (!IsCryptoConfigurationValid(config)) throw new ArgumentException("All configuration properties must be valid.", nameof(config));
 			SerializationProvider = serializationProvider;
 
 			_lazyDerivedBytes = new Lazy<KeySaltPair>(() => GenerateDerivedBytes(config));
@@ -147,7 +148,9 @@ namespace Jabberwocky.Core.Cryptography
 		private static KeySaltPair GenerateDerivedBytes(CryptoConfiguration config)
 		{
 			var saltBytes = new byte[SaltSize];
-			Encoding.UTF8.GetBytes(config.InitializationVector, 0, config.InitializationVector.Length, saltBytes, 0);
+			var charSizeInBytes = sizeof(char);
+			var characterCount = Math.Min(SaltSize / charSizeInBytes, config.InitializationVector.Length);
+			Encoding.UTF8.GetBytes(config.InitializationVector, 0, characterCount, saltBytes, 0);
 
 			using (var derivePassword = new Rfc2898DeriveBytes(config.SecretKey, saltBytes))
 			{
@@ -161,6 +164,13 @@ namespace Jabberwocky.Core.Cryptography
 					};
 				}
 			}
+		}
+
+		private static bool IsCryptoConfigurationValid(CryptoConfiguration config)
+		{
+			return !string.IsNullOrEmpty(config.DigestKey)
+				   && !string.IsNullOrEmpty(config.InitializationVector)
+				   && !string.IsNullOrEmpty(config.SecretKey);
 		}
 
 		#endregion
