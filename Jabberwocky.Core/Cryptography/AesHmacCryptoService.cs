@@ -18,15 +18,15 @@ namespace Jabberwocky.Core.Cryptography
 		protected ISerializationProvider SerializationProvider { get; }
 
 		/// <summary>
-		/// Symmetric Key size for 256-bit cipher
+		/// Symmetric Key size for 256-bit cipher (in bytes)
 		/// </summary>
 		private const int KeySize = 32;
 		/// <summary>
-		/// AES cipher block-size
+		/// AES cipher block-size (in bytes)
 		/// </summary>
-		private const int BlockSize = 128;
+		private const int BlockSize = 16;
 		/// <summary>
-		/// Initialization Vector size
+		/// Initialization Vector size (in bytes)
 		/// </summary>
 		private const int SaltSize = 16;
 
@@ -123,9 +123,11 @@ namespace Jabberwocky.Core.Cryptography
 
 		protected virtual byte[] CryptContent(byte[] contentBytes, Func<SymmetricAlgorithm, ICryptoTransform> cryptorFunc)
 		{
+			const int blockSizeInBits = BlockSize * 8;
+
 			using (var aes = new RijndaelManaged())
 			{
-				aes.BlockSize = BlockSize;
+				aes.BlockSize = blockSizeInBits;
 				aes.Mode = CipherMode.CBC;
 				aes.Key = SymmetricKey;
 				aes.IV = Salt;
