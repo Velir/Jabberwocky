@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using Castle.DynamicProxy;
 using Glass.Mapper.Sc.Configuration.Attributes;
+using Jabberwocky.Core.Utils.Extensions;
 using Jabberwocky.Glass.Factory.Attributes;
 using Jabberwocky.Glass.Factory.Caching;
 using Jabberwocky.Glass.Factory.Implementation;
@@ -78,17 +80,34 @@ namespace Jabberwocky.Glass.Factory.Interceptors
 				? invocationTarget.GetGenericMethodDefinition()
 				: invocationTarget;
 
-			var map = invocation.TargetType.GetInterfaceMap(_interfaceType);
-			var index = Array.IndexOf(map.TargetMethods, targetMethod);
+			var fallbackMethod = GetFallbackInterfaceMethod(invocation, _interfaceType, invocationTarget, targetMethod);
+			if (fallbackMethod != null)
+			{
+				invocation.ReturnValue = fallbackMethod.Invoke(fallbackImpl, invocation.Arguments);
+			}
+		}
 
-			if (index == -1) return;
+		private static MethodInfo GetFallbackInterfaceMethod(IInvocation invocation, Type targetInterfaceType, 
+			MethodInfo invocationTarget, MethodInfo targetMethod)
+		{
+			var interfaceCandidates = new[] { targetInterfaceType }.Concat(targetInterfaceType.GetInterfaces());
 
-			MethodInfo interfaceMethod = map.InterfaceMethods[index];
-			interfaceMethod = interfaceMethod.IsGenericMethod
-				? interfaceMethod.MakeGenericMethod(invocationTarget.GetGenericArguments())
-				: interfaceMethod;
+			foreach (var interfaceType in interfaceCandidates)
+			{
+				var map = invocation.TargetType.GetInterfaceMap(interfaceType);
+				var index = Array.IndexOf(map.TargetMethods, targetMethod);
 
-			invocation.ReturnValue = interfaceMethod.Invoke(fallbackImpl, invocation.Arguments);
+				if (index == -1) continue;
+
+				MethodInfo interfaceMethod = map.InterfaceMethods[index];
+				interfaceMethod = interfaceMethod.IsGenericMethod
+					? interfaceMethod.MakeGenericMethod(invocationTarget.GetGenericArguments())
+					: interfaceMethod;
+
+				return interfaceMethod;
+			}
+
+			return null;
 		}
 	}
 }

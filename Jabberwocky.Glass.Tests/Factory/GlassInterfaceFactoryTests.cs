@@ -76,6 +76,26 @@ namespace Jabberwocky.Glass.Tests.Factory
 							ZIndex = 0
 						}
 					}
+				},
+				{
+					typeof(INestedTestInterface), new[]
+					{
+						new GlassInterfaceMetadata
+						{
+							GlassType = typeof (IIntermediateTemplate),
+							ImplementationType = typeof(IIntermediateTemplateModel),
+							IsFallback = false,
+							ZIndex = 0
+						},
+						// Base Type, matches no direct template
+						new GlassInterfaceMetadata
+						{
+							GlassType = typeof (IBaseType),
+							ImplementationType = typeof (IBaseTypeModel),
+							IsFallback = true,
+							ZIndex = 0
+						},
+					}
 				}
 			};
 
@@ -289,6 +309,20 @@ namespace Jabberwocky.Glass.Tests.Factory
 			Assert.AreEqual("IInheritedTemplateModel", testItem.ZIndexTest); // Should fallback to IInheritedTemplateModel -> BaseType
 		}
 
+		[Test]
+		public void GlassFactory_FallbackBehavior_WorksWithNestedInterfaces()
+		{
+			
+			var mockItem = Substitute.For<IIntermediateTemplate>();
+			mockItem._Id = Guid.NewGuid();
+			mockItem._TemplateId.Returns(new Guid(FakeIntermediateTemplate)); // matching template
+			mockItem._BaseTemplates.Returns(new Guid[0]);
+
+			var testItem = _glassFactory.GetItem<INestedTestInterface>(mockItem);
+			Assert.IsNotNull(testItem);
+			Assert.AreEqual("IBaseTypeModel", testItem.ZIndexTest); // Should fallback to IIntermediateTemplateModel -> BaseType
+		}
+
 		private ITestInterface GetItemWithFallback()
 		{
 			var mockItem = Substitute.For<IBaseType>();
@@ -348,6 +382,12 @@ namespace Jabberwocky.Glass.Tests.Factory
 			object DontCallMe();
 
 			string ZIndexTest { get; }
+		}
+
+		[GlassFactoryInterface]
+		private interface INestedTestInterface : ITestInterface
+		{
+			
 		}
 
 		[GlassFactoryType(typeof (IInheritedTemplate), ZIndex = 1)]
@@ -415,7 +455,7 @@ namespace Jabberwocky.Glass.Tests.Factory
 		}
 
 		[GlassFactoryType(typeof (IBaseType))]
-		public abstract class IBaseTypeModel : ITestInterface
+		public abstract class IBaseTypeModel : ITestInterface, INestedTestInterface
 		{
 			private readonly IBaseType _innerItem;
 			protected IBaseTypeModel(IBaseType innerItem)
@@ -452,7 +492,7 @@ namespace Jabberwocky.Glass.Tests.Factory
 		}
 
 		[GlassFactoryType(typeof(IIntermediateTemplate))]
-		public abstract class IIntermediateTemplateModel : ITestInterface
+		public abstract class IIntermediateTemplateModel : INestedTestInterface
 		{
 			public abstract bool IsNotFallback { get; } 
 			public abstract bool IsFallback { get; }
