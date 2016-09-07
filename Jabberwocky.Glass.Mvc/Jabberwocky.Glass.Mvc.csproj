@@ -93,6 +93,8 @@
     <Compile Include="Attributes\HttpGetOrInvalidHttpPostAttribute.cs" />
     <Compile Include="Attributes\ValidateFormHandlerAttribute.cs" />
     <Compile Include="Attributes\ValidHttpPostAttribute.cs" />
+    <Compile Include="Internals\AssemblyConstants.cs" />
+    <Compile Include="Internals\ForwardedTypes\AutofacMvcTypes.cs" />
     <Compile Include="Models\Factory\IViewModelFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DatasourceNestingOptions.cs" />

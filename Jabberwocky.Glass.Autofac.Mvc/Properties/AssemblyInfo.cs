@@ -36,3 +36,19 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.1.1.0")]
 
 [assembly: InternalsVisibleTo("Jabberwocky.Glass.Autofac.Mvc.Tests")]
+
+#pragma warning disable 612
+[assembly: TypeForwardedTo(typeof(Jabberwocky.Glass.Autofac.Mvc.Attributes.HttpGetOrInvalidHttpPostAttribute))]
+[assembly: TypeForwardedTo(typeof(Jabberwocky.Glass.Autofac.Mvc.Attributes.ValidateFormHandlerAttribute))]
+[assembly: TypeForwardedTo(typeof(Jabberwocky.Glass.Autofac.Mvc.Attributes.ValidHttpPostAttribute))]
+
+[assembly: TypeForwardedTo(typeof(Jabberwocky.Glass.Autofac.Mvc.Models.Factory.IViewModelFactory))]
+
+[assembly: TypeForwardedTo(typeof(Jabberwocky.Glass.Autofac.Mvc.Services.IRenderingContextService))]
+[assembly: TypeForwardedTo(typeof(Jabberwocky.Glass.Autofac.Mvc.Services.RenderingContextService))]
+[assembly: TypeForwardedTo(typeof(Jabberwocky.Glass.Autofac.Mvc.Services.DatasourceNestingOptions))]
+
+[assembly: TypeForwardedTo(typeof(Jabberwocky.Glass.Autofac.Mvc.Util.CustomSitecoreHelper))]
+
+[assembly: TypeForwardedTo(typeof(Jabberwocky.Glass.Autofac.Mvc.Views.CustomGlassView<>))]
+#pragma warning restore 612

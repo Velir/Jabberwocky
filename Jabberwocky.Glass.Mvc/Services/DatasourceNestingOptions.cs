@@ -1,6 +1,8 @@
 namespace Jabberwocky.Glass.Mvc.Services
 {
-	public enum DatasourceNestingOptions
+    // This type is forwarded... until the obolete version is deprecated, any changes here should be evaluated against the forwarded type
+
+    public enum DatasourceNestingOptions
     {
         Default,
         Never,
