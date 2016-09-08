@@ -1,9 +1,9 @@
-﻿namespace Jabberwocky.Glass.Autofac.Mvc.Models
+namespace Jabberwocky.Glass.Autofac.Mvc.Models
 {
 	public abstract class InjectableGlassViewModelBase
 	{
 		internal object InternalDatasourceModel;
 
-	    internal object InternalRenderingParameterModel;
+		internal object InternalRenderingParameterModel;
 	}
 }

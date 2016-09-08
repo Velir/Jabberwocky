@@ -1,0 +1,653 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Sitecore.Kernel.7.0.0.0.Fakes</name>
+    </assembly>
+    <members>
+        <member name="T:Sitecore.Data.Items.Fakes.ShimItem">
+            <summary>Shim type of Sitecore.Data.Items.Item</summary>
+        </member>
+        <member name="M:Sitecore.Data.Items.Fakes.ShimItem.#ctor">
+            <summary>Initializes a new shim instance</summary>
+        </member>
+        <member name="M:Sitecore.Data.Items.Fakes.ShimItem.#ctor(Sitecore.Data.Items.Item)">
+            <summary>Initializes a new shim for the given instance</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AccessGet">
+            <summary>Sets the shim of Item.get_Access()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AddStringBranchId">
+            <summary>Sets the shim of Item.Add(String name, BranchId branchId)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AddStringBranchItem">
+            <summary>Sets the shim of Item.Add(String name, BranchItem branch)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AddStringTemplateID">
+            <summary>Sets the shim of Item.Add(String name, TemplateID templateID)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AddStringTemplateItem">
+            <summary>Sets the shim of Item.Add(String name, TemplateItem template)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AddToItemCloningRelationsCacheItemItemUri">
+            <summary>Sets the shim of Item.AddToItemCloningRelationsCache(Item item, ItemUri uri)</summary>
+        </member>
+        <member name="T:Sitecore.Data.Items.Fakes.ShimItem.AllInstances">
+            <summary>Define shims for all instances members</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.AccessGet">
+            <summary>Sets the shim of Item.get_Access()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.AddStringBranchId">
+            <summary>Sets the shim of Item.Add(String name, BranchId branchId)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.AddStringBranchItem">
+            <summary>Sets the shim of Item.Add(String name, BranchItem branch)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.AddStringTemplateID">
+            <summary>Sets the shim of Item.Add(String name, TemplateID templateID)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.AddStringTemplateItem">
+            <summary>Sets the shim of Item.Add(String name, TemplateItem template)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.AppearanceGet">
+            <summary>Sets the shim of Item.get_Appearance()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.AxesGet">
+            <summary>Sets the shim of Item.get_Axes()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.BeginEdit">
+            <summary>Sets the shim of Item.BeginEdit()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.BranchGet">
+            <summary>Sets the shim of Item.get_Branch()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.BranchIdGet">
+            <summary>Sets the shim of Item.get_BranchId()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.BranchIdSetID">
+            <summary>Sets the shim of Item.set_BranchId(ID value)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.BranchesGet">
+            <summary>Sets the shim of Item.get_Branches()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.ChangeTemplateTemplateItem">
+            <summary>Sets the shim of Item.ChangeTemplate(TemplateItem template)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.ChildrenGet">
+            <summary>Sets the shim of Item.get_Children()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.CloneIDDatabase">
+            <summary>Sets the shim of Item.Clone(ID cloneID, Database ownerDatabase)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.CloneItem">
+            <summary>Sets the shim of Item.Clone(Item item)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.CloneToItem">
+            <summary>Sets the shim of Item.CloneTo(Item destination)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.CloneToItemBoolean">
+            <summary>Sets the shim of Item.CloneTo(Item destination, Boolean deep)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.CloneToItemStringBoolean">
+            <summary>Sets the shim of Item.CloneTo(Item destination, String name, Boolean deep)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.CopyToItemString">
+            <summary>Sets the shim of Item.CopyTo(Item destination, String copyName)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.CopyToItemStringIDBoolean">
+            <summary>Sets the shim of Item.CopyTo(Item destination, String copyName, ID copyID, Boolean deep)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.DatabaseGet">
+            <summary>Sets the shim of Item.get_Database()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.Delete">
+            <summary>Sets the shim of Item.Delete()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.DeleteBoolean">
+            <summary>Sets the shim of Item.Delete(Boolean removeBlobs)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.DeleteChildren">
+            <summary>Sets the shim of Item.DeleteChildren()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.DisplayNameGet">
+            <summary>Sets the shim of Item.get_DisplayName()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.Duplicate">
+            <summary>Sets the shim of Item.Duplicate()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.DuplicateString">
+            <summary>Sets the shim of Item.Duplicate(String copyName)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.EditingGet">
+            <summary>Sets the shim of Item.get_Editing()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.EmptyGet">
+            <summary>Sets the shim of Item.get_Empty()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.EndEdit">
+            <summary>Sets the shim of Item.EndEdit()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.FieldsGet">
+            <summary>Sets the shim of Item.get_Fields()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.GetChangesBoolean">
+            <summary>Sets the shim of Item.GetChanges(Boolean force)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.GetChildren">
+            <summary>Sets the shim of Item.GetChildren()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.GetChildrenChildListOptions">
+            <summary>Sets the shim of Item.GetChildren(ChildListOptions options)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.GetClones">
+            <summary>Sets the shim of Item.GetClones()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.GetClonesBoolean">
+            <summary>Sets the shim of Item.GetClones(Boolean processChildren)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.GetFullChanges">
+            <summary>Sets the shim of Item.GetFullChanges()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.GetOuterXmlBoolean">
+            <summary>Sets the shim of Item.GetOuterXml(Boolean includeSubitems)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.GetOuterXmlItemSerializerOptions">
+            <summary>Sets the shim of Item.GetOuterXml(ItemSerializerOptions options)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.GetPropertyString">
+            <summary>Sets the shim of Item.GetProperty(String name)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.GetUniqueId">
+            <summary>Sets the shim of Item.GetUniqueId()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.HasChildrenGet">
+            <summary>Sets the shim of Item.get_HasChildren()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.HasClonesGet">
+            <summary>Sets the shim of Item.get_HasClones()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.HelpGet">
+            <summary>Sets the shim of Item.get_Help()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.IDGet">
+            <summary>Sets the shim of Item.get_ID()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.InnerDataGet">
+            <summary>Sets the shim of Item.get_InnerData()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.IsCloneGet">
+            <summary>Sets the shim of Item.get_IsClone()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.IsEditingGet">
+            <summary>Sets the shim of Item.get_IsEditing()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.IsItemCloneGet">
+            <summary>Sets the shim of Item.get_IsItemClone()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.KeyGet">
+            <summary>Sets the shim of Item.get_Key()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.LanguageGet">
+            <summary>Sets the shim of Item.get_Language()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.LanguagesGet">
+            <summary>Sets the shim of Item.get_Languages()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.LinksGet">
+            <summary>Sets the shim of Item.get_Links()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.LockingGet">
+            <summary>Sets the shim of Item.get_Locking()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.MasterGet">
+            <summary>Sets the shim of Item.get_Master()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.MasterIDGet">
+            <summary>Sets the shim of Item.get_MasterID()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.MasterIDSetID">
+            <summary>Sets the shim of Item.set_MasterID(ID value)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.MastersGet">
+            <summary>Sets the shim of Item.get_Masters()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.ModifiedGet">
+            <summary>Sets the shim of Item.get_Modified()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.MoveToItem">
+            <summary>Sets the shim of Item.MoveTo(Item destination)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.NameGet">
+            <summary>Sets the shim of Item.get_Name()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.NameSetString">
+            <summary>Sets the shim of Item.set_Name(String value)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.OriginatorIdGet">
+            <summary>Sets the shim of Item.get_OriginatorId()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.ParentGet">
+            <summary>Sets the shim of Item.get_Parent()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.ParentIDGet">
+            <summary>Sets the shim of Item.get_ParentID()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.PasteItemStringBooleanPasteMode">
+            <summary>Sets the shim of Item.PasteItem(String xml, Boolean changeIDs, PasteMode mode)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.PasteStringBooleanPasteMode">
+            <summary>Sets the shim of Item.Paste(String xml, Boolean changeIDs, PasteMode mode)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.PathsGet">
+            <summary>Sets the shim of Item.get_Paths()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.PublishingGet">
+            <summary>Sets the shim of Item.get_Publishing()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.Recycle">
+            <summary>Sets the shim of Item.Recycle()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.RecycleChildren">
+            <summary>Sets the shim of Item.RecycleChildren()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.RecycleVersion">
+            <summary>Sets the shim of Item.RecycleVersion()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.RejectChanges">
+            <summary>Sets the shim of Item.RejectChanges()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.Reload">
+            <summary>Sets the shim of Item.Reload()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.RuntimeSettingsGet">
+            <summary>Sets the shim of Item.get_RuntimeSettings()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.SecurityGet">
+            <summary>Sets the shim of Item.get_Security()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.SecuritySetItemSecurity">
+            <summary>Sets the shim of Item.set_Security(ItemSecurity value)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.SetChangesItemChanges">
+            <summary>Sets the shim of Item.SetChanges(ItemChanges changes)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.SetDatabaseDatabase">
+            <summary>Sets the shim of Item.SetDatabase(Database database)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.SetInnerDataItem">
+            <summary>Sets the shim of Item.SetInnerData(Item item)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.SetPropertyStringIDID">
+            <summary>Sets the shim of Item.SetProperty(String name, ID value, ID originalValue)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.SetPropertyStringStringString">
+            <summary>Sets the shim of Item.SetProperty(String name, String value, String originalValue)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.SharedFieldsSourceGet">
+            <summary>Sets the shim of Item.get_SharedFieldsSource()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.SourceGet">
+            <summary>Sets the shim of Item.get_Source()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.SourceUriGet">
+            <summary>Sets the shim of Item.get_SourceUri()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.StateGet">
+            <summary>Sets the shim of Item.get_State()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.StatisticsGet">
+            <summary>Sets the shim of Item.get_Statistics()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.SyncRootGet">
+            <summary>Sets the shim of Item.get_SyncRoot()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.TemplateGet">
+            <summary>Sets the shim of Item.get_Template()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.TemplateIDGet">
+            <summary>Sets the shim of Item.get_TemplateID()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.TemplateIDSetID">
+            <summary>Sets the shim of Item.set_TemplateID(ID value)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.TemplateNameGet">
+            <summary>Sets the shim of Item.get_TemplateName()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.UriGet">
+            <summary>Sets the shim of Item.get_Uri()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.VersionGet">
+            <summary>Sets the shim of Item.get_Version()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.VersionsGet">
+            <summary>Sets the shim of Item.get_Versions()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances.VisualizationGet">
+            <summary>Sets the shim of Item.get_Visualization()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AllInstances._Deleteb__1bID">
+            <summary>Sets the shim of Item.&lt;Delete&gt;b__1b(ID id)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AppearanceGet">
+            <summary>Sets the shim of Item.get_Appearance()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.AxesGet">
+            <summary>Sets the shim of Item.get_Axes()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.BeginEdit">
+            <summary>Sets the shim of Item.BeginEdit()</summary>
+        </member>
+        <member name="M:Sitecore.Data.Items.Fakes.ShimItem.BehaveAsCurrent">
+            <summary>Assigns the &apos;Current&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Sitecore.Data.Items.Fakes.ShimItem.BehaveAsNotImplemented">
+            <summary>Assigns the &apos;NotImplemented&apos; behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.Behavior">
+            <summary>Assigns the behavior for all methods of the shimmed type</summary>
+        </member>
+        <member name="M:Sitecore.Data.Items.Fakes.ShimItem.Bind(Sitecore.Security.AccessControl.ISecurable)">
+            <summary>Binds the members of the interface to the shim.</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.BranchGet">
+            <summary>Sets the shim of Item.get_Branch()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.BranchIdGet">
+            <summary>Sets the shim of Item.get_BranchId()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.BranchIdSetID">
+            <summary>Sets the shim of Item.set_BranchId(ID value)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.BranchesGet">
+            <summary>Sets the shim of Item.get_Branches()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.ChangeTemplateTemplateItem">
+            <summary>Sets the shim of Item.ChangeTemplate(TemplateItem template)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.ChildrenGet">
+            <summary>Sets the shim of Item.get_Children()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.CloneIDDatabase">
+            <summary>Sets the shim of Item.Clone(ID cloneID, Database ownerDatabase)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.CloneItem">
+            <summary>Sets the shim of Item.Clone(Item item)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.CloneToItem">
+            <summary>Sets the shim of Item.CloneTo(Item destination)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.CloneToItemBoolean">
+            <summary>Sets the shim of Item.CloneTo(Item destination, Boolean deep)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.CloneToItemStringBoolean">
+            <summary>Sets the shim of Item.CloneTo(Item destination, String name, Boolean deep)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.ConstructorIDItemDataDatabase">
+            <summary>Sets the shim of Item.Item(ID itemID, ItemData data, Database database)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.CopyToItemString">
+            <summary>Sets the shim of Item.CopyTo(Item destination, String copyName)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.CopyToItemStringIDBoolean">
+            <summary>Sets the shim of Item.CopyTo(Item destination, String copyName, ID copyID, Boolean deep)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.DatabaseGet">
+            <summary>Sets the shim of Item.get_Database()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.Delete">
+            <summary>Sets the shim of Item.Delete()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.DeleteBoolean">
+            <summary>Sets the shim of Item.Delete(Boolean removeBlobs)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.DeleteChildren">
+            <summary>Sets the shim of Item.DeleteChildren()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.DisplayNameGet">
+            <summary>Sets the shim of Item.get_DisplayName()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.Duplicate">
+            <summary>Sets the shim of Item.Duplicate()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.DuplicateString">
+            <summary>Sets the shim of Item.Duplicate(String copyName)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.EditingGet">
+            <summary>Sets the shim of Item.get_Editing()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.EmptyGet">
+            <summary>Sets the shim of Item.get_Empty()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.EndEdit">
+            <summary>Sets the shim of Item.EndEdit()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.FieldsGet">
+            <summary>Sets the shim of Item.get_Fields()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.GetCacheKeyItem">
+            <summary>Sets the shim of Item.GetCacheKey(Item item)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.GetChangesBoolean">
+            <summary>Sets the shim of Item.GetChanges(Boolean force)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.GetChildren">
+            <summary>Sets the shim of Item.GetChildren()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.GetChildrenChildListOptions">
+            <summary>Sets the shim of Item.GetChildren(ChildListOptions options)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.GetClones">
+            <summary>Sets the shim of Item.GetClones()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.GetClonesBoolean">
+            <summary>Sets the shim of Item.GetClones(Boolean processChildren)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.GetClonesInternalItemBoolean">
+            <summary>Sets the shim of Item.GetClonesInternal(Item item, Boolean processChildren)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.GetFullChanges">
+            <summary>Sets the shim of Item.GetFullChanges()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.GetOuterXmlBoolean">
+            <summary>Sets the shim of Item.GetOuterXml(Boolean includeSubitems)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.GetOuterXmlItemSerializerOptions">
+            <summary>Sets the shim of Item.GetOuterXml(ItemSerializerOptions options)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.GetPropertyString">
+            <summary>Sets the shim of Item.GetProperty(String name)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.GetUniqueId">
+            <summary>Sets the shim of Item.GetUniqueId()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.HasChildrenGet">
+            <summary>Sets the shim of Item.get_HasChildren()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.HasClonesGet">
+            <summary>Sets the shim of Item.get_HasClones()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.HelpGet">
+            <summary>Sets the shim of Item.get_Help()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.IDGet">
+            <summary>Sets the shim of Item.get_ID()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.InnerDataGet">
+            <summary>Sets the shim of Item.get_InnerData()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.IsCloneGet">
+            <summary>Sets the shim of Item.get_IsClone()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.IsEditingGet">
+            <summary>Sets the shim of Item.get_IsEditing()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.IsEmptyIDDatabase">
+            <summary>Sets the shim of Item.IsEmpty(ID itemID, Database database)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.IsItemCloneGet">
+            <summary>Sets the shim of Item.get_IsItemClone()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.KeyGet">
+            <summary>Sets the shim of Item.get_Key()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.LanguageGet">
+            <summary>Sets the shim of Item.get_Language()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.LanguagesGet">
+            <summary>Sets the shim of Item.get_Languages()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.LinksGet">
+            <summary>Sets the shim of Item.get_Links()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.LockingGet">
+            <summary>Sets the shim of Item.get_Locking()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.MasterGet">
+            <summary>Sets the shim of Item.get_Master()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.MasterIDGet">
+            <summary>Sets the shim of Item.get_MasterID()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.MasterIDSetID">
+            <summary>Sets the shim of Item.set_MasterID(ID value)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.MastersGet">
+            <summary>Sets the shim of Item.get_Masters()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.ModifiedGet">
+            <summary>Sets the shim of Item.get_Modified()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.MoveToItem">
+            <summary>Sets the shim of Item.MoveTo(Item destination)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.NameGet">
+            <summary>Sets the shim of Item.get_Name()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.NameSetString">
+            <summary>Sets the shim of Item.set_Name(String value)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.OriginatorIdGet">
+            <summary>Sets the shim of Item.get_OriginatorId()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.ParentGet">
+            <summary>Sets the shim of Item.get_Parent()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.ParentIDGet">
+            <summary>Sets the shim of Item.get_ParentID()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.PasteItemStringBooleanPasteMode">
+            <summary>Sets the shim of Item.PasteItem(String xml, Boolean changeIDs, PasteMode mode)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.PasteStringBooleanPasteMode">
+            <summary>Sets the shim of Item.Paste(String xml, Boolean changeIDs, PasteMode mode)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.PathsGet">
+            <summary>Sets the shim of Item.get_Paths()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.PublishingGet">
+            <summary>Sets the shim of Item.get_Publishing()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.Recycle">
+            <summary>Sets the shim of Item.Recycle()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.RecycleChildren">
+            <summary>Sets the shim of Item.RecycleChildren()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.RecycleVersion">
+            <summary>Sets the shim of Item.RecycleVersion()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.RejectChanges">
+            <summary>Sets the shim of Item.RejectChanges()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.Reload">
+            <summary>Sets the shim of Item.Reload()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.RemoveItemFromCloningCacheItem">
+            <summary>Sets the shim of Item.RemoveItemFromCloningCache(Item item)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.RuntimeSettingsGet">
+            <summary>Sets the shim of Item.get_RuntimeSettings()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.SecurityGet">
+            <summary>Sets the shim of Item.get_Security()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.SecuritySetItemSecurity">
+            <summary>Sets the shim of Item.set_Security(ItemSecurity value)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.SetChangesItemChanges">
+            <summary>Sets the shim of Item.SetChanges(ItemChanges changes)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.SetDatabaseDatabase">
+            <summary>Sets the shim of Item.SetDatabase(Database database)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.SetInnerDataItem">
+            <summary>Sets the shim of Item.SetInnerData(Item item)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.SetPropertyStringIDID">
+            <summary>Sets the shim of Item.SetProperty(String name, ID value, ID originalValue)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.SetPropertyStringStringString">
+            <summary>Sets the shim of Item.SetProperty(String name, String value, String originalValue)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.SharedFieldsSourceGet">
+            <summary>Sets the shim of Item.get_SharedFieldsSource()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.SourceGet">
+            <summary>Sets the shim of Item.get_Source()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.SourceUriGet">
+            <summary>Sets the shim of Item.get_SourceUri()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.StateGet">
+            <summary>Sets the shim of Item.get_State()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.StaticConstructor">
+            <summary>Sets the shim of Item.Item()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.StatisticsGet">
+            <summary>Sets the shim of Item.get_Statistics()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.SyncRootGet">
+            <summary>Sets the shim of Item.get_SyncRoot()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.TemplateGet">
+            <summary>Sets the shim of Item.get_Template()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.TemplateIDGet">
+            <summary>Sets the shim of Item.get_TemplateID()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.TemplateIDSetID">
+            <summary>Sets the shim of Item.set_TemplateID(ID value)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.TemplateNameGet">
+            <summary>Sets the shim of Item.get_TemplateName()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.TryGetCacheValueItemItemUriOut">
+            <summary>Sets the shim of Item.TryGetCacheValue(Item item, ItemUri&amp; itemUri)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.UriGet">
+            <summary>Sets the shim of Item.get_Uri()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.VersionGet">
+            <summary>Sets the shim of Item.get_Version()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.VersionsGet">
+            <summary>Sets the shim of Item.get_Versions()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem.VisualizationGet">
+            <summary>Sets the shim of Item.get_Visualization()</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem._Deleteb__19TemplateField">
+            <summary>Sets the shim of Item.&lt;Delete&gt;b__19(TemplateField f)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem._Deleteb__1aTemplateField">
+            <summary>Sets the shim of Item.&lt;Delete&gt;b__1a(TemplateField f)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem._Deleteb__1bID">
+            <summary>Sets the shim of Item.&lt;Delete&gt;b__1b(ID id)</summary>
+        </member>
+        <member name="P:Sitecore.Data.Items.Fakes.ShimItem._Deleteb__1cGuid">
+            <summary>Sets the shim of Item.&lt;Delete&gt;b__1c(Guid guid)</summary>
+        </member>
+    </members>
+</doc>

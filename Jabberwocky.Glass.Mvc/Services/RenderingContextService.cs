@@ -1,12 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
-using System.Reflection;
-using Sitecore.Mvc.Presentation;
-using Glass.Mapper.Sc;
 using System.Linq;
+using System.Reflection;
+using Glass.Mapper.Sc;
 using Jabberwocky.Glass.Models;
+using Sitecore.Mvc.Presentation;
 
-namespace Jabberwocky.Glass.Autofac.Mvc.Services
+namespace Jabberwocky.Glass.Mvc.Services
 {
 	public class RenderingContextService : IRenderingContextService
 	{

@@ -5,12 +5,12 @@ using System.Reflection;
 using Autofac;
 using Autofac.Core;
 using Jabberwocky.Glass.Autofac.Mvc.Models.Attributes;
-using Jabberwocky.Glass.Autofac.Mvc.Services;
 using Jabberwocky.Glass.Models;
+using Jabberwocky.Glass.Mvc.Services;
 
 namespace Jabberwocky.Glass.Autofac.Mvc.Models.Factory
 {
-    public class AutofacViewModelFactory : IViewModelFactory
+    public class AutofacViewModelFactory : Jabberwocky.Glass.Mvc.Models.Factory.IViewModelFactory
     {
         private static readonly ConcurrentDictionary<Type, TypeTuple?> ViewModelTypeCache = new ConcurrentDictionary<Type, TypeTuple?>();
 

@@ -6,7 +6,7 @@ using Sitecore.Data;
 using Sitecore.Diagnostics;
 using Sitecore.Mvc.Pipelines.Response.GetModel;
 using Glass.Mapper;
-using Jabberwocky.Glass.Autofac.Mvc.Models.Factory;
+using Jabberwocky.Glass.Mvc.Models.Factory;
 using Sitecore.Data.Items;
 
 namespace Jabberwocky.Glass.Autofac.Mvc.Pipelines.Processors
