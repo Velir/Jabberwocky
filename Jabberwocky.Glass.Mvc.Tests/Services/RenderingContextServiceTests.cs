@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using Glass.Mapper.Sc;
-using Jabberwocky.Glass.Autofac.Mvc.Services;
 using Jabberwocky.Glass.Models;
+using Jabberwocky.Glass.Mvc.Services;
 using Microsoft.QualityTools.Testing.Fakes;
 using NSubstitute;
 using NUnit.Framework;
@@ -10,7 +10,7 @@ using Sitecore.Data.Items;
 using Sitecore.Mvc.Common;
 using Sitecore.Mvc.Presentation;
 
-namespace Jabberwocky.Glass.Autofac.Mvc.Tests.Services
+namespace Jabberwocky.Glass.Mvc.Tests.Services
 {
     [TestFixture]
     public class RenderingContextServiceTests

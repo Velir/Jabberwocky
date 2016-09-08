@@ -1,11 +1,11 @@
-﻿using System.Web;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
-using Jabberwocky.Glass.Autofac.Mvc.Attributes;
+using Jabberwocky.Glass.Mvc.Attributes;
 using Sitecore.Mvc.Extensions;
 using Sitecore.Mvc.Helpers;
 
-namespace Jabberwocky.Glass.Autofac.Mvc.Util
+namespace Jabberwocky.Glass.Mvc.Util
 {
 	public class CustomSitecoreHelper : SitecoreHelper
 	{

@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Jabberwocky.Glass.Autofac.Mvc")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyCompany("Velir")]
 [assembly: AssemblyProduct("Jabberwocky.Glass.Autofac.Mvc")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2015")]
+[assembly: AssemblyCopyright("Copyright © Velir 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,7 +32,23 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.1.1.0")]
-[assembly: AssemblyFileVersion("1.1.1.0")]
+[assembly: AssemblyVersion("1.2.0.0")]
+[assembly: AssemblyFileVersion("1.2.0.0")]
 
 [assembly: InternalsVisibleTo("Jabberwocky.Glass.Autofac.Mvc.Tests")]
+
+#pragma warning disable 612
+[assembly: TypeForwardedTo(typeof(Jabberwocky.Glass.Autofac.Mvc.Attributes.HttpGetOrInvalidHttpPostAttribute))]
+[assembly: TypeForwardedTo(typeof(Jabberwocky.Glass.Autofac.Mvc.Attributes.ValidateFormHandlerAttribute))]
+[assembly: TypeForwardedTo(typeof(Jabberwocky.Glass.Autofac.Mvc.Attributes.ValidHttpPostAttribute))]
+
+[assembly: TypeForwardedTo(typeof(Jabberwocky.Glass.Autofac.Mvc.Models.Factory.IViewModelFactory))]
+
+[assembly: TypeForwardedTo(typeof(Jabberwocky.Glass.Autofac.Mvc.Services.IRenderingContextService))]
+[assembly: TypeForwardedTo(typeof(Jabberwocky.Glass.Autofac.Mvc.Services.RenderingContextService))]
+[assembly: TypeForwardedTo(typeof(Jabberwocky.Glass.Autofac.Mvc.Services.DatasourceNestingOptions))]
+
+[assembly: TypeForwardedTo(typeof(Jabberwocky.Glass.Autofac.Mvc.Util.CustomSitecoreHelper))]
+
+[assembly: TypeForwardedTo(typeof(Jabberwocky.Glass.Autofac.Mvc.Views.CustomGlassView<>))]
+#pragma warning restore 612

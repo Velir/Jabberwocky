@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace Jabberwocky.Glass.Autofac.Mvc.Models.Factory
+namespace Jabberwocky.Glass.Mvc.Models.Factory
 {
 	public interface IViewModelFactory
 	{

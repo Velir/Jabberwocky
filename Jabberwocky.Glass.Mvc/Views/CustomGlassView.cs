@@ -1,9 +1,9 @@
-﻿using System.Web.Mvc;
+using System.Web.Mvc;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using Glass.Mapper.Sc.Web.Mvc;
-using Jabberwocky.Glass.Autofac.Mvc.Models.Factory;
+using Jabberwocky.Glass.Mvc.Models.Factory;
 
-namespace Jabberwocky.Glass.Autofac.Mvc.Views
+namespace Jabberwocky.Glass.Mvc.Views
 {
 	public abstract class CustomGlassView<TModel> : GlassView<TModel> where TModel : class
 	{

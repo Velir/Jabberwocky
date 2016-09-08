@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Web.Mvc;
 
-namespace Jabberwocky.Glass.Autofac.Mvc.Attributes
+namespace Jabberwocky.Glass.Mvc.Attributes
 {
 	public class ValidHttpPostAttribute : ActionMethodSelectorAttribute
 	{
