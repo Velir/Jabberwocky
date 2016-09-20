@@ -4,8 +4,6 @@ using System.Web.Mvc;
 
 namespace Jabberwocky.Glass.Mvc.Attributes
 {
-    // This type is forwarded... until the obolete version is deprecated, any changes here should be evaluated against the forwarded type
-
 	[AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
 	public class HttpGetOrInvalidHttpPostAttribute : ActionMethodSelectorAttribute
 	{

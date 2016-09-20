@@ -1,14 +1,11 @@
 ﻿using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using Autofac;
 using Autofac.Extras.AggregateService;
 using Jabberwocky.Autofac.Attributes;
-using Jabberwocky.Autofac.Internals;
 
 namespace Jabberwocky.Autofac.Extensions
 {
-    [TypeForwardedFrom(AssemblyConstants.AutowireRegistrationExtensionsType)]
 	public static class AutowireRegistrationExtensions
 	{
 		public static void AutowireDependencies(this ContainerBuilder builder, bool preserveDefaults = false, params string[] assemblyNames)

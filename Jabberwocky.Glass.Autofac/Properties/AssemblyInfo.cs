@@ -38,10 +38,3 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("Jabberwocky.Glass.Autofac.Mvc")]
 [assembly: InternalsVisibleTo("Jabberwocky.Glass.Autofac.WebApi")]
 [assembly: InternalsVisibleTo("Jabberwocky.Glass.Autofac.Tests")]
-
-// Forwarded Types:
-#pragma warning disable 612
-[assembly: TypeForwardedTo(typeof(Jabberwocky.Glass.Autofac.Attributes.LifetimeScope))]
-[assembly: TypeForwardedTo(typeof(Jabberwocky.Glass.Autofac.Attributes.AutowireServiceAttribute))]
-[assembly: TypeForwardedTo(typeof(Jabberwocky.Glass.Autofac.Extensions.AutowireRegistrationExtensions))]
-#pragma warning restore 612

@@ -61,8 +61,6 @@
     <Compile Include="Attributes\AutowireServiceAttribute.cs" />
     <Compile Include="Extensions\AutowireRegistrationExtensions.cs" />
     <Compile Include="Extensions\ResolutionExtensions.cs" />
-    <Compile Include="Internals\AssemblyConstants.cs" />
-    <Compile Include="Internals\ForwardedTypes\AutofacTypes.cs" />
     <Compile Include="Modules\Aspected\AspectInterceptionModule.cs" />
     <Compile Include="Modules\Aspected\Configuration\AspectConfiguration.cs" />
     <Compile Include="Modules\Aspected\Configuration\InterceptionContext.cs" />
