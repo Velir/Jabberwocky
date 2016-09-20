@@ -1,6 +1,6 @@
 ﻿using Autofac;
 
-namespace Jabberwocky.Glass.Autofac.Pipelines.Factories
+namespace Jabberwocky.Glass.Autofac.DependencyInjection.Factories
 {
     public interface ILifetimeScopeFactory
     {

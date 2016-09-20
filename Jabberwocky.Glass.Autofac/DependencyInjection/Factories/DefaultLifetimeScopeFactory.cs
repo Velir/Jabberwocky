@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Autofac;
-using Jabberwocky.Glass.Autofac.Pipelines.Factories.Providers;
+using Jabberwocky.Glass.Autofac.DependencyInjection.Factories.Providers;
 
-namespace Jabberwocky.Glass.Autofac.Pipelines.Factories
+namespace Jabberwocky.Glass.Autofac.DependencyInjection.Factories
 {
     internal class DefaultLifetimeScopeFactory : ILifetimeScopeFactory
     {

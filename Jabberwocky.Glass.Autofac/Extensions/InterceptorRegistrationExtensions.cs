@@ -5,7 +5,7 @@ using System.Linq;
 using Autofac;
 using Autofac.Builder;
 using Autofac.Core;
-using Autofac.Extras.DynamicProxy2;
+using Autofac.Extras.DynamicProxy;
 using Castle.DynamicProxy;
 
 namespace Jabberwocky.Glass.Autofac.Extensions

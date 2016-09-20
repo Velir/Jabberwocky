@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using Autofac;
-using Autofac.Extras.DynamicProxy2;
+using Autofac.Extras.DynamicProxy;
 using Glass.Mapper.Sc;
 using Jabberwocky.Autofac.Extensions;
 using Jabberwocky.Core.Utils.Extensions;

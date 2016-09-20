@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Autofac;
-using Autofac.Extras.DynamicProxy2;
+using Autofac.Extras.DynamicProxy;
 using Jabberwocky.Glass.Autofac.Extensions;
 using Jabberwocky.Glass.Factory;
 using Jabberwocky.Glass.Factory.Builder;

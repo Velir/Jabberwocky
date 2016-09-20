@@ -2,7 +2,7 @@
 using System.Web.Http.Dependencies;
 using Autofac;
 using Autofac.Integration.WebApi;
-using Jabberwocky.Glass.Autofac.Pipelines.Factories.Providers;
+using Jabberwocky.Glass.Autofac.DependencyInjection.Factories.Providers;
 
 namespace Jabberwocky.Glass.Autofac.WebApi.Pipelines.Factories.Providers
 {

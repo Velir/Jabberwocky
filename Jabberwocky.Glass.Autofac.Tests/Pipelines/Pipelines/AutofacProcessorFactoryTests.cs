@@ -1,7 +1,7 @@
 ﻿using System;
 using Autofac;
 using Jabberwocky.Core.Testing;
-using Jabberwocky.Glass.Autofac.Pipelines.Factories;
+using Jabberwocky.Glass.Autofac.DependencyInjection.Factories;
 using Jabberwocky.Glass.Autofac.Pipelines.Processors;
 using Jabberwocky.Glass.Autofac.Tests.Pipelines.Processors;
 using Jabberwocky.Glass.Autofac.Util;
@@ -13,7 +13,7 @@ namespace Jabberwocky.Glass.Autofac.Tests.Pipelines.Pipelines
 	[TestFixture]
 	public class AutofacProcessorFactoryTests
 	{
-		private AutofacProcessorFactory _factory;
+		private AutofacSitecoreFactory _factory;
 		private static readonly string TestProcessorFQN = typeof (TestProcessor).AssemblyQualifiedName;
 
 		[SetUp]
@@ -26,7 +26,7 @@ namespace Jabberwocky.Glass.Autofac.Tests.Pipelines.Pipelines
 			AutofacConfig.ServiceLocator = builder.Build();
 
 			// SUT
-			_factory = new AutofacProcessorFactory();
+			_factory = new AutofacSitecoreFactory();
         }
 
 		[TestFixtureTearDown]

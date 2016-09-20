@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Autofac;
-using Jabberwocky.Glass.Autofac.Pipelines.Factories;
-using Jabberwocky.Glass.Autofac.Pipelines.Factories.Providers;
+using Autofac.Core;
+using Jabberwocky.Glass.Autofac.DependencyInjection.Factories;
+using Jabberwocky.Glass.Autofac.DependencyInjection.Factories.Providers;
 using Jabberwocky.Glass.Autofac.Pipelines.Processors;
 
 namespace Jabberwocky.Glass.Autofac.Extensions
@@ -45,7 +46,7 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 			var asm = new[] { JabberwockyMvcDll, JabberwockyWebApiDll }.Select(TryLoadAssembly).Concat(assemblies).Where(a => a != null).Distinct().ToArray();
 
             // Register processors
-			builder.RegisterAssemblyTypes(asm).AsClosedTypesOf(typeof(IProcessor<>));
+		    builder.RegisterAssemblyTypes(asm).AsClosedTypesOf(typeof(IProcessor<>));
 
             // Register internals for Lifetime Scope resolution
 		    builder.RegisterAssemblyTypes(asm).AssignableTo<ILifetimeScopeProvider>().As<ILifetimeScopeProvider>();
@@ -54,7 +55,7 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 			return builder;
 		}
 
-		[Obsolete("Need to figure out how to do this appropriately, so we can vary registrations by pipeline")]
+	    [Obsolete("Need to figure out how to do this appropriately, so we can vary registrations by pipeline")]
 		internal static ContainerBuilder RegisterSitecorePipelineServices(this ContainerBuilder builder)
 		{
 			// Register custom ISitecoreService behavior for custom lifetime scopes

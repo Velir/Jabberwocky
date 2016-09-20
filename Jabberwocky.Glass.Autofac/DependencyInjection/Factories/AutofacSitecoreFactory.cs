@@ -1,16 +1,16 @@
 ﻿using System;
 using Autofac;
 using Jabberwocky.Glass.Autofac.Extensions;
-using Jabberwocky.Glass.Autofac.Pipelines.Processors;
 using Jabberwocky.Glass.Autofac.Util;
 using Sitecore.Reflection;
 
-namespace Jabberwocky.Glass.Autofac.Pipelines.Factories
+namespace Jabberwocky.Glass.Autofac.DependencyInjection.Factories
 {
 	/// <summary>
 	/// A Sitecore Factory adapter for Autofac 
 	/// </summary>
-	public class AutofacProcessorFactory : IFactory
+	[Obsolete("Use Sitecore DI instead")]
+	public class AutofacSitecoreFactory : IFactory
 	{
 		protected static IContainer Container => AutofacConfig.ServiceLocator;
 
@@ -26,7 +26,7 @@ namespace Jabberwocky.Glass.Autofac.Pipelines.Factories
 				var processor = scope.Resolve(type);
 
 				// Assign LifetimeScope if possible
-				var baseProcessor = processor as ProcessorLifetimeBase;
+				var baseProcessor = processor as LifetimeBase;
 				if (baseProcessor != null)
 				{
 					baseProcessor.LifetimeScope = scope;
