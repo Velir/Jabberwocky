@@ -1,8 +1,6 @@
 ﻿using System;
 using Autofac;
-using Jabberwocky.Core.Testing;
 using Jabberwocky.Glass.Autofac.DependencyInjection.Factories;
-using Jabberwocky.Glass.Autofac.Pipelines.Processors;
 using Jabberwocky.Glass.Autofac.Tests.Pipelines.Processors;
 using Jabberwocky.Glass.Autofac.Util;
 using NSubstitute;
@@ -57,26 +55,6 @@ namespace Jabberwocky.Glass.Autofac.Tests.Pipelines.Pipelines
 			var service = _factory.GetObject("I absolutely don't exist");
 
 			Assert.IsNull(service);
-		}
-
-		[Test]
-		public void GetObject_ReturnsType_DisposesLifetime()
-		{
-			var service = _factory.GetObject(TestProcessorFQN) as ProcessorBase<string>;
-			dynamic dynService = DynamicWrapper.For(service);
-
-			var isDisposed = false;
-			ILifetimeScope scope = dynService.LifetimeScope;
-			scope.CurrentScopeEnding += (sender, args) => isDisposed = true;
-
-			// Before
-			Assert.IsNotNull(service);
-			Assert.IsFalse(isDisposed);
-
-			service.Process(null);
-
-			// After
-			Assert.IsTrue(isDisposed);
 		}
 
 		[Test]

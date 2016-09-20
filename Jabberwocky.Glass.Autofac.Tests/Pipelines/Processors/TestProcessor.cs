@@ -1,5 +1,4 @@
 ﻿using System;
-using Autofac;
 using Jabberwocky.Glass.Autofac.Pipelines.Processors;
 
 namespace Jabberwocky.Glass.Autofac.Tests.Pipelines.Processors
@@ -14,7 +13,7 @@ namespace Jabberwocky.Glass.Autofac.Tests.Pipelines.Processors
 			_testDependency = testDependency;
 		}
 
-		protected override void Run(string pipelineArgs)
+		protected internal override void Run(string pipelineArgs)
 		{
 			// do nothing
 		}

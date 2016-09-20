@@ -26,7 +26,7 @@ namespace Jabberwocky.Glass.Autofac.DependencyInjection.Factories
 				var processor = scope.Resolve(type);
 
 				// Assign LifetimeScope if possible
-				var baseProcessor = processor as LifetimeBase;
+				var baseProcessor = processor as ILifetimeBase;
 				if (baseProcessor != null)
 				{
 					baseProcessor.LifetimeScope = scope;

@@ -37,6 +37,7 @@ using System.Runtime.InteropServices;
 
 [assembly: InternalsVisibleTo("Jabberwocky.Glass.Autofac.Mvc")]
 [assembly: InternalsVisibleTo("Jabberwocky.Glass.Autofac.WebApi")]
+[assembly: InternalsVisibleTo("Jabberwocky.Glass.Autofac.Tests")]
 
 // Forwarded Types:
 #pragma warning disable 612
