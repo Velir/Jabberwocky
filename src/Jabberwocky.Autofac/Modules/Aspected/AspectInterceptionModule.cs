@@ -54,7 +54,8 @@ namespace Jabberwocky.Autofac.Modules.Aspected
 			IncludeTypes = config.AutowireAspect
 				? new HashSet<Type>(
 					config.Assemblies.Select(LoadAssembly)
-						.SelectMany(a => a?.ExportedTypes)
+						.Where(assembly => assembly != null)
+						.SelectMany(a => a.ExportedTypes)
 						.Where(t => t?.GetCustomAttribute<AspectAttribute>() != null))
 				: new HashSet<Type>();
 		}
