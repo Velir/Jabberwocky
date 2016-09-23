@@ -1,4 +1,5 @@
 ﻿using Jabberwocky.Autofac.Extras.MiniProfiler.Configuration;
+using Jabberwocky.Autofac.Extras.MiniProfiler.Util;
 using Jabberwocky.Autofac.Modules.Aspected;
 using Jabberwocky.Autofac.Modules.Aspected.Strategies;
 
@@ -13,7 +14,6 @@ namespace Jabberwocky.Autofac.Extras.MiniProfiler
 	/// </remarks>
 	public class MiniProfilerModule : AspectInterceptionModule
 	{
-
 		public MiniProfilerModule(params string[] assemblies)
 			: this(new MiniProfilerConfiguration(assemblies, assemblies))
 		{
@@ -27,6 +27,7 @@ namespace Jabberwocky.Autofac.Extras.MiniProfiler
 		public MiniProfilerModule(MiniProfilerConfiguration config)
 			: base(config)
 		{
+			MiniProfilerRuntime.MiniProfilerInitialized = config.IsMiniProfilerInitialized;
 		}
 	}
 }

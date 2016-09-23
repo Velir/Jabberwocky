@@ -8,6 +8,8 @@ namespace Jabberwocky.Autofac.Extras.MiniProfiler.Configuration
 {
 	public sealed class MiniProfilerConfiguration : AspectConfiguration
 	{
+		internal bool IsMiniProfilerInitialized;
+
 		public MiniProfilerConfiguration(
 			IEnumerable<string> assemblies,
 			IEnumerable<string> includeNamespaces = null,

@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
+using Jabberwocky.Autofac.Extras.MiniProfiler.Util;
 using StackExchange.Profiling;
 using Profiler = StackExchange.Profiling.MiniProfiler;
 
@@ -13,13 +14,16 @@ namespace Jabberwocky.Autofac.Extras.MiniProfiler.Interceptors
 
 		public void Intercept(IInvocation invocation)
 		{
-			var profiler = Profiler.Current;
-			if (profiler == null)
+			// We must first check that the runtime has already been initialized
+			// as Profiler.Current will setup the MVC routes for us if not - this breaks certain routing in certain Sitecore contexts
+			if (!MiniProfilerRuntime.MiniProfilerInitialized || Profiler.Current == null)
 			{
 				invocation.Proceed();
 				return;
 			}
 
+			var profiler = Profiler.Current;
+			
 			var returnType = invocation.Method.ReturnType;
 			var typeName = invocation.TargetType?.Name ?? invocation.Proxy?.GetType().FullName ?? UnknownType;
 
