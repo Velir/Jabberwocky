@@ -2,7 +2,7 @@
 using Sitecore.Pipelines;
 using StackExchange.Profiling;
 
-namespace Jabberwocky.Autofac.Extras.MiniProfiler.Sc.Pipeline
+namespace Jabberwocky.Autofac.Extras.MiniProfiler.Sc.Pipeline.Initialize
 {
 	public class MiniProfilerRouteProcessor
 	{

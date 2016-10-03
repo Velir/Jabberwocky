@@ -102,6 +102,16 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 				// It should work across ASP.NET WebForms, MVC, WebAPI with defaults.
 				// It makes the assumption that should the current Sitecore Context be indeterminate (or 'core'), then the web DB is preferred
 
+				builder.Register(c => c.Resolve<ISitecoreService>(new TypedParameter(typeof(string), "master")))
+					.Named<ISitecoreService>("master")
+					.ExternallyOwned()
+					.PreserveExistingDefaults();
+
+				builder.Register(c => c.Resolve<ISitecoreService>(new TypedParameter(typeof(string), "web")))
+					.Named<ISitecoreService>("web")
+					.ExternallyOwned()
+					.PreserveExistingDefaults();
+
 				builder.Register((c, p) =>
 				{
 					var overriddenDbParam = p.OfType<TypedParameter>().FirstOrDefault(@param => @param.Type == typeof(string));

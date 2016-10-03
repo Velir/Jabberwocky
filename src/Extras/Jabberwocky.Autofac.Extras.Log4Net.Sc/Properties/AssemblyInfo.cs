@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Jabberwocky.Autofac.Extras.MiniProfiler.Sc")]
+[assembly: AssemblyTitle("Jabberwocky.Autofac.Extras.Log4Net.Sc")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Velir")]
-[assembly: AssemblyProduct("Jabberwocky.Autofac.Extras.MiniProfiler.Sc")]
-[assembly: AssemblyCopyright("Copyright © 2016")]
+[assembly: AssemblyProduct("Jabberwocky.Autofac.Extras.Log4Net.Sc")]
+[assembly: AssemblyCopyright("Copyright © Velir 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("33a89f6a-dd1e-4076-b526-6759fd66565f")]
+[assembly: Guid("d4d76656-90c0-4546-bd01-1991d3019313")]
 
 // Version information for an assembly consists of the following four values:
 //

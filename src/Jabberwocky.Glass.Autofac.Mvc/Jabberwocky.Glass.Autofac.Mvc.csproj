@@ -37,6 +37,14 @@
       <HintPath>..\..\packages\Autofac.4.1.0\lib\net45\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Autofac.Extras.AttributeMetadata, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.Extras.AttributeMetadata.4.0.0\lib\net45\Autofac.Extras.AttributeMetadata.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mef, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.Mef.4.0.0\lib\net45\Autofac.Integration.Mef.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Autofac.Integration.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Autofac.Mvc5.4.0.0\lib\net451\Autofac.Integration.Mvc.dll</HintPath>
       <Private>True</Private>
@@ -103,6 +111,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Extensions\MvcRegistrationExtensions.cs" />
     <Compile Include="Models\Attributes\AllowNestedDatasourceAttribute.cs" />
     <Compile Include="Models\Attributes\ConfigureDatasourceAttribute.cs" />
@@ -113,10 +122,13 @@
     <Compile Include="Pipelines\Factories\Providers\MvcLifetimeScopeProvider.cs" />
     <Compile Include="Pipelines\Processors\GetModelFromViewProcessor.cs" />
     <Compile Include="Pipelines\Processors\GetModelProcessor.cs" />
+    <Compile Include="Pipelines\RegisterAutofacDependencies\ConfigureMvcDependencyResolver.cs" />
+    <Compile Include="Pipelines\RegisterAutofacDependencies\RegisterGlassMvcServices.cs" />
+    <Compile Include="Pipelines\RegisterAutofacDependencies\RegisterMvcControllers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App_Config\Include\Jabberwocky.Glass.Autofac.Mvc.config">
+    <None Include="App_Config\Include\1.Jabberwocky.Glass.Autofac.Mvc.config">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
