@@ -92,13 +92,15 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 		{
 			builder.RegisterType<ItemService>().As<IItemService>();
 			builder.RegisterType<LinkService>().As<ILinkService>();
-			builder.RegisterType<SitecoreContext>().As<ISitecoreContext>().ExternallyOwned();
+			builder.RegisterType<SitecoreContext>().As<ISitecoreContext>()
+				.InstancePerLifetimeScope()
+				.ExternallyOwned();
 
 			if (customServiceResolver == null)
 			{
 				// This is a default resolver for the ISitecoreService
 				// It should work across ASP.NET WebForms, MVC, WebAPI with defaults.
-				// It makes the assumption that should the current Sitecore Context be indeterminate (or 'core'), then the master DB is preferred
+				// It makes the assumption that should the current Sitecore Context be indeterminate (or 'core'), then the web DB is preferred
 
 				builder.Register((c, p) =>
 				{
