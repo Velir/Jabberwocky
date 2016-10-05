@@ -13,4 +13,8 @@
     <copyright>Copyright 2016</copyright>
     <tags>Velir Jabberwocky Autofac Extras MiniProfiler</tags>
   </metadata>
+
+    <files>
+    <file src="App_Config\Include\z.Jabberwocky\2.Jabberwocky.Autofac.Extras.MiniProfiler.Sc.config" target="content\App_Config\Include\z.Jabberwocky\2.Jabberwocky.Autofac.Extras.MiniProfiler.Sc.config" />
+  </files>
 </package>

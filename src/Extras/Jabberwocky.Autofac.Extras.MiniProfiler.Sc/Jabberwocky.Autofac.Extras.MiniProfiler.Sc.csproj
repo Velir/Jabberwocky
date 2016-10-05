@@ -64,7 +64,7 @@
     <Compile Include="SitecoreMiniProfilerModule.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App_Config\Include\z.Jabberwocky\2.Jabberwocky.Autofac.Extras.MiniProfiler.config" />
+    <None Include="App_Config\Include\z.Jabberwocky\2.Jabberwocky.Autofac.Extras.MiniProfiler.Sc.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
