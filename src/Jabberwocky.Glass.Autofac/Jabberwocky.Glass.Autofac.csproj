@@ -84,6 +84,7 @@
   <ItemGroup>
     <Compile Include="Aspects\Strategies\GlassInterfaceFactoryStrategy.cs" />
     <Compile Include="DependencyInjection\AutofacServiceProviderBuilder.cs" />
+    <Compile Include="DependencyInjection\Providers\AutofacDelegatingServiceProvider.cs" />
     <Compile Include="Extensions\AutofacRegistrationExtensions.cs" />
     <Compile Include="Extensions\CacheRegistrationExtensions.cs" />
     <Compile Include="Extensions\FactoryRegistrationExtensions.cs" />
@@ -98,6 +99,7 @@
     <Compile Include="DependencyInjection\Factories\DefaultLifetimeScopeFactory.cs" />
     <Compile Include="DependencyInjection\Factories\ILifetimeScopeFactory.cs" />
     <Compile Include="DependencyInjection\Factories\Providers\ILifetimeScopeProvider.cs" />
+    <Compile Include="Pipelines\Initialize\InitializeAutofacProvider.cs" />
     <Compile Include="Pipelines\PipelineArgs\RegisterAutofacDependenciesPipelineArgs.cs" />
     <Compile Include="Pipelines\Processors\ProcessorBase.cs" />
     <Compile Include="Pipelines\Processors\IProcessor.cs" />
@@ -122,6 +124,10 @@
     <ProjectReference Include="..\Jabberwocky.Core\Jabberwocky.Core.csproj">
       <Project>{79F22272-B90E-4461-BAEE-92AE1A6C28BC}</Project>
       <Name>Jabberwocky.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Jabberwocky.DependencyInjection\Jabberwocky.DependencyInjection.csproj">
+      <Project>{D24E1F38-0BD8-4630-A8FD-1B4884EE259E}</Project>
+      <Name>Jabberwocky.DependencyInjection</Name>
     </ProjectReference>
     <ProjectReference Include="..\Jabberwocky.Glass\Jabberwocky.Glass.csproj">
       <Project>{13E08D30-B2A4-45EF-A28E-C916EB80B70D}</Project>

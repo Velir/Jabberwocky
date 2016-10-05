@@ -1,28 +1,26 @@
 ﻿using System;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using Jabberwocky.Glass.Autofac.Pipelines.PipelineArgs;
+using Jabberwocky.Glass.Autofac.DependencyInjection.Providers;
 using Microsoft.Extensions.DependencyInjection;
 using Sitecore.DependencyInjection;
-using Sitecore.Pipelines;
 
 namespace Jabberwocky.Glass.Autofac.DependencyInjection
 {
-	public class AutofacServiceProviderBuilder : BaseServiceProviderBuilder
+	public class AutofacServiceProviderBuilder : DefaultBaseServiceProviderBuilder
 	{
-		private const string PipelineName = "registerAutofacDependencies";
-
 		protected override IServiceProvider BuildServiceProvider(IServiceCollection serviceCollection)
 		{
-			var args = new RegisterAutofacDependenciesPipelineArgs
+			// Build a default container with only the conforming service collection registrations
+			var builder = new ContainerBuilder();
+			builder.Populate(serviceCollection);
+
+			var container = builder.Build();
+
+			return new AutofacDelegatingServiceProvider(new AutofacServiceProvider(container), serviceCollection)
 			{
-				ServiceCollection = serviceCollection,
-				ContainerBuilder = new ContainerBuilder()
+				RootContainer = container
 			};
-
-			CorePipeline.Run(PipelineName, args, false);
-
-			return new AutofacServiceProvider(args.BuiltContainer ?? args.ContainerBuilder.Build());
 		}
 	}
 }

@@ -128,7 +128,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App_Config\Include\1.Jabberwocky.Glass.Autofac.Mvc.config">
+    <None Include="App_Config\Include\z.Jabberwocky\1.Jabberwocky.Glass.Autofac.Mvc.config">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
