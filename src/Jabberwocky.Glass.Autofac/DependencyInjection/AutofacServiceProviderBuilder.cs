@@ -12,6 +12,7 @@ namespace Jabberwocky.Glass.Autofac.DependencyInjection
 		protected override IServiceProvider BuildServiceProvider(IServiceCollection serviceCollection)
 		{
 			// Build a default container with only the conforming service collection registrations
+			// Note: Sitecore requires these registrations in order to functionn properly, so we register them first
 			var builder = new ContainerBuilder();
 			builder.Populate(serviceCollection);
 
