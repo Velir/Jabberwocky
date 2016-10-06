@@ -91,7 +91,7 @@
     <Compile Include="Services\SiteContextService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App_Config\Include\Jabberwocky.Glass.config" />
+    <None Include="App_Config\Include\z.Jabberwocky\1.Jabberwocky.Glass.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

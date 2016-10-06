@@ -15,6 +15,6 @@
   </metadata>
 
   <files>
-    <file src="App_Config\Include\z.Jabberwocky\1.Jabberwocky.Glass.Autofac.Mvc.config" target="content\App_Config\Include\z.Jabberwocky\Jabberwocky.Glass.Autofac.Mvc.config" />
+    <file src="App_Config\Include\z.Jabberwocky\1.Jabberwocky.Glass.Autofac.Mvc.config" target="content\App_Config\Include\z.Jabberwocky\1.Jabberwocky.Glass.Autofac.Mvc.config" />
   </files>
 </package>
