@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Jabberwocky.Glass.Mvc")]
+[assembly: AssemblyTitle("Jabberwocky.WebApi.Sc")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Velir")]
-[assembly: AssemblyProduct("Jabberwocky.Glass.Mvc")]
+[assembly: AssemblyProduct("Jabberwocky.WebApi.Sc")]
 [assembly: AssemblyCopyright("Copyright © Velir 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("dd17db22-247c-44a6-b0dd-091786863626")]
+[assembly: Guid("18e207e2-e97e-49a0-a092-52303c79b2ae")]
 
 // Version information for an assembly consists of the following four values:
 //

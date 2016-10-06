@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Jabberwocky.WebApi.Sc</id>
+    <version>$version$</version>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Jabberwocky bootstrap for WebApi in Sitecore</description>
+    <language>en-US</language>
+    <copyright>Copyright Velir 2016</copyright>
+  </metadata>
+
+  <files>
+    <file src="App_Config\Include\z.Jabberwocky\1.Jabberwocky.WebApi.Sc.config" target="content\App_Config\Include\z.Jabberwocky\1.Jabberwocky.WebApi.Sc.config" />
+  </files>
+</package>
