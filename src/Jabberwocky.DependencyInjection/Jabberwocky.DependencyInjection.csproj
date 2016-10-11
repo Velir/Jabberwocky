@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Autowire\Attributes\AutowireServiceAttribute.cs" />
+    <Compile Include="Autowire\Extensions\AutowireRegistrationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\DelegatingServiceProvider.cs" />
     <Compile Include="Scanning\IAssemblyScanningService.cs" />

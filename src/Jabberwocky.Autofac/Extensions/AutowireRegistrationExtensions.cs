@@ -1,8 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Reflection;
 using Autofac;
 using Autofac.Extras.AggregateService;
 using Jabberwocky.Autofac.Attributes;
+using Jabberwocky.Core.Utils.Reflection;
+using Jabberwocky.DependencyInjection.Autowire.Attributes;
 
 namespace Jabberwocky.Autofac.Extensions
 {
@@ -10,13 +13,15 @@ namespace Jabberwocky.Autofac.Extensions
 	{
 		public static void AutowireDependencies(this ContainerBuilder builder, bool preserveDefaults = false, params string[] assemblyNames)
 		{
-			var assemblies = new[] {Assembly.GetExecutingAssembly()}.Concat(assemblyNames.Select(Assembly.Load)).Distinct();
+			assemblyNames = assemblyNames ?? new string[0];
+
+			var assemblies = new[] {Assembly.GetExecutingAssembly()}.Concat(assemblyNames.Select(AssemblyManager.LoadAssemblySafe)).Distinct();
 
 			foreach (var meta in assemblies.SelectMany(asm => asm.ExportedTypes)
-				.Select(type => new { Type = type, Attr = type.GetCustomAttributes<AutowireServiceAttribute>(true).FirstOrDefault()})
+				.Select(GetRegistrationMetadata)
 				.Where(meta => meta.Attr != null))
 			{
-				if (meta.Type.IsInterface && meta.Attr.IsAggregateService)
+				if (meta.IsAggregateService)
 				{
 					builder.RegisterAggregateService(meta.Type);
 					continue;
@@ -27,24 +32,47 @@ namespace Jabberwocky.Autofac.Extensions
 
 				switch (meta.Attr.LifetimeScope)
 				{
-					case LifetimeScope.PerRequest:
-						registration.InstancePerRequest();
-                        break;
 					case LifetimeScope.PerScope:
 						registration.InstancePerLifetimeScope();
                         break;
 					case LifetimeScope.SingleInstance:
 						registration.SingleInstance();
                         break;
-					case LifetimeScope.NoTracking:
-						registration.ExternallyOwned();
-						break;
 					case LifetimeScope.Default:
 					default:
 						registration.InstancePerDependency();
 						break;
 				}
+
+				if (meta.Attr.RegisterAsSelf)
+				{
+					registration.AsSelf();
+				}
+
+				if (meta.IsExternallyOwned)
+				{
+					registration.ExternallyOwned();
+				}
 			}
+		}
+
+		private static RegistrationMetadata GetRegistrationMetadata(Type type)
+		{
+			return new RegistrationMetadata
+			{
+				Type = type,
+				Attr = type.GetCustomAttributes<AutowireServiceAttribute>(true).FirstOrDefault(),
+				IsExternallyOwned = type.GetCustomAttributes<ExternallyOwnedAttribute>().Any(),
+				IsAggregateService = type.GetCustomAttributes<AggregateServiceAttribute>().Any()
+			};
+		}
+
+		private struct RegistrationMetadata
+		{
+			public Type Type;
+			public AutowireServiceAttribute Attr;
+			public bool IsExternallyOwned;
+			public bool IsAggregateService;
 		}
 	}
 }

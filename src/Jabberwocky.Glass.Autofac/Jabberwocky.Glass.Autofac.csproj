@@ -125,6 +125,10 @@
       <Project>{79F22272-B90E-4461-BAEE-92AE1A6C28BC}</Project>
       <Name>Jabberwocky.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Jabberwocky.DependencyInjection.Sc\Jabberwocky.DependencyInjection.Sc.csproj">
+      <Project>{9abffe48-ee9c-4e93-95f8-17eadcc0e422}</Project>
+      <Name>Jabberwocky.DependencyInjection.Sc</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Jabberwocky.DependencyInjection\Jabberwocky.DependencyInjection.csproj">
       <Project>{D24E1F38-0BD8-4630-A8FD-1B4884EE259E}</Project>
       <Name>Jabberwocky.DependencyInjection</Name>
