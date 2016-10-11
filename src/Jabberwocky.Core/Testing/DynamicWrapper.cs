@@ -55,7 +55,7 @@ namespace Jabberwocky.Core.Testing
 		/// <summary>
 		/// Create an instance via the constructor matching the args 
 		/// </summary>
-		public static dynamic FromType(System.Reflection.Assembly asm, string type, params object[] args)
+		public static dynamic FromType(Assembly asm, string type, params object[] args)
 		{
 
 			var allt = asm.GetTypes();
