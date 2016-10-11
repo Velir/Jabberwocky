@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -72,8 +73,7 @@ namespace Jabberwocky.DependencyInjection.Scanning
 
 		private static string GetFileNameFromPath(string filePath)
 		{
-			var info = new FileInfo(filePath);
-			return info.Name;
+			return Path.GetFileNameWithoutExtension(filePath);
 		}
 
 		protected virtual Assembly LoadAssembly(string assemblyName)

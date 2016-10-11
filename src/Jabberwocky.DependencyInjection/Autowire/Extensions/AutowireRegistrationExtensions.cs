@@ -15,7 +15,7 @@ namespace Jabberwocky.DependencyInjection.Autowire.Extensions
 			var assemblies = new[] { Assembly.GetExecutingAssembly() }.Concat(assemblyNames.Select(AssemblyManager.LoadAssemblySafe)).Distinct();
 
 			foreach (var meta in assemblies.SelectMany(asm => asm.ExportedTypes)
-				.Select(type => new { Type = type, Attr = type.GetCustomAttributes<AutowireServiceAttribute>(true).FirstOrDefault() })
+				.Select(type => new { Type = type, Attr = type.GetCustomAttributesSafe<AutowireServiceAttribute>(true).FirstOrDefault() })
 				.Where(meta => meta.Attr != null))
 			{
 				// Configure the lifetime scope

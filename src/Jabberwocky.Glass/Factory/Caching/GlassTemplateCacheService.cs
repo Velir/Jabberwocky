@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Glass.Mapper.Sc;
 using Glass.Mapper.Sc.Configuration.Attributes;
+using Jabberwocky.Core.Utils.Reflection;
 using Jabberwocky.Glass.Factory.Util;
 using Jabberwocky.Glass.Models;
 
@@ -146,7 +147,7 @@ namespace Jabberwocky.Glass.Factory.Caching
 
 				foreach (var metadata in mappingGroup)
 				{
-					var sitecoreAttribute = metadata.GlassType.GetCustomAttributes(typeof(SitecoreTypeAttribute), false).FirstOrDefault() as SitecoreTypeAttribute;
+					var sitecoreAttribute = metadata.GlassType.GetCustomAttributesSafe<SitecoreTypeAttribute>().FirstOrDefault();
 					var templateId = metadata.IsFallback
 							? DefaultFallbackTemplateId
 							: sitecoreAttribute?.TemplateId;

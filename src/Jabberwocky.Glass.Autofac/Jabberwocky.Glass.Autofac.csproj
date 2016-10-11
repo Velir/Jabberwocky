@@ -130,7 +130,7 @@
       <Name>Jabberwocky.DependencyInjection.Sc</Name>
     </ProjectReference>
     <ProjectReference Include="..\Jabberwocky.DependencyInjection\Jabberwocky.DependencyInjection.csproj">
-      <Project>{D24E1F38-0BD8-4630-A8FD-1B4884EE259E}</Project>
+      <Project>{d24e1f38-0bd8-4630-a8fd-1b4884ee259e}</Project>
       <Name>Jabberwocky.DependencyInjection</Name>
     </ProjectReference>
     <ProjectReference Include="..\Jabberwocky.Glass\Jabberwocky.Glass.csproj">

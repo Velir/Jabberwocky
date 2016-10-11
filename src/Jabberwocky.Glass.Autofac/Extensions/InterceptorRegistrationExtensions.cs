@@ -7,6 +7,7 @@ using Autofac.Builder;
 using Autofac.Core;
 using Autofac.Extras.DynamicProxy;
 using Castle.DynamicProxy;
+using Jabberwocky.Core.Utils.Reflection;
 
 namespace Jabberwocky.Glass.Autofac.Extensions
 {
@@ -75,13 +76,11 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 			if (implType.IsClass)
 				enumerable =
 					enumerable.Concat(
-						implType.GetCustomAttributes(typeof(InterceptAttribute), true)
-							.Cast<InterceptAttribute>()
+						implType.GetCustomAttributesSafe<InterceptAttribute>(true)
 							.Select(att => att.InterceptorService))
 						.Concat(
 							implType.GetInterfaces()
-								.SelectMany(i => (IEnumerable<object>)i.GetCustomAttributes(typeof(InterceptAttribute), true))
-								.Cast<InterceptAttribute>()
+								.SelectMany(i => i.GetCustomAttributesSafe<InterceptAttribute>(true))
 								.Select(att => att.InterceptorService));
 
 			return enumerable.ToArray();

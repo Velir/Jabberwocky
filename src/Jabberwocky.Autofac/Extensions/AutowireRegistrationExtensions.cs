@@ -61,9 +61,9 @@ namespace Jabberwocky.Autofac.Extensions
 			return new RegistrationMetadata
 			{
 				Type = type,
-				Attr = type.GetCustomAttributes<AutowireServiceAttribute>(true).FirstOrDefault(),
-				IsExternallyOwned = type.GetCustomAttributes<ExternallyOwnedAttribute>().Any(),
-				IsAggregateService = type.GetCustomAttributes<AggregateServiceAttribute>().Any()
+				Attr = type.GetCustomAttributesSafe<AutowireServiceAttribute>().FirstOrDefault(),
+				IsExternallyOwned = type.GetCustomAttributesSafe<ExternallyOwnedAttribute>().Any(),
+				IsAggregateService = type.GetCustomAttributesSafe<AggregateServiceAttribute>().Any()
 			};
 		}
 

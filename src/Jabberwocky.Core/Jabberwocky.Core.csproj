@@ -61,6 +61,7 @@
     <Compile Include="Utils\Extensions\LinqExtensions.cs" />
     <Compile Include="Utils\Extensions\TypeExtensions.cs" />
     <Compile Include="Utils\LockingUtil.cs" />
+    <Compile Include="Utils\Reflection\MemberInfoExtensions.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

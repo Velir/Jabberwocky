@@ -3,6 +3,7 @@ using System.Reflection;
 using Castle.DynamicProxy;
 using Jabberwocky.Autofac.Modules.Aspected.Configuration;
 using Jabberwocky.Autofac.Modules.Aspected.Strategies;
+using Jabberwocky.Core.Utils.Reflection;
 using Jabberwocky.Glass.Factory.Attributes;
 
 namespace Jabberwocky.Glass.Autofac.Aspects.Strategies
@@ -15,7 +16,7 @@ namespace Jabberwocky.Glass.Autofac.Aspects.Strategies
 		{
 			// Only operate on Glass Interface Factory class proxies
 			return ProxyUtil.IsProxy(context.ExistingInstance)
-				&& context.ComponentServices.All(service => service.ServiceType.GetCustomAttribute<GlassFactoryTypeAttribute>() != null);
+				&& context.ComponentServices.All(service => service.ServiceType.GetCustomAttributeSafe<GlassFactoryTypeAttribute>() != null);
 		}
 
 		public void CreateProxy(InterceptionContext context)

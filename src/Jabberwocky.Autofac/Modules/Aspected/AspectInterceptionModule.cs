@@ -9,6 +9,7 @@ using Castle.DynamicProxy;
 using Jabberwocky.Autofac.Aspects.Attributes;
 using Jabberwocky.Autofac.Modules.Aspected.Configuration;
 using Jabberwocky.Autofac.Modules.Aspected.Strategies;
+using Jabberwocky.Core.Utils.Reflection;
 using Module = Autofac.Module;
 
 namespace Jabberwocky.Autofac.Modules.Aspected
@@ -56,7 +57,7 @@ namespace Jabberwocky.Autofac.Modules.Aspected
 					config.Assemblies.Select(LoadAssembly)
 						.Where(assembly => assembly != null)
 						.SelectMany(a => a.ExportedTypes)
-						.Where(t => t?.GetCustomAttribute<AspectAttribute>() != null))
+						.Where(t => t?.GetCustomAttributesSafe<AspectAttribute>() != null))
 				: new HashSet<Type>();
 		}
 
