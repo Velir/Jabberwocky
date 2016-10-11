@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Jabberwocky.Core.Assembly;
 using Jabberwocky.Glass.Autofac.Pipelines.PipelineArgs;
 using Jabberwocky.Glass.Autofac.Pipelines.Processors;
 
@@ -17,7 +18,11 @@ namespace Jabberwocky.Glass.Autofac.Pipelines.RegisterAutofacDependencies.Base
 
 		public virtual void AddAssembly(string assemblyName)
 		{
-			ConfiguredAssemblies.Add(assemblyName);
+			string[] matchingAssemblies = assemblyName.Contains("*") ? AssemblyManager.GetAssemblyNames($"{assemblyName}.dll") : new [] { assemblyName };
+			foreach (string assembly in matchingAssemblies)
+			{
+				ConfiguredAssemblies.Add(assembly);
+			}
 		}
 
 		protected virtual string[] GetConfiguredAssemblies(RegisterAutofacDependenciesPipelineArgs args)

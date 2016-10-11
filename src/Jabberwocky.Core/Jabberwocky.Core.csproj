@@ -35,6 +35,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assembly\AssemblyManager.cs" />
     <Compile Include="Caching\Base\NullCacheEntry.cs" />
     <Compile Include="Caching\GeneralCache.cs" />
     <Compile Include="Caching\Base\BaseCacheProvider.cs" />
