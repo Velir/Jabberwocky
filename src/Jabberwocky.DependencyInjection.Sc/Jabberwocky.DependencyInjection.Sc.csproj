@@ -58,7 +58,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App_Config\Include\z.Jabberwocky\1.Jabberwocky.DependencyInjection.config" />
+    <None Include="App_Config\Include\z.Jabberwocky\1.Jabberwocky.DependencyInjection.Sc.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
