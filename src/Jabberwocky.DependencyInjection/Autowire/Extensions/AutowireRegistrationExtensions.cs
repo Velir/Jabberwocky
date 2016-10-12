@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Jabberwocky.Core.Utils.Reflection;
 using Jabberwocky.DependencyInjection.Autowire.Attributes;
@@ -14,7 +16,7 @@ namespace Jabberwocky.DependencyInjection.Autowire.Extensions
 
 			var assemblies = new[] { Assembly.GetExecutingAssembly() }.Concat(assemblyNames.Select(AssemblyManager.LoadAssemblySafe)).Distinct();
 
-			foreach (var meta in assemblies.SelectMany(asm => asm.ExportedTypes)
+			foreach (var meta in assemblies.SelectMany(TryGetExportedTypes)
 				.Select(type => new { Type = type, Attr = type.GetCustomAttributesSafe<AutowireServiceAttribute>(true).FirstOrDefault() })
 				.Where(meta => meta.Attr != null))
 			{
@@ -46,6 +48,19 @@ namespace Jabberwocky.DependencyInjection.Autowire.Extensions
 				{
 					collection.Add(new ServiceDescriptor(meta.Type, meta.Type, lifetime));
 				}
+			}
+		}
+
+		private static IEnumerable<Type> TryGetExportedTypes(Assembly asm)
+		{
+			try
+			{
+				return asm.ExportedTypes;
+			}
+			catch
+			{
+				// Unable to load types
+				return Enumerable.Empty<Type>();
 			}
 		}
 	}
