@@ -29,6 +29,7 @@
 				<processor type="Jabberwocky.Glass.Autofac.Pipelines.RegisterAutofacDependencies.ConfigureScannedAssemblies, Jabberwocky.Glass.Autofac">
 					<ConfiguredAssemblies hint="list:AddAssembly">
 						<!-- Add your Website DLL & Libraries here -->
+						<solution>$rootnamespace$*</solution>
 						<GlassMapper>Glass.Mapper</GlassMapper>
 						<GlassMapperSc>Glass.Mapper.Sc</GlassMapperSc>
 						<GlassMapperMvc>Glass.Mapper.Sc.Mvc</GlassMapperMvc>

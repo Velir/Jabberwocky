@@ -34,7 +34,7 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("2.0.0.0")]
 [assembly: AssemblyFileVersion("2.0.0.0")]
-[assembly: AssemblyInformationalVersion("2.0.0-alpha4")]
+[assembly: AssemblyInformationalVersion("2.0.0-alpha5")]
 
 [assembly: InternalsVisibleTo("Jabberwocky.Glass.Autofac.Mvc")]
 [assembly: InternalsVisibleTo("Jabberwocky.Glass.Autofac.WebApi")]

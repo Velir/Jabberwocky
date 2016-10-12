@@ -139,7 +139,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App_Config\Include\z.Jabberwocky\1.Jabberwocky.Glass.Autofac.config" />
+    <None Include="App_Config\Include\z.Jabberwocky\1.Jabberwocky.Glass.Autofac.config.pp" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
