@@ -19,7 +19,7 @@ namespace Jabberwocky.Autofac.Extensions
 
 			foreach (var meta in assemblies.SelectMany(asm => asm.ExportedTypes)
 				.Select(GetRegistrationMetadata)
-				.Where(meta => meta.Attr != null))
+				.Where(meta => meta.IsValid))
 			{
 				if (meta.IsAggregateService)
 				{
@@ -69,6 +69,8 @@ namespace Jabberwocky.Autofac.Extensions
 
 		private struct RegistrationMetadata
 		{
+			public bool IsValid => Attr != null || IsAggregateService;
+
 			public Type Type;
 			public AutowireServiceAttribute Attr;
 			public bool IsExternallyOwned;
