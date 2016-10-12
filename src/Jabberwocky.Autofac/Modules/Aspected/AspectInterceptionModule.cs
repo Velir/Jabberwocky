@@ -57,7 +57,7 @@ namespace Jabberwocky.Autofac.Modules.Aspected
 					config.Assemblies.Select(LoadAssembly)
 						.Where(assembly => assembly != null)
 						.SelectMany(a => a.ExportedTypes)
-						.Where(t => t?.GetCustomAttributesSafe<AspectAttribute>() != null))
+						.Where(t => t?.GetCustomAttributeSafe<AspectAttribute>() != null))
 				: new HashSet<Type>();
 		}
 
