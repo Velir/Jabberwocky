@@ -116,7 +116,7 @@ namespace Jabberwocky.Core.Caching.Base
 			if (key == null) throw new ArgumentNullException(nameof(key));
 			if (callback == null) throw new ArgumentNullException(nameof(callback));
 
-			return await GetFromCacheAsync<T>(key, absoluteExpiration, ct => Task.FromResult(callback()), token);
+			return await GetFromCacheAsync<T>(key, absoluteExpiration, ct => Task.FromResult(callback()), token).ConfigureAwait(false);
 		}
 
 		public virtual Task<T> GetFromCacheAsync<T>(string key, Func<CancellationToken, Task<T>> callback, CancellationToken token = default(CancellationToken)) where T : class

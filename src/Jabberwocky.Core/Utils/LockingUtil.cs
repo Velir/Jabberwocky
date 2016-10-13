@@ -22,7 +22,7 @@ namespace Jabberwocky.Core.Utils
 		/// <param name="obj">The object to get a lock for</param>
 		/// <typeparam name="T">The type of this object</typeparam>
 		/// <returns>A lock unique to this object's ToString() value</returns>
-		public static IDisposable GetLock<T>(this T obj)
+		public static LockObject GetLock<T>(this T obj)
 		{
 			return GetLock(obj.ToString());
 		}
@@ -41,7 +41,7 @@ namespace Jabberwocky.Core.Utils
 		/// <param name="token">Cancellation token</param>
 		/// <typeparam name="T">The type of this object</typeparam>
 		/// <returns>A lock unique to this object's ToString() value</returns>
-		public static Task<IDisposable> GetLockAsync<T>(this T obj, CancellationToken token = default(CancellationToken))
+		public static Task<LockObject> GetLockAsync<T>(this T obj, CancellationToken token = default(CancellationToken))
 		{
 			return GetLockAsync(obj.ToString(), token);
 		}
@@ -58,12 +58,12 @@ namespace Jabberwocky.Core.Utils
 		/// </remarks>
 		/// <param name="key">A unique key to create a lock for</param>
 		/// <returns>A lock unique to the specified key value</returns>
-		public static IDisposable GetLock(string key)
+		public static LockObject GetLock(string key)
 		{
-			LockObject @lock = null;
+			LockObject @lock = default(LockObject);
 			do
 			{
-				if (@lock != null) @lock.Dispose();
+				@lock.Dispose();
 
 				@lock = new LockObject(key, LockManager.Locks, LockManager.Locks.GetOrAdd(key, _ => new LockState()));
 				@lock.Acquire();
@@ -84,12 +84,12 @@ namespace Jabberwocky.Core.Utils
 		/// <param name="key">A unique key to create a lock for</param>
 		/// <param name="token">A cancellation token</param>
 		/// <returns>A lock unique to the specified key value</returns>
-		public static async Task<IDisposable> GetLockAsync(string key, CancellationToken token = default(CancellationToken))
+		public static async Task<LockObject> GetLockAsync(string key, CancellationToken token = default(CancellationToken))
 		{
-			LockObject @lock = null;
+			LockObject @lock = default(LockObject);
 			do
 			{
-				if (@lock != null) @lock.Dispose();
+				@lock.Dispose();
 
 				@lock = new LockObject(key, LockManager.Locks, LockManager.Locks.GetOrAdd(key, _ => new LockState()));
 				await @lock.AcquireAsync(token).ConfigureAwait(false);
@@ -103,15 +103,15 @@ namespace Jabberwocky.Core.Utils
 			internal static ConcurrentDictionary<string, LockState> Locks => LazyLocks.Value;
 		}
 
-		private sealed class LockObject : IDisposable
+		public struct LockObject : IDisposable
 		{
 			private readonly ConcurrentDictionary<string, LockState> _container;
 			private readonly LockState _lockState;
 			private readonly string _key;
 
-			public bool IsValid => _lockState.IsValid;
+			internal bool IsValid => _lockState.IsValid;
 
-			public LockObject(string key, ConcurrentDictionary<string, LockState> container, LockState lockState)
+			internal LockObject(string key, ConcurrentDictionary<string, LockState> container, LockState lockState)
 			{
 				_key = key;
 				_container = container;
@@ -119,18 +119,20 @@ namespace Jabberwocky.Core.Utils
 				Interlocked.Increment(ref _lockState.RefCount);
 			}
 
-			public void Acquire()
+			internal void Acquire()
 			{
 				_lockState.Semaphore.Wait();
 			}
 
-			public Task AcquireAsync(CancellationToken token = default(CancellationToken))
+			internal Task AcquireAsync(CancellationToken token = default(CancellationToken))
 			{
 				return _lockState.Semaphore.WaitAsync(token);
 			}
 
 			public void Dispose()
 			{
+				if (_lockState == null) return;
+
 				try
 				{
 					if (Interlocked.Decrement(ref _lockState.RefCount) <= 0)
@@ -149,13 +151,13 @@ namespace Jabberwocky.Core.Utils
 			}
 		}
 
-		private sealed class LockState
+		internal sealed class LockState
 		{
-			public int RefCount;
+			internal int RefCount;
 			// Note that we no longer dispose of this resource; we will now rely on non-deterministic finalization cleanup
 			// Justification: http://source.roslyn.codeplex.com/#Microsoft.CodeAnalysis.Workspaces/Utilities/AsyncSemaphore.cs,91c6ef418f692fa1,references
-			public readonly SemaphoreSlim Semaphore = new SemaphoreSlim(1);
-			public volatile bool IsValid = true;
+			internal readonly SemaphoreSlim Semaphore = new SemaphoreSlim(1);
+			internal volatile bool IsValid = true;
 		}
 
 		#endregion

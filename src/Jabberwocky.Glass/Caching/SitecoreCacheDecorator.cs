@@ -130,7 +130,7 @@ namespace Jabberwocky.Glass.Caching
 				return await callback(token).ConfigureAwait(false);
 			}
 			var newKey = GenerateCacheKey(key);
-			return await Provider.GetFromCacheAsync(newKey, absoluteExpiration, callback, token);
+			return await Provider.GetFromCacheAsync(newKey, absoluteExpiration, callback, token).ConfigureAwait(false);
 		}
 
 		public async Task AddToCacheAsync<T>(string key, T value, CancellationToken token = new CancellationToken()) where T : class
