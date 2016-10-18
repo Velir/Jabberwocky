@@ -109,12 +109,12 @@ namespace Jabberwocky.Glass.Factory.Caching
 			}
 		}
 
-		internal IEnumerable<Guid> GetBaseTemplates(IBaseTemplates item, ISitecoreService service, int depth = DefaultDepth, bool ignoreTemplate = false)
+		internal IEnumerable<Guid> GetBaseTemplates(IBaseTemplates item, ISitecoreService service, int depth = DefaultDepth)
 		{
-			return InternalGetBaseTemplates(item, service, new HashSet<Guid>(), depth, ignoreTemplate).Concat(new[] { new Guid(DefaultFallbackTemplateId) });
+			return InternalGetBaseTemplates(item, service, new HashSet<Guid>(), depth).Concat(new[] { new Guid(DefaultFallbackTemplateId) });
 		}
 
-		private IEnumerable<Guid> InternalGetBaseTemplates(IBaseTemplates item, ISitecoreService service, HashSet<Guid> visitedSet, int depth, bool ignoreTemplate = false)
+		private IEnumerable<Guid> InternalGetBaseTemplates(IBaseTemplates item, ISitecoreService service, HashSet<Guid> visitedSet, int depth)
 		{
 			if (item == null || depth <= 0) return DefaultBaseTemplateArray;
 
