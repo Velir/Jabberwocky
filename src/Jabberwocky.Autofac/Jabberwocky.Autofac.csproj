@@ -65,7 +65,10 @@
     <Compile Include="Modules\Aspected\AspectInterceptionModule.cs" />
     <Compile Include="Modules\Aspected\Configuration\AspectConfiguration.cs" />
     <Compile Include="Modules\Aspected\Configuration\InterceptionContext.cs" />
-    <Compile Include="Modules\Aspected\Strategies\DefaultProxyStrategy.cs" />
+    <Compile Include="Modules\Aspected\Strategies\Activation\ActivatedInterceptionContext.cs" />
+    <Compile Include="Modules\Aspected\Strategies\Activation\ActivationReplacementStrategy.cs" />
+    <Compile Include="Modules\Aspected\Strategies\ClassProxyStrategy.cs" />
+    <Compile Include="Modules\Aspected\Strategies\InterfaceProxyStrategy.cs" />
     <Compile Include="Modules\Aspected\Strategies\IProxyStrategy.cs" />
     <Compile Include="Modules\LogInjectionModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

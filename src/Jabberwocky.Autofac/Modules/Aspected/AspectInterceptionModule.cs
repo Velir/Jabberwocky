@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using Autofac;
@@ -17,8 +18,9 @@ namespace Jabberwocky.Autofac.Modules.Aspected
 	public class AspectInterceptionModule : Module
 	{
 		protected const string ReservedProxyInterface = "Castle.DynamicProxy.IProxyTargetAccessor";
-		private static readonly Lazy<DefaultProxyStrategy> LazyDefaultStrategy = new Lazy<DefaultProxyStrategy>();
-		protected static DefaultProxyStrategy DefaultStrategy => LazyDefaultStrategy.Value;
+		private static readonly Lazy<IProxyStrategy[]> LazyDefaultStrategies = new Lazy<IProxyStrategy[]>(InitDefaultStrategies);
+
+		protected static IProxyStrategy[] DefaultStrategies => LazyDefaultStrategies.Value;
 
 		protected readonly IInterceptor[] Interceptors;
 		protected readonly ICollection<IProxyStrategy> Strategies;
@@ -46,7 +48,7 @@ namespace Jabberwocky.Autofac.Modules.Aspected
 		public AspectInterceptionModule(AspectConfiguration config)
 		{
 			Interceptors = config.Interceptors.ToArray();
-			Strategies = config.Strategies.ToArray();
+			Strategies = config.Strategies.Concat(DefaultStrategies).ToArray();
 			IncludeNamespaces = new HashSet<string>(config.IncludeNamespaces, StringComparer.InvariantCultureIgnoreCase);
 			ExcludeNamespaces = new HashSet<string>(config.ExcludeNamespaces, StringComparer.InvariantCultureIgnoreCase);
 			ExcludeTypes = new HashSet<string>(config.ExcludeTypes, StringComparer.InvariantCultureIgnoreCase);
@@ -65,7 +67,7 @@ namespace Jabberwocky.Autofac.Modules.Aspected
 			IComponentRegistration registration)
 		{
 			InterceptRegistration(componentRegistry, registration, Interceptors);
-
+			
 			base.AttachToComponentRegistration(componentRegistry, registration);
 		}
 
@@ -89,23 +91,10 @@ namespace Jabberwocky.Autofac.Modules.Aspected
 				return;
 			}
 
-			registration.Activating += (sender, e) =>
-			{
-				try
-				{
-					InterceptActivation(interceptors, e, proxyTypes);
-				}
-				catch
-				{
-					// do nothing
-				}
-			};
-		}
+			var type = registration.Activator.LimitType;
+			var componentServices = registration.Services.OfType<IServiceWithType>().ToArray();
 
-		protected virtual void InterceptActivation(IInterceptor[] interceptors, ActivatingEventArgs<object> e, HashSet<Type> proxyTypes)
-		{
-			var type = e.Instance.GetType();
-			var componentServices = e.Component.Services.OfType<IServiceWithType>().ToArray();
+			Debug.Assert(type != null);
 
 			Predicate<Type> isExplicitlyIncludedType = t => IncludeTypes.Any() && !IncludeTypes.Contains(t);
 			Predicate<IEnumerable<IServiceWithType>> allServicesAreIncludedInNamespaces = services =>
@@ -134,15 +123,14 @@ namespace Jabberwocky.Autofac.Modules.Aspected
 				type.GetInterfaces()
 					.Where(i => i.IsVisible && !i.FullName.Equals(ReservedProxyInterface))
 					.ToArray();
-			var instance = e.Instance;
 
 			var context = new InterceptionContext
 			{
+				ComponentRegistration = registration,
+				ComponentRegistry = componentRegistry,
 				Interceptors = interceptors,
-				EventArgs = e,
 				ComponentServices = componentServices,
 				ProxyableInterfaces = proxiedInterfaces,
-				ExistingInstance = instance,
 				InstanceType = type
 			};
 
@@ -152,11 +140,20 @@ namespace Jabberwocky.Autofac.Modules.Aspected
 		protected virtual void ExecuteProxyStrategy(InterceptionContext context)
 		{
 			// Select an appropriate strategy
-			var strategy = Strategies.FirstOrDefault(strat => strat.CanHandle(context)) ?? DefaultStrategy;
-			strategy.CreateProxy(context);
+			var strategy = Strategies.FirstOrDefault(strat => strat.CanHandle(context));
+			strategy?.CreateProxy(context);
 		}
 
 		#region Private Helpers
+
+		private static IProxyStrategy[] InitDefaultStrategies()
+		{
+			return new IProxyStrategy[]
+			{
+				new InterfaceProxyStrategy(),
+				new ClassProxyStrategy(),
+			};
+		}
 
 		/// <summary>
 		///     Get Activated event handlers for a registrations
