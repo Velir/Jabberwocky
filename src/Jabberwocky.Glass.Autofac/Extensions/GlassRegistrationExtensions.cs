@@ -93,7 +93,6 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 			builder.RegisterType<ItemService>().As<IItemService>();
 			builder.RegisterType<LinkService>().As<ILinkService>();
 			builder.RegisterType<SitecoreContext>().As<ISitecoreContext>()
-				.InstancePerLifetimeScope()
 				.ExternallyOwned();
 
 			if (customServiceResolver == null)
