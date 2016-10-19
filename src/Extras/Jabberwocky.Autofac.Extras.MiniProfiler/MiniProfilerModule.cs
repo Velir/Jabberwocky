@@ -1,4 +1,6 @@
-﻿using Jabberwocky.Autofac.Extras.MiniProfiler.Configuration;
+﻿using Autofac;
+using Jabberwocky.Autofac.Extras.MiniProfiler.Configuration;
+using Jabberwocky.Autofac.Extras.MiniProfiler.Interceptors;
 using Jabberwocky.Autofac.Extras.MiniProfiler.Util;
 using Jabberwocky.Autofac.Modules.Aspected;
 using Jabberwocky.Autofac.Modules.Aspected.Strategies;
@@ -28,6 +30,13 @@ namespace Jabberwocky.Autofac.Extras.MiniProfiler
 			: base(config)
 		{
 			MiniProfilerRuntime.MiniProfilerInitialized = config.IsMiniProfilerInitialized;
+		}
+
+		protected override void Load(ContainerBuilder builder)
+		{
+			base.Load(builder);
+
+			builder.RegisterType<AsyncProfilingInterceptor>().AsSelf();
 		}
 	}
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Jabberwocky.Core.Utils.Reflection;
 using Jabberwocky.DependencyInjection.Scanning;
 using Jabberwocky.Glass.Autofac.Pipelines.PipelineArgs;
 using Jabberwocky.Glass.Autofac.Pipelines.Processors;
@@ -44,14 +45,7 @@ namespace Jabberwocky.Glass.Autofac.Pipelines.RegisterAutofacDependencies.Base
 
 		protected Assembly TryLoad(string assemblyName)
 		{
-			try
-			{
-				return Assembly.Load(assemblyName);
-			}
-			catch
-			{
-				return null;
-			}
+			return AssemblyManager.LoadAssemblySafe(assemblyName);
 		}
 	}
 }

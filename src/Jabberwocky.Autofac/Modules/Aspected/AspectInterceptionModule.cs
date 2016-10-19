@@ -64,7 +64,7 @@ namespace Jabberwocky.Autofac.Modules.Aspected
 		protected override void AttachToComponentRegistration(IComponentRegistry componentRegistry,
 			IComponentRegistration registration)
 		{
-			InterceptRegistration(registration, Interceptors);
+			InterceptRegistration(componentRegistry, registration, Interceptors);
 
 			base.AttachToComponentRegistration(componentRegistry, registration);
 		}
@@ -72,9 +72,10 @@ namespace Jabberwocky.Autofac.Modules.Aspected
 		/// <summary>
 		///     Intercept a specific component registrations.
 		/// </summary>
+		/// <param name="componentRegistry"></param>
 		/// <param name="registration">Component registration</param>
 		/// <param name="interceptors">List of interceptors to apply.</param>
-		protected virtual void InterceptRegistration(IComponentRegistration registration, params IInterceptor[] interceptors)
+		protected virtual void InterceptRegistration(IComponentRegistry componentRegistry, IComponentRegistration registration, params IInterceptor[] interceptors)
 		{
 			var proxyTypes = new HashSet<Type>(interceptors.Select(i => i.GetType()));
 
@@ -190,14 +191,7 @@ namespace Jabberwocky.Autofac.Modules.Aspected
 
 		private static Assembly LoadAssembly(string assemblyName)
 		{
-			try
-			{
-				return Assembly.Load(assemblyName);
-			}
-			catch
-			{
-				return null;
-			}
+			return AssemblyManager.LoadAssemblySafe(assemblyName);
 		}
 
 		#endregion

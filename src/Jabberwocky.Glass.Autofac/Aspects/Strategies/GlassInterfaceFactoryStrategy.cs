@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Reflection;
 using Castle.DynamicProxy;
 using Jabberwocky.Autofac.Modules.Aspected.Configuration;
 using Jabberwocky.Autofac.Modules.Aspected.Strategies;
