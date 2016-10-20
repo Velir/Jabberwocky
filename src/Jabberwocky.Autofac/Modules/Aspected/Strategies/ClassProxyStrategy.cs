@@ -44,12 +44,6 @@ namespace Jabberwocky.Autofac.Modules.Aspected.Strategies
 			var configuredParameters = activator._defaultParameters as IEnumerable<Parameter> ?? Enumerable.Empty<Parameter>();
 			var configuredProperties = activator._configuredProperties as IEnumerable<Parameter> ?? Enumerable.Empty<Parameter>();
 
-			//var configuredParameters = (IEnumerable<Parameter>)typeof(ReflectionActivator).GetField("_configuredParameters",
-			//	BindingFlags.NonPublic | BindingFlags.Instance).GetValue(reflectionActivator);
-
-			//var configuredProperties = (IEnumerable<Parameter>)typeof(ReflectionActivator).GetField("_configuredProperties",
-			//	BindingFlags.NonPublic | BindingFlags.Instance).GetValue(reflectionActivator);
-
 			registration.Activator = new ReflectionActivator(proxyType,
 				reflectionActivator.ConstructorFinder,
 				reflectionActivator.ConstructorSelector,
