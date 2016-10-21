@@ -10,7 +10,7 @@ namespace Jabberwocky.Autofac.Extras.MiniProfiler.Sc.Pipeline.RegisterAutofacDep
 {
 	public class RegisterMiniProfilerModule : BaseConfiguredAssemblyProcessor
 	{
-		public bool IncludeSitecoreRegistrations { get; set; } = true;
+		public bool IncludeSitecoreRegistrations { get; set; } = false;
 
 		public HashSet<string> IncludeNamespaces { get; set; } = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
 		public HashSet<string> ExcludeNamespaces { get; set; } = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
