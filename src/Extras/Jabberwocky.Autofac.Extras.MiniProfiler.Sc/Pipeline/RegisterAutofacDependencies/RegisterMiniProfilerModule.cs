@@ -10,7 +10,12 @@ namespace Jabberwocky.Autofac.Extras.MiniProfiler.Sc.Pipeline.RegisterAutofacDep
 {
 	public class RegisterMiniProfilerModule : BaseConfiguredAssemblyProcessor
 	{
-		public MiniProfilerConfigurationWrapper Configuration { get; set; } = new MiniProfilerConfigurationWrapper();
+		public bool IncludeSitecoreRegistrations { get; set; } = true;
+
+		public HashSet<string> IncludeNamespaces { get; set; } = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
+		public HashSet<string> ExcludeNamespaces { get; set; } = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
+		public HashSet<string> ExcludeTypes { get; set; } = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
+		public HashSet<string> ExcludeAssemblies { get; set; } = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
 
 		public override void Process(RegisterAutofacDependenciesPipelineArgs args)
 		{
@@ -18,33 +23,17 @@ namespace Jabberwocky.Autofac.Extras.MiniProfiler.Sc.Pipeline.RegisterAutofacDep
 			var instrumentedSitecoreAssemblies = sitecoreServiceAssemblies.Where(n => !string.IsNullOrEmpty(n)).Distinct().ToArray();
 			var includedSitecoreNamespaces = instrumentedSitecoreAssemblies.Concat(new[] { "Sitecore" });
 
-			MiniProfilerConfiguration config = Configuration;
-			config.Assemblies = Configuration.IncludeSitecoreRegistrations
-				? config.Assemblies.Concat(instrumentedSitecoreAssemblies)
+			MiniProfilerConfiguration config = CreateConfig(args);
+			config.Assemblies = IncludeSitecoreRegistrations
+				? config.Assemblies.Concat(instrumentedSitecoreAssemblies).Distinct()
 				: config.Assemblies;
-			config.IncludeNamespaces = Configuration.IncludeSitecoreRegistrations
-				? config.IncludeNamespaces.Concat(includedSitecoreNamespaces)
+			config.IncludeNamespaces = IncludeSitecoreRegistrations
+				? config.IncludeNamespaces.Concat(includedSitecoreNamespaces).Distinct()
 				: config.IncludeNamespaces;
 			
 			args.ContainerBuilder.RegisterModule(new SitecoreMiniProfilerModule(config));
 		}
-	}
-
-	public class MiniProfilerConfigurationWrapper
-	{
-		public bool IncludeSitecoreRegistrations { get; set; } = true;
-
-		public HashSet<string> Assemblies { get; set; } = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
-		public HashSet<string> IncludeNamespaces { get; set; } = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
-		public HashSet<string> ExcludeNamespaces { get; set; } = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
-		public HashSet<string> ExcludeTypes { get; set; } = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
-		public HashSet<string> ExcludeAssemblies { get; set; } = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
-
-		public void AddAssembly(string assembly)
-		{
-			Assemblies.Add(assembly);
-		}
-
+		
 		public void IncludeNamespace(string @namespace)
 		{
 			IncludeNamespaces.Add(@namespace);
@@ -64,20 +53,22 @@ namespace Jabberwocky.Autofac.Extras.MiniProfiler.Sc.Pipeline.RegisterAutofacDep
 			ExcludeAssemblies.Add(assembly);
 		}
 
-		public static implicit operator MiniProfilerConfiguration(MiniProfilerConfigurationWrapper wrapper)
+		public MiniProfilerConfiguration CreateConfig(RegisterAutofacDependenciesPipelineArgs args)
 		{
-			// Explicitly declare the includedNamespaces to be the set of assemblies IFF no overrides are provided
-			var includedNamespaces = wrapper.IncludeNamespaces.Any()
-				? wrapper.IncludeNamespaces
-				: wrapper.Assemblies;
+			var assemblies = GetConfiguredAssemblies(args);
 
-			return new MiniProfilerConfiguration(wrapper.Assemblies.ToArray())
+			// Explicitly declare the includedNamespaces to be the set of assemblies IFF no overrides are provided
+			var includedNamespaces = IncludeNamespaces.Any()
+				? IncludeNamespaces.ToArray()
+				: assemblies;
+
+			return new MiniProfilerConfiguration(assemblies)
 			{
 				IncludeNamespaces = includedNamespaces,
-				ExcludeNamespaces = wrapper.ExcludeNamespaces,
-				ExcludeTypes = wrapper.ExcludeTypes,
-				ExcludeAssemblies = wrapper.ExcludeAssemblies
+				ExcludeNamespaces = ExcludeNamespaces,
+				ExcludeTypes = ExcludeTypes,
+				ExcludeAssemblies = ExcludeAssemblies
 			};
-		} 
+		}
 	}
 }
