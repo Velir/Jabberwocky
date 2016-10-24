@@ -6,7 +6,6 @@ using Jabberwocky.Extras.Polly.Sc.Constants;
 using Polly;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
-using Sitecore.Mvc.Extensions;
 
 namespace Jabberwocky.Extras.Polly.Sc.Renderer
 {
@@ -35,36 +34,23 @@ namespace Jabberwocky.Extras.Polly.Sc.Renderer
 		public override void Render(TextWriter writer)
 		{
 			int numExceptions;
-			int.TryParse(_renderingItem.InnerItem[FieldConstants.BreakAfterExceptionCount], out numExceptions);
 			int seconds;
-			int.TryParse(_renderingItem.InnerItem[FieldConstants.OpenCircuitDurationInSeconds], out seconds);
+			if (!int.TryParse(_renderingItem.InnerItem[FieldConstants.BreakAfterExceptionCount], out numExceptions)
+			    || !int.TryParse(_renderingItem.InnerItem[FieldConstants.OpenCircuitDurationInSeconds], out seconds))
+			{
+				// Could not parse the values to integers, so just pass through
+				Log.Warn("Configuration values for 'Break After Exception Count' or 'Open Circuit Duration In Seconds' were invalid.", this);
+
+				_innerRenderer.Render(writer);
+				return;
+			}
 
 			var policyKey = _keyProvider.GetKey(_renderingItem);
 
 			var policy = _cacheProvider.GetOrAddPolicy(policyKey,
 				key => Policy.Handle<Exception>().CircuitBreaker(numExceptions, TimeSpan.FromSeconds(seconds)));
 
-			// Let's only 'try' if we can handle the exception
-			if (ShouldHideRendering())
-			{
-				try
-				{
-					policy.Execute(() => _innerRenderer.Render(writer));
-				}
-				catch (Exception ex)
-				{
-					Log.Warn($"Hiding rendering '{_renderingItem.ID}' due to error.", ex, typeof(CircuitBreakerRendererDecorator));
-				}
-			}
-			else
-			{
-				policy.Execute(() => _innerRenderer.Render(writer));
-			}
-		}
-
-		private bool ShouldHideRendering()
-		{
-			return _renderingItem.InnerItem[FieldConstants.HideOnError].ToBool();
+			policy.Execute(() => _innerRenderer.Render(writer));
 		}
 	}
 }

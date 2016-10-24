@@ -70,21 +70,27 @@
     <Compile Include="Caching\Keys\DefaultPolicyKeyProvider.cs" />
     <Compile Include="Caching\Keys\IPolicyKeyProvider.cs" />
     <Compile Include="Constants\FieldConstants.cs" />
+    <Compile Include="Pipelines\Mvc\RenderRendering\AddErrorHandlingWrapper.cs" />
     <Compile Include="Pipelines\Mvc\RenderRendering\AddPageEditorWrapper.cs" />
     <Compile Include="Pipelines\Mvc\RenderRendering\AddPollyWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderer\CircuitBreakerRendererDecorator.cs" />
+    <Compile Include="Renderer\ErrorHandlingRendererDecorator.cs" />
     <Compile Include="Renderer\PageEditorRendererDecorator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App_Config\Include\z.Jabberwocky\1.Jabberwocky.Extras.Polly.Sc.config" />
     <None Include="packages.config" />
+    <None Include="Packages\Jabberwocky Extras Polly Sc.zip" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Jabberwocky.Core\Jabberwocky.Core.csproj">
       <Project>{79F22272-B90E-4461-BAEE-92AE1A6C28BC}</Project>
       <Name>Jabberwocky.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Packages\readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
