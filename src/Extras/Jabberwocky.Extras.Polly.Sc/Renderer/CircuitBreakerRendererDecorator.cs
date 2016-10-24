@@ -39,7 +39,8 @@ namespace Jabberwocky.Extras.Polly.Sc.Renderer
 			    || !int.TryParse(_renderingItem.InnerItem[FieldConstants.OpenCircuitDurationInSeconds], out seconds))
 			{
 				// Could not parse the values to integers, so just pass through
-				Log.Warn("Configuration values for 'Break After Exception Count' or 'Open Circuit Duration In Seconds' were invalid.", this);
+				Log.Warn($"Configuration values on rendering '{_renderingItem.ID}' for " +
+				         $"'{FieldConstants.BreakAfterExceptionCount}' or '{FieldConstants.OpenCircuitDurationInSeconds}' were invalid.", this);
 
 				_innerRenderer.Render(writer);
 				return;
