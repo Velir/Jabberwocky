@@ -70,9 +70,9 @@
     <Compile Include="Caching\Keys\DefaultPolicyKeyProvider.cs" />
     <Compile Include="Caching\Keys\IPolicyKeyProvider.cs" />
     <Compile Include="Constants\FieldConstants.cs" />
-    <Compile Include="Pipelines\Mvc\RenderRendering\AddErrorHandlingWrapper.cs" />
-    <Compile Include="Pipelines\Mvc\RenderRendering\AddPageEditorWrapper.cs" />
-    <Compile Include="Pipelines\Mvc\RenderRendering\AddPollyWrapper.cs" />
+    <Compile Include="Pipelines\Mvc\GetRenderer\AddErrorHandlingWrapper.cs" />
+    <Compile Include="Pipelines\Mvc\GetRenderer\AddPageEditorWrapper.cs" />
+    <Compile Include="Pipelines\Mvc\GetRenderer\AddPollyWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderer\CircuitBreakerRendererDecorator.cs" />
     <Compile Include="Renderer\ErrorHandlingRendererDecorator.cs" />

@@ -5,20 +5,20 @@ using Jabberwocky.Extras.Polly.Sc.Renderer;
 using Microsoft.Extensions.DependencyInjection;
 using Sitecore.DependencyInjection;
 using Sitecore.Mvc.Extensions;
-using Sitecore.Mvc.Pipelines.Response.RenderRendering;
+using Sitecore.Mvc.Pipelines.Response.GetRenderer;
 using Sitecore.Mvc.Presentation;
 
-namespace Jabberwocky.Extras.Polly.Sc.Pipelines.Mvc.RenderRendering
+namespace Jabberwocky.Extras.Polly.Sc.Pipelines.Mvc.GetRenderer
 {
-	public class AddPollyWrapper : RenderRenderingProcessor
+	public class AddPollyWrapper : GetRendererProcessor
 	{
-		public override void Process(RenderRenderingArgs args)
+		public override void Process(GetRendererArgs args)
 		{
-			if (args.Rendered) return;
+			if (args.Result == null) return;
 
 			var rendering = args.Rendering;
-			var renderer = rendering?.Renderer;
-			if (renderer == null) return;
+			var renderer = args.Result;
+			if (rendering == null) return;
 
 			// Check if the current rendering has enabled the circuit breaker; if not, don't do anything
 			if (!IsCircuitBreakerEnabled(rendering)) return;
@@ -28,7 +28,7 @@ namespace Jabberwocky.Extras.Polly.Sc.Pipelines.Mvc.RenderRendering
 			var policyKeyProvider = ServiceLocator.ServiceProvider.GetService<IPolicyKeyProvider>() ?? DefaultPolicyKeyProvider.Default;
 			var policyCacheProvider = ServiceLocator.ServiceProvider.GetService<IPolicyCacheProvider>() ?? PolicyCacheProvider.Default;
 
-			rendering.Renderer = new CircuitBreakerRendererDecorator(renderer, rendering.RenderingItem, policyCacheProvider, policyKeyProvider);
+			args.Result = new CircuitBreakerRendererDecorator(renderer, rendering.RenderingItem, policyCacheProvider, policyKeyProvider);
 		}
 
 		private bool IsCircuitBreakerEnabled(Rendering rendering)

@@ -1,25 +1,25 @@
 ﻿using Jabberwocky.Extras.Polly.Sc.Constants;
 using Jabberwocky.Extras.Polly.Sc.Renderer;
 using Sitecore.Mvc.Extensions;
-using Sitecore.Mvc.Pipelines.Response.RenderRendering;
+using Sitecore.Mvc.Pipelines.Response.GetRenderer;
 using Sitecore.Mvc.Presentation;
 
-namespace Jabberwocky.Extras.Polly.Sc.Pipelines.Mvc.RenderRendering
+namespace Jabberwocky.Extras.Polly.Sc.Pipelines.Mvc.GetRenderer
 {
-	public class AddErrorHandlingWrapper : RenderRenderingProcessor
+	public class AddErrorHandlingWrapper : GetRendererProcessor
 	{
-		public override void Process(RenderRenderingArgs args)
+		public override void Process(GetRendererArgs args)
 		{
-			if (args.Rendered) return;
+			if (args.Result == null) return;
 
 			var rendering = args.Rendering;
-			var renderer = rendering?.Renderer;
-			if (renderer == null) return;
+			var renderer = args.Result;
+			if (rendering == null) return;
 
 			// Check if the current rendering has enabled 'hiding on error'; if not, don't do anything
 			if (!IsErrorHandlingEnabled(rendering)) return;
 
-			rendering.Renderer = new ErrorHandlingRendererDecorator(renderer, rendering.RenderingItem);
+			args.Result = new ErrorHandlingRendererDecorator(renderer, rendering.RenderingItem);
 		}
 
 		private bool IsErrorHandlingEnabled(Rendering rendering)
