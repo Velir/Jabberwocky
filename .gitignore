@@ -72,3 +72,6 @@ tools/Nuget/*
 
 #GhostDoc
 *.GhostDoc*
+
+#Extra Sitecore packages
+!src/Extras/Jabberwocky.Extras.Polly.Sc/Packages
