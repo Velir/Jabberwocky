@@ -8,7 +8,9 @@ namespace Jabberwocky.Glass.Mvc.Services
 	{
 		Rendering GetCurrentRendering();
 
-		T GetCurrentRenderingDatasource<T>(DatasourceNestingOptions options = DatasourceNestingOptions.Default) where T : class, IGlassBase;
+		T GetCurrentRenderingDatasource<T>(DatasourceNestingOptions options = DatasourceNestingOptions.Default) where T : class;
+
+		object GetCurrentRenderingDatasource(Type modelType, DatasourceNestingOptions options = DatasourceNestingOptions.Default);
 
 		T GetCurrentRenderingParameters<T>() where T : class;
 

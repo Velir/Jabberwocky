@@ -32,8 +32,8 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Models.Factory
 
         public object Create(Type model)
         {
-            var glassModel = GetGlassModel(model);
             var glassModelType = GetGlassModelTypeFromGenericParam(model);
+            var glassModel = GetGlassModel(model, glassModelType);
             var renderingParamType = GetRenderingModelTypeFromGenericParam(model);
             var renderingParamModel = GetRenderingParamModel(renderingParamType);
             var viewModel = _resolver.ResolveOptional(model, GetModelConstructorParams(glassModelType, glassModel, renderingParamType, renderingParamModel));
@@ -48,7 +48,7 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Models.Factory
             return viewModel;
         }
 
-        private static Parameter[] GetModelConstructorParams(Type glassModelType, IGlassBase glassModel, Type renderingModelType = null, object renderingModel = null)
+        private static Parameter[] GetModelConstructorParams(Type glassModelType, object glassModel, Type renderingModelType = null, object renderingModel = null)
         {
             var parameterArray = glassModel == null || glassModelType == null
                 ? new Parameter[0]
@@ -114,7 +114,7 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Models.Factory
                 : _renderingContextService.GetCurrentRenderingParameters(renderingParamType);
         }
 
-        private IGlassBase GetGlassModel(Type viewModelType)
+        private object GetGlassModel(Type viewModelType, Type glassModelType)
         {
             var datasourceConfigAttr = viewModelType.GetCustomAttribute<ConfigureDatasourceAttribute>();
             var config = DatasourceNestingOptions.Default;
@@ -125,7 +125,7 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Models.Factory
                     : DatasourceNestingOptions.Never;
             }
 
-            return _renderingContextService.GetCurrentRenderingDatasource<IGlassBase>(config);
+            return _renderingContextService.GetCurrentRenderingDatasource(glassModelType, config);
         }
 
         internal struct TypeTuple

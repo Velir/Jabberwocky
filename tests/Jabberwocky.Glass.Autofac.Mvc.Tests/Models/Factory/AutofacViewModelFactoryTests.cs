@@ -83,7 +83,7 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Tests.Models.Factory
             var viewModel = new InjectableViewModel();
             var glassModel = Substitute.For<IGlassBase>();
             _resolver.ResolveOptional(typeof(object), new Parameter[0]).ReturnsForAnyArgs(viewModel);
-            _renderingContextService.GetCurrentRenderingDatasource<IGlassBase>().ReturnsForAnyArgs(glassModel);
+            _renderingContextService.GetCurrentRenderingDatasource(typeof(IGlassBase)).ReturnsForAnyArgs(glassModel);
 
             var resolvedModel = _sut.Create<InjectableViewModel>();
 
@@ -101,7 +101,7 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Tests.Models.Factory
             var glassModel = Substitute.For<IGlassBase>();
             var renderingModel = Substitute.For<IRenderingTemplate>();
             _resolver.ResolveOptional(typeof(object), new Parameter[0]).ReturnsForAnyArgs(viewModel);
-            _renderingContextService.GetCurrentRenderingDatasource<IGlassBase>().ReturnsForAnyArgs(glassModel);
+            _renderingContextService.GetCurrentRenderingDatasource(typeof(IGlassBase)).ReturnsForAnyArgs(glassModel);
             _renderingContextService.GetCurrentRenderingParameters(typeof(IRenderingTemplate))
                 .ReturnsForAnyArgs(renderingModel);
 
@@ -122,7 +122,7 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Tests.Models.Factory
             var renderingModel = Substitute.For<IRenderingTemplate>();
             _resolver.ResolveOptional(typeof(object), new Parameter[0])
                 .ReturnsForAnyArgs(ci => new ConstructorViewModel(GetValue<IRenderingTemplate>(ci[1], 1), GetValue<IGlassBase>(ci[1], 0)));
-            _renderingContextService.GetCurrentRenderingDatasource<IGlassBase>().ReturnsForAnyArgs(glassModel);
+            _renderingContextService.GetCurrentRenderingDatasource(typeof(IGlassBase)).ReturnsForAnyArgs(glassModel);
             _renderingContextService.GetCurrentRenderingParameters(typeof(IRenderingTemplate))
                 .ReturnsForAnyArgs(renderingModel);
 
@@ -143,13 +143,13 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Tests.Models.Factory
             var viewModel = new NeverFallbackViewModel();
             var glassModel = Substitute.For<IGlassBase>();
             _resolver.ResolveOptional(typeof(object), new Parameter[0]).ReturnsForAnyArgs(viewModel);
-            _renderingContextService.GetCurrentRenderingDatasource<IGlassBase>(DatasourceNestingOptions.Never).Returns(glassModel);
+            _renderingContextService.GetCurrentRenderingDatasource(typeof(IGlassBase), DatasourceNestingOptions.Never).Returns(glassModel);
 
             var resolvedModel = _sut.Create<NeverFallbackViewModel>();
 
             Assert.AreSame(viewModel, resolvedModel);
             Assert.AreSame(glassModel, viewModel.GlassModel);
-            _renderingContextService.Received().GetCurrentRenderingDatasource<IGlassBase>(DatasourceNestingOptions.Never);
+            _renderingContextService.Received().GetCurrentRenderingDatasource(typeof(IGlassBase), DatasourceNestingOptions.Never);
         }
 
         [Test]
@@ -161,13 +161,13 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Tests.Models.Factory
             var viewModel = new AlwaysFallbackViewModel();
             var glassModel = Substitute.For<IGlassBase>();
             _resolver.ResolveOptional(typeof(object), new Parameter[0]).ReturnsForAnyArgs(viewModel);
-            _renderingContextService.GetCurrentRenderingDatasource<IGlassBase>(DatasourceNestingOptions.Always).Returns(glassModel);
+            _renderingContextService.GetCurrentRenderingDatasource(typeof(IGlassBase), DatasourceNestingOptions.Always).Returns(glassModel);
 
             var resolvedModel = _sut.Create<AlwaysFallbackViewModel>();
 
             Assert.AreSame(viewModel, resolvedModel);
             Assert.AreSame(glassModel, viewModel.GlassModel);
-            _renderingContextService.Received().GetCurrentRenderingDatasource<IGlassBase>(DatasourceNestingOptions.Always);
+            _renderingContextService.Received().GetCurrentRenderingDatasource(typeof(IGlassBase), DatasourceNestingOptions.Always);
         }
 
         private T GetValue<T>(object ci, int index)
