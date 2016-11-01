@@ -116,6 +116,8 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Models.Factory
 
         private object GetGlassModel(Type viewModelType, Type glassModelType)
         {
+	        if (glassModelType == null) return null;
+
             var datasourceConfigAttr = viewModelType.GetCustomAttribute<ConfigureDatasourceAttribute>();
             var config = DatasourceNestingOptions.Default;
             if (datasourceConfigAttr != null)
