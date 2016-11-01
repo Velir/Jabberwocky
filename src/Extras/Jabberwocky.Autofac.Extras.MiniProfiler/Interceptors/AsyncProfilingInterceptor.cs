@@ -8,6 +8,9 @@ using Profiler = StackExchange.Profiling.MiniProfiler;
 
 namespace Jabberwocky.Autofac.Extras.MiniProfiler.Interceptors
 {
+	/// <remarks>
+	/// This class is thread-safe
+	/// </remarks>
 	public class AsyncProfilingInterceptor : IInterceptor
 	{
 		private const string UnknownType = "UNKNOWNTYPE";

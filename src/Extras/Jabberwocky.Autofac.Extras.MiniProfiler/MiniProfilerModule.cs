@@ -36,7 +36,7 @@ namespace Jabberwocky.Autofac.Extras.MiniProfiler
 		{
 			base.Load(builder);
 
-			builder.RegisterType<AsyncProfilingInterceptor>().AsSelf();
+			builder.RegisterType<AsyncProfilingInterceptor>().AsSelf().SingleInstance();
 		}
 	}
 }
