@@ -10,6 +10,7 @@ namespace Jabberwocky.Autofac.Extras.MiniProfiler.Sc.Pipeline.RegisterAutofacDep
 {
 	public class RegisterMiniProfilerModule : BaseConfiguredAssemblyProcessor
 	{
+		public bool InstrumentNamespacesOnly { get; set; } = false;
 		public bool IncludeSitecoreRegistrations { get; set; } = false;
 
 		public HashSet<string> IncludeNamespaces { get; set; } = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase);
@@ -58,9 +59,9 @@ namespace Jabberwocky.Autofac.Extras.MiniProfiler.Sc.Pipeline.RegisterAutofacDep
 			var assemblies = GetConfiguredAssemblies(args);
 
 			// Explicitly declare the includedNamespaces to be the set of assemblies IFF no overrides are provided
-			var includedNamespaces = IncludeNamespaces.Any()
+			var includedNamespaces = InstrumentNamespacesOnly
 				? IncludeNamespaces.ToArray()
-				: assemblies;
+				: assemblies.Concat(IncludeNamespaces);
 
 			return new MiniProfilerConfiguration(assemblies)
 			{
