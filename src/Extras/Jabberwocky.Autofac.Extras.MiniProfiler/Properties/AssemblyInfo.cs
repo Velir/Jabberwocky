@@ -34,6 +34,6 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("2.0.0.0")]
 [assembly: AssemblyFileVersion("2.0.0.0")]
-[assembly: AssemblyInformationalVersion("2.0.0-alpha9-2")]
+[assembly: AssemblyInformationalVersion("2.0.0-alpha9-3")]
 
 [assembly: InternalsVisibleTo("Jabberwocky.Autofac.Extras.MiniProfiler.Sc")]
