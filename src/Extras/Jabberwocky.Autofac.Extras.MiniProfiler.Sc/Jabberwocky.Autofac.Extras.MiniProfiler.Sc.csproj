@@ -47,6 +47,10 @@
       <HintPath>..\..\..\packages\Sitecore.Kernel.NoReferences.8.2.160729\lib\NET452\Sitecore.Kernel.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Sitecore.Mvc, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Sitecore.Mvc.NoReferences.8.2.160729\lib\NET452\Sitecore.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -59,11 +63,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Pipeline\Initialize\MiniProfilerRouteProcessor.cs" />
+    <Compile Include="Pipeline\Mvc\GetRenderer\AddMiniProfilerWrapper.cs" />
     <Compile Include="Pipeline\RegisterAutofacDependencies\RegisterMiniProfilerModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Renderer\MiniProfilerRenderer.cs" />
     <Compile Include="SitecoreMiniProfilerModule.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="App_Config\Include\z.Jabberwocky\2.Jabberwocky.Autofac.Extras.MiniProfiler.Sc.config" />
     <None Include="packages.config" />
   </ItemGroup>
