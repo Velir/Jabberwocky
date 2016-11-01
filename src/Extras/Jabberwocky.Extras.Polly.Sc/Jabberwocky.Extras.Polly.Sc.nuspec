@@ -16,7 +16,7 @@
 
     <files>
     <file src="Packages\readme.txt" target="" />
-    <file src="Packages\Jabberwocky Extras Polly Sc.zip" target="content\packages\Jabberwocky Extras Polly Sc.zip" />
+    <file src="Packages\Jabberwocky Extras Polly Sc.zip" target="content\sitecore packages\Jabberwocky Extras Polly Sc.zip" />
     <file src="App_Config\Include\z.Jabberwocky\1.Jabberwocky.Extras.Polly.Sc.config" target="content\App_Config\Include\z.Jabberwocky\1.Jabberwocky.Extras.Polly.Sc.config" />
   </files>
 </package>
