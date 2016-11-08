@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Autofac;
 using Jabberwocky.Autofac.Extras.MiniProfiler.Configuration;
+using Jabberwocky.Autofac.Modules.Aspected.Strategies;
 using Jabberwocky.Glass.Autofac.Pipelines.PipelineArgs;
 using Jabberwocky.Glass.Autofac.Pipelines.RegisterAutofacDependencies.Base;
 
@@ -68,8 +69,25 @@ namespace Jabberwocky.Autofac.Extras.MiniProfiler.Sc.Pipeline.RegisterAutofacDep
 				IncludeNamespaces = includedNamespaces,
 				ExcludeNamespaces = ExcludeNamespaces,
 				ExcludeTypes = ExcludeTypes,
-				ExcludeAssemblies = ExcludeAssemblies
+				ExcludeAssemblies = ExcludeAssemblies,
+				Strategies = LoadStrategies()
 			};
+		}
+
+		// TODO: Will need to refactor this out - simple workaround for now
+		private IEnumerable<IProxyStrategy> LoadStrategies()
+		{
+			const string glassInterfaceProxyStrategy =
+				"Jabberwocky.Glass.Autofac.Aspects.Strategies.GlassInterfaceFactoryStrategy, Jabberwocky.Glass.Autofac";
+
+			try
+			{
+				return new[] { (IProxyStrategy) Activator.CreateInstance(Type.GetType(glassInterfaceProxyStrategy, true)) };
+			}
+			catch
+			{
+				return Enumerable.Empty<IProxyStrategy>();
+			}
 		}
 	}
 }
