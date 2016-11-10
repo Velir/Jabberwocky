@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Jabberwocky.DependencyInjection</id>
+    <version>$version$</version>
+    <title>Jabberwocky Dependency Injection</title>
+    <authors>Chris Smith</authors>
+    <owners>Velir, Chris Smith</owners>
+    <projectUrl>https://github.com/Velir/Jabberwocky</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Jabberwocky Dependency Injection</description>
+    <releaseNotes>RTM</releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>Velir Jabberwocky Dependency Injection</tags>
+  </metadata>
+</package>

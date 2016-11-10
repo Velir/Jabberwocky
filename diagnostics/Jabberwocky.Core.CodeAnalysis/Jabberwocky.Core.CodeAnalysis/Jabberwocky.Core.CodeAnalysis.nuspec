@@ -1,0 +1,21 @@
+﻿<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Jabberwocky.Core.CodeAnalysis</id>
+    <version>$version$</version>
+    <title>Jabberwocky.Core.CodeAnalysis</title>
+    <authors>Chris Smith</authors>
+    <owners>Velir, Chris Smith</owners>
+    <projectUrl>https://github.com/Velir/Jabberwocky</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Jabberwocky Core CodeAnalysis</description>
+    <releaseNotes>RTM</releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags>Jabberwocky.Core.CodeAnalysis, analyzers, Velir Jabberwocky Core CodeAnalysis Analysis</tags>
+  </metadata>
+  <!-- The convention for analyzers is to put language agnostic dlls in analyzers\dotnet and language specific analyzers in either analyzers\dotnet\cs or analyzers\dotnet\vb -->
+  <files>
+    <file src="bin\Release\*.dll" target="analyzers\dotnet\cs" exclude="**\Microsoft.CodeAnalysis.*;**\System.Collections.Immutable.*;**\System.Reflection.Metadata.*;**\System.Composition.*" />
+    <file src="tools\*.ps1" target="tools\" />
+  </files>
+</package>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Jabberwocky.Extras.Polly.Sc</id>
+    <version>$version$</version>
+    <title>Jabberwocky Polly Sc</title>
+    <authors>Chris Smith</authors>
+    <owners>Velir, Chris Smith</owners>
+    <projectUrl>https://github.com/Velir/Jabberwocky</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Jabberwocky package for circuit-breaker and error handling of renderings</description>
+    <releaseNotes>RTM</releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>Velir Jabberwocky Extras Circuit Breaker Polly Error Handling</tags>
+  </metadata>
+
+    <files>
+    <file src="Packages\readme.txt" target="" />
+    <file src="Packages\Jabberwocky Extras Polly Sc.zip" target="content\sitecore packages\Jabberwocky Extras Polly Sc.zip" />
+    <file src="App_Config\Include\z.Jabberwocky\1.Jabberwocky.Extras.Polly.Sc.config" target="content\App_Config\Include\z.Jabberwocky\1.Jabberwocky.Extras.Polly.Sc.config" />
+  </files>
+</package>

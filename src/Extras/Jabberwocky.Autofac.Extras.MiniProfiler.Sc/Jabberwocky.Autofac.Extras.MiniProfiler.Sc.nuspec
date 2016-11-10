@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Jabberwocky.Autofac.Extras.MiniProfiler.Sc</id>
+    <version>$version$</version>
+    <title>Jabberwocky Autofac MiniProfiler Sc</title>
+    <authors>Chris Smith</authors>
+    <owners>Velir, Chris Smith</owners>
+    <projectUrl>https://github.com/Velir/Jabberwocky</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Jabberwocky Autofac MiniProfiler Sitecore</description>
+    <releaseNotes>RTM</releaseNotes>
+    <copyright>Copyright 2016</copyright>
+    <tags>Velir Jabberwocky Autofac Extras MiniProfiler</tags>
+  </metadata>
+
+    <files>
+    <file src="App_Config\Include\z.Jabberwocky\2.Jabberwocky.Autofac.Extras.MiniProfiler.Sc.config" target="content\App_Config\Include\z.Jabberwocky\2.Jabberwocky.Autofac.Extras.MiniProfiler.Sc.config" />
+  </files>
+</package>

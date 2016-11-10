@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Jabberwocky.Glass</id>
+    <version>$version$</version>
+    <title>Jabberwocky Glass</title>
+    <authors>Chris Smith</authors>
+    <owners>Velir, Chris Smith</owners>
+    <projectUrl>https://github.com/Velir/Jabberwocky</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Jabberwocky Glass</description>
+    <releaseNotes>RTM</releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags>Velir Jabberwocky Glass</tags>
+  </metadata>
+  
+  <files>
+    <file src="App_Config\Include\z.Jabberwocky\1.Jabberwocky.Glass.config" target="content\App_Config\Include\z.Jabberwocky\1.Jabberwocky.Glass.config" />
+  </files>
+</package>

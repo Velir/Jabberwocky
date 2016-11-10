@@ -57,7 +57,8 @@ _ReSharper*/
 
 #NuGet
 packages/
-*.nupkg
+tools/Nuget/*
+!tools/Nuget/nuget.bat
 
 #ncrunch
 *ncrunch*
@@ -71,3 +72,6 @@ packages/
 
 #GhostDoc
 *.GhostDoc*
+
+#Extra Sitecore packages
+!src/Extras/Jabberwocky.Extras.Polly.Sc/Packages
