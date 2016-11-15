@@ -6,7 +6,24 @@ using Sitecore.Globalization;
 
 namespace Jabberwocky.Glass.Models
 {
-	public interface IGlassBase
+	public interface IGlassBase : IGlassCore, IGlassRelationships<IGlassBase>, IGlassExtendedAttributes
+	{
+		
+	}
+
+	public interface IGlassExtendedAttributes
+	{
+		[SitecoreInfo(SitecoreInfoType.Url)]
+		string _Url { get; set; }
+
+		[SitecoreInfo(SitecoreInfoType.Name)]
+		string _Name { get; set; }
+
+		[SitecoreInfo(SitecoreInfoType.MediaUrl)]
+		string _MediaUrl { get; set; }
+	}
+
+	public interface IGlassCore
 	{
 		[SitecoreId]
 		Guid _Id { get; set; }
@@ -14,31 +31,25 @@ namespace Jabberwocky.Glass.Models
 		[SitecoreInfo(SitecoreInfoType.Language)]
 		Language _Language { get; set; }
 
-		[SitecoreInfo(SitecoreInfoType.Version)]
-		int _Version { get; set; }
-
-		[SitecoreInfo(SitecoreInfoType.Url)]
-		string _Url { get; set; }
-
 		[SitecoreInfo(SitecoreInfoType.TemplateId)]
 		Guid _TemplateId { get; set; }
+
+		[SitecoreInfo(SitecoreInfoType.BaseTemplateIds)]
+		IEnumerable<Guid> _BaseTemplates { get; set; }
 
 		[SitecoreInfo(SitecoreInfoType.Path)]
 		string _Path { get; set; }
 
-		[SitecoreInfo(SitecoreInfoType.Name)]
-		string _Name { get; set; }
+		[SitecoreInfo(SitecoreInfoType.Version)]
+		int _Version { get; set; }
+	}
 
+	public interface IGlassRelationships<T> where T : IGlassCore
+	{
 		[SitecoreChildren(InferType = true, IsLazy = true)]
-		IEnumerable<IGlassBase> _ChildrenWithInferType { get; set; }
+		IEnumerable<T> _ChildrenWithInferType { get; set; }
 
 		[SitecoreParent(InferType = true, IsLazy = true)]
-		IGlassBase _Parent { get; set; }
-
-		[SitecoreInfo(SitecoreInfoType.MediaUrl)]
-		string _MediaUrl { get; set; }
-
-		[SitecoreInfo(SitecoreInfoType.BaseTemplateIds)]
-		IEnumerable<Guid> _BaseTemplates { get; set; }
+		T _Parent { get; set; }
 	}
 }

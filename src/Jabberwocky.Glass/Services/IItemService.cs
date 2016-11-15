@@ -5,14 +5,14 @@ namespace Jabberwocky.Glass.Services
 {
 	public interface IItemService
 	{
-		IEnumerable<IGlassBase> GetDescendants(IGlassBase item);
+		IEnumerable<IGlassCore> GetDescendants(IGlassCore item);
 
-		IEnumerable<IGlassBase> GetAncestors(IGlassBase item);
+		IEnumerable<IGlassCore> GetAncestors(IGlassCore item);
 
-		bool HasPresentation(IGlassBase item);
+		bool HasPresentation(IGlassCore item);
 
-		bool IsContentItem(IGlassBase item);
+		bool IsContentItem(IGlassCore item);
 
-		bool IsMediaItem(IGlassBase item);
+		bool IsMediaItem(IGlassCore item);
 	}
 }

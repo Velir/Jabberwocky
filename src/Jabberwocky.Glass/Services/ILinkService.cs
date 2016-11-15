@@ -5,8 +5,8 @@ namespace Jabberwocky.Glass.Services
 {
 	public interface ILinkService
 	{
-		IEnumerable<IGlassBase> GetReferrers(IGlassBase item);
+		IEnumerable<IGlassCore> GetReferrers(IGlassCore item);
 
-		IEnumerable<IGlassBase> GetValidLinkTargets(IGlassBase item);
+		IEnumerable<IGlassCore> GetValidLinkTargets(IGlassCore item);
 	}
 }

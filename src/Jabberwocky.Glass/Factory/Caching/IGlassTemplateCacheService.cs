@@ -5,7 +5,7 @@ namespace Jabberwocky.Glass.Factory.Caching
 {
 	public interface IGlassTemplateCacheService
 	{
-		Type GetImplementingTypeForItem(IGlassBase item, Type interfaceType);
+		Type GetImplementingTypeForItem(IGlassCore item, Type interfaceType);
 		Type GetImplementingTypeForTemplate(Guid templateId, Type interfaceType);
 		Type GetFallbackImplementingTypeForTemplate(Guid templateId, Type interfaceType);
 	}

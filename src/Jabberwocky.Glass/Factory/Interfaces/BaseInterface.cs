@@ -3,7 +3,7 @@ using Jabberwocky.Glass.Models;
 
 namespace Jabberwocky.Glass.Factory.Interfaces
 {
-	public abstract class BaseInterface<T> where T : class, IGlassBase
+	public abstract class BaseInterface<T> where T : class, IGlassCore
 	{
 		protected virtual T InnerItem { get; private set; }
 

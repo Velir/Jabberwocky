@@ -5,7 +5,7 @@ namespace Jabberwocky.Glass.Factory
 {
 	public interface IGlassInterfaceFactory
 	{
-		T GetItem<T>(IGlassBase model) where T : class;
-		IEnumerable<T> GetItems<T>(IEnumerable<IGlassBase> models) where T : class;
+		T GetItem<T>(IGlassCore model) where T : class;
+		IEnumerable<T> GetItems<T>(IEnumerable<IGlassCore> models) where T : class;
 	}
 }
