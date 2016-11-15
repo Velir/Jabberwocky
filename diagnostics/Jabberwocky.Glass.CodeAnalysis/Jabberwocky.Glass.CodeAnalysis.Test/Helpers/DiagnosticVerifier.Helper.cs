@@ -24,7 +24,7 @@ namespace TestHelper
 
 		// User Metadata References
 		private static readonly MetadataReference JabberwockyCoreReference = MetadataReference.CreateFromFile(typeof(ICacheProvider).Assembly.Location);
-		private static readonly MetadataReference JabberwockyGlassReference = MetadataReference.CreateFromFile(typeof(IGlassInterfaceFactory).Assembly.Location);
+		private static readonly MetadataReference JabberwockyGlassReference = MetadataReference.CreateFromFile(typeof(IGlassAdapterFactory).Assembly.Location);
 
 
 		internal static string DefaultFilePathPrefix = "Test";

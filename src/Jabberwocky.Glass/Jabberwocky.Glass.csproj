@@ -70,8 +70,8 @@
     <Compile Include="Factory\Configuration\ConfigurationOptions.cs" />
     <Compile Include="Factory\Configuration\IConfigurationOptions.cs" />
     <Compile Include="Factory\Exceptions\ImplementationMismatchException.cs" />
-    <Compile Include="Factory\GlassInterfaceFactory.cs" />
-    <Compile Include="Factory\IGlassInterfaceFactory.cs" />
+    <Compile Include="Factory\GlassAdapterFactory.cs" />
+    <Compile Include="Factory\IGlassAdapterFactory.cs" />
     <Compile Include="Factory\Caching\IGlassTemplateCacheService.cs" />
     <Compile Include="Factory\Implementation\Decorators\DebuggingDecorator.cs" />
     <Compile Include="Factory\Implementation\IImplementationFactory.cs" />

@@ -18,7 +18,7 @@ namespace Jabberwocky.Glass.Factory.Builder
 			_serviceFactory = serviceFactory;
 		}
 
-		public override IGlassInterfaceFactory BuildFactory()
+		public override IGlassAdapterFactory BuildFactory()
 		{
 			IImplementationFactory implFactory = null;
 
@@ -26,7 +26,7 @@ namespace Jabberwocky.Glass.Factory.Builder
 			var templateCache = new GlassTemplateCacheService(implementedTypes, _serviceFactory);
 			implFactory = new ProxyImplementationFactory((t, model) => new FallbackInterceptor(t, model, templateCache, implFactory));
 
-			return new GlassInterfaceFactory(templateCache, implFactory);
+			return new GlassAdapterFactory(templateCache, implFactory);
 		}
 	}
 }

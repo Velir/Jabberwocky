@@ -7,7 +7,7 @@ using Jabberwocky.Glass.Factory.Attributes;
 
 namespace Jabberwocky.Glass.Autofac.Aspects.Strategies
 {
-	public class GlassInterfaceFactoryStrategy : ActivationReplacementStrategy
+	public class GlassAdapterFactoryStrategy : ActivationReplacementStrategy
 	{
 		private static readonly ProxyGenerator ProxyGenerator = new ProxyGenerator(true);
 

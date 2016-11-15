@@ -82,7 +82,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Aspects\Strategies\GlassInterfaceFactoryStrategy.cs" />
+    <Compile Include="Aspects\Strategies\GlassAdapterFactoryStrategy.cs" />
     <Compile Include="DependencyInjection\AutofacServiceProviderBuilder.cs" />
     <Compile Include="DependencyInjection\Providers\AutofacDelegatingServiceProvider.cs" />
     <Compile Include="Extensions\AutofacRegistrationExtensions.cs" />
