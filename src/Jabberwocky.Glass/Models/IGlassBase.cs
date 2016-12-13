@@ -21,7 +21,10 @@ namespace Jabberwocky.Glass.Models
 
 		[SitecoreInfo(SitecoreInfoType.MediaUrl)]
 		string _MediaUrl { get; set; }
-	}
+
+        [SitecoreInfo(SitecoreInfoType.BaseTemplateIds)]
+        IEnumerable<Guid> _BaseTemplates { get; set; }
+    }
 
 	public interface IGlassCore
 	{
@@ -33,9 +36,6 @@ namespace Jabberwocky.Glass.Models
 
 		[SitecoreInfo(SitecoreInfoType.TemplateId)]
 		Guid _TemplateId { get; set; }
-
-		[SitecoreInfo(SitecoreInfoType.BaseTemplateIds)]
-		IEnumerable<Guid> _BaseTemplates { get; set; }
 
 		[SitecoreInfo(SitecoreInfoType.Path)]
 		string _Path { get; set; }
