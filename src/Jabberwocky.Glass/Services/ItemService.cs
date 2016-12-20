@@ -20,19 +20,19 @@ namespace Jabberwocky.Glass.Services
 		public IEnumerable<IGlassCore> GetDescendants(IGlassCore glassItem)
 		{
 			var item = _service.GetItem<Item>(glassItem._Id, glassItem._Language);
-			return item.Axes.GetDescendants().Select(sItem => _service.GetItem<IGlassCore>(sItem.ID.Guid, inferType: true));
+			return item.Axes.GetDescendants().Select(sItem => _service.Cast<IGlassCore>(sItem, inferType: true));
 		}
 
 		public IEnumerable<IGlassCore> GetAncestors(IGlassCore glassItem)
 		{
 			var item = _service.GetItem<Item>(glassItem._Id, glassItem._Language);
-			return item.Axes.GetAncestors().Select(sItem => _service.GetItem<IGlassCore>(sItem.ID.Guid, inferType: true));
+			return item.Axes.GetAncestors().Select(sItem => _service.Cast<IGlassCore>(sItem, inferType: true));
 		}
 
 		public bool HasPresentation(IGlassCore glassItem)
 		{
 			var item = _service.GetItem<Item>(glassItem._Id, glassItem._Language);
-			return item != null && item[Sitecore.FieldIDs.LayoutField] != string.Empty;
+			return item != null && item[Sitecore.FieldIDs.FinalLayoutField] != string.Empty;
 		}
 
 		public bool IsContentItem(IGlassCore glassItem)
