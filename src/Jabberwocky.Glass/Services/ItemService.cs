@@ -17,31 +17,31 @@ namespace Jabberwocky.Glass.Services
 			_service = service;
 		}
 
-		public IEnumerable<IGlassBase> GetDescendants(IGlassBase glassItem)
+		public IEnumerable<IGlassCore> GetDescendants(IGlassCore glassItem)
 		{
 			var item = _service.GetItem<Item>(glassItem._Id, glassItem._Language);
-			return item.Axes.GetDescendants().Select(sItem => _service.GetItem<IGlassBase>(sItem.ID.Guid, inferType: true));
+			return item.Axes.GetDescendants().Select(sItem => _service.GetItem<IGlassCore>(sItem.ID.Guid, inferType: true));
 		}
 
-		public IEnumerable<IGlassBase> GetAncestors(IGlassBase glassItem)
+		public IEnumerable<IGlassCore> GetAncestors(IGlassCore glassItem)
 		{
 			var item = _service.GetItem<Item>(glassItem._Id, glassItem._Language);
-			return item.Axes.GetAncestors().Select(sItem => _service.GetItem<IGlassBase>(sItem.ID.Guid, inferType: true));
+			return item.Axes.GetAncestors().Select(sItem => _service.GetItem<IGlassCore>(sItem.ID.Guid, inferType: true));
 		}
 
-		public bool HasPresentation(IGlassBase glassItem)
+		public bool HasPresentation(IGlassCore glassItem)
 		{
 			var item = _service.GetItem<Item>(glassItem._Id, glassItem._Language);
 			return item != null && item[Sitecore.FieldIDs.LayoutField] != string.Empty;
 		}
 
-		public bool IsContentItem(IGlassBase glassItem)
+		public bool IsContentItem(IGlassCore glassItem)
 		{
 			var item = _service.GetItem<Item>(glassItem._Id, glassItem._Language);
 			return item != null && item.Paths.IsContentItem;
 		}
 
-		public bool IsMediaItem(IGlassBase glassItem)
+		public bool IsMediaItem(IGlassCore glassItem)
 		{
 			var item = _service.GetItem<Item>(glassItem._Id, glassItem._Language);
 			return item != null && item.Paths.IsMediaItem;

@@ -26,23 +26,23 @@ namespace Jabberwocky.Glass.Factory
 			_factory = factory;
 		}
 
-		public T GetItem<T>(IGlassBase model) where T : class
+		public T GetItem<T>(IGlassCore model) where T : class
 		{
 			var implType = GetItemFromInterface(model, typeof(T));
 
 			return implType != null
-				? _factory.Create<T, IGlassBase>(implType, model)
+				? _factory.Create<T, IGlassCore>(implType, model)
 				: default(T);
 		}
 
-		public IEnumerable<T> GetItems<T>(IEnumerable<IGlassBase> models) where T : class
+		public IEnumerable<T> GetItems<T>(IEnumerable<IGlassCore> models) where T : class
 		{
 			if (models == null) return Enumerable.Empty<T>();
 
 			return models.Select(GetItem<T>).Where(x => x != default(T));
 		}
 
-		private Type GetItemFromInterface(IGlassBase item, Type interfaceType)   // interfaceType: this will be non-generic type, ie. IListable
+		private Type GetItemFromInterface(IGlassCore item, Type interfaceType)   // interfaceType: this will be non-generic type, ie. IListable
 		{
 			if (item == null || interfaceType == null) return null;
 

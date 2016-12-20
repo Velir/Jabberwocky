@@ -57,7 +57,7 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 				// Register lazy versions of each "DIRECT" (no inheritance) interface
 				foreach (
 					var interfaceType in
-						type.GetInterfaces(false).Where(interfaceType => typeof(IGlassBase).IsAssignableFrom(interfaceType)))
+						type.GetInterfaces(false).Where(interfaceType => typeof(IGlassCore).IsAssignableFrom(interfaceType)))
 				{
 					builder.RegisterType(type).As(interfaceType).ExternallyOwned();
 
