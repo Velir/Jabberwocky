@@ -1,11 +1,11 @@
 using System;
+using AutoSitecore;
 using Glass.Mapper.Sc;
 using Jabberwocky.Glass.Models;
 using Jabberwocky.Glass.Mvc.Services;
-using Microsoft.QualityTools.Testing.Fakes;
+using Jabberwocky.Glass.Mvc.Tests.Util;
 using NSubstitute;
 using NUnit.Framework;
-using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Mvc.Common;
 using Sitecore.Mvc.Presentation;
@@ -28,6 +28,13 @@ namespace Jabberwocky.Glass.Mvc.Tests.Services
 
         private RenderingContextService _renderingService;
 
+        #region ID Constants
+
+        private const string StaticItemDatasourceId = "{011DE547-24FC-47B3-80DB-BBA29962FE84}";
+        private const string NestedItemDatasourceId = "{4A75054B-B7A5-4181-A695-D5F5B8F2FB32}";
+
+        #endregion
+        
         [SetUp]
         public void Setup()
         {
@@ -43,8 +50,8 @@ namespace Jabberwocky.Glass.Mvc.Tests.Services
             _contextItem = Substitute.For<IGlassBase>();
 
             _directDatasource._Id.Returns(Guid.NewGuid());
-            _staticItemDatasource._Id.Returns(Guid.NewGuid());
-            _nestedItemDatasource._Id.Returns(Guid.NewGuid());
+            _staticItemDatasource._Id.Returns(new Guid(StaticItemDatasourceId));
+            _nestedItemDatasource._Id.Returns(new Guid(NestedItemDatasourceId));
             _contextItem._Id.Returns(Guid.NewGuid());
 
             var mockGlassHtml = Substitute.For<IGlassHtml>();
@@ -71,27 +78,22 @@ namespace Jabberwocky.Glass.Mvc.Tests.Services
 
             Assert.AreEqual(_directDatasource._Id, datasource._Id);
         }
-
-        [Test]
-        public void GetCurrentRenderingDatasource_NestingEnabled_NoDirectDatasource_WithDefaultNesting_ReturnsStaticItemFirst()
+        
+        [Test, AutoSitecore]
+        public void GetCurrentRenderingDatasource_NestingEnabled_NoDirectDatasource_WithDefaultNesting_ReturnsStaticItemFirst([ItemData(itemId: StaticItemDatasourceId)] Item fakeItem)
         {
             var props = new RenderingProperties(_rendering);
 
-            using (ShimsContext.Create())
-            {
-                var fakeItem = CreateFakeItem(_staticItemDatasource._Id);
+            // Setup rendering params: no direct datasource, rendering.Item is set to static item
+            _rendering.DataSource.Returns(ci => null);
+            _rendering.Properties.Returns(ci => props);
+            _rendering.Item.Returns(fakeItem);
 
-                // Setup rendering params: no direct datasource, rendering.Item is set to static item
-                _rendering.DataSource.Returns(ci => null);
-                _rendering.Properties.Returns(ci => props);
-                _rendering.Item.Returns(fakeItem);
+            _sitecoreContext.GetItem<IGlassBase>(_staticItemDatasource._Id, inferType: true).Returns(_staticItemDatasource);
 
-                _sitecoreContext.GetItem<IGlassBase>(_staticItemDatasource._Id, inferType: true).Returns(_staticItemDatasource);
+            var datasource = _renderingService.GetCurrentRenderingDatasource<IGlassBase>();
 
-                var datasource = _renderingService.GetCurrentRenderingDatasource<IGlassBase>();
-
-                Assert.AreEqual(_staticItemDatasource._Id, datasource._Id);
-            }
+            Assert.AreEqual(_staticItemDatasource._Id, datasource._Id);
         }
 
         [Test]
@@ -111,61 +113,43 @@ namespace Jabberwocky.Glass.Mvc.Tests.Services
             Assert.AreEqual(_staticItemDatasource._Id, datasource._Id);
         }
 
-        [Test]
-        public void GetCurrentRenderingDatasource_NestingEnabled_NoDirectDatasourceOrStaticItem_WithAlwaysNesting_ReturnsNestedItem()
+        [Test, AutoSitecore]
+        public void GetCurrentRenderingDatasource_NestingEnabled_NoDirectDatasourceOrStaticItem_WithAlwaysNesting_ReturnsNestedItem([ItemData(itemId: NestedItemDatasourceId)] Item fakeItem)
         {
             var props = new RenderingProperties(_rendering);
 
-            using (ShimsContext.Create())
-            {
-                var fakeItem = CreateFakeItem(_nestedItemDatasource._Id);
+            // Setup rendering params: no direct datasource, static item is set
+            _rendering.DataSource.Returns(ci => null);
+            _rendering.Properties.Returns(ci => props);
+            props["ItemId"] = null; // simulates no StaticItem
+            _renderingContext.ContextItem.Returns(fakeItem); // sets the nested datasource
 
-                // Setup rendering params: no direct datasource, static item is set
-                _rendering.DataSource.Returns(ci => null);
-                _rendering.Properties.Returns(ci => props);
-                props["ItemId"] = null; // simulates no StaticItem
-                _renderingContext.ContextItem.Returns(fakeItem); // sets the nested datasource
+            _sitecoreContext.GetItem<IGlassBase>(_nestedItemDatasource._Id, inferType: true)
+                .Returns(_nestedItemDatasource);
 
-                _sitecoreContext.GetItem<IGlassBase>(_nestedItemDatasource._Id, inferType: true)
-                    .Returns(_nestedItemDatasource);
+            var datasource =
+                _renderingService.GetCurrentRenderingDatasource<IGlassBase>(DatasourceNestingOptions.Always);
 
-                var datasource =
-                    _renderingService.GetCurrentRenderingDatasource<IGlassBase>(DatasourceNestingOptions.Always);
-
-                Assert.AreEqual(_nestedItemDatasource._Id, datasource._Id);
-            }
+            Assert.AreEqual(_nestedItemDatasource._Id, datasource._Id);
         }
 
-        [Test]
-        public void GetCurrentRenderingDatasource_NestingEnabled_NoDirectDatasourceOrStaticItem_WithNeverNesting_ReturnsContextItem()
+        [Test, AutoSitecore]
+        public void GetCurrentRenderingDatasource_NestingEnabled_NoDirectDatasourceOrStaticItem_WithNeverNesting_ReturnsContextItem([ItemData(itemId: NestedItemDatasourceId)] Item fakeItem)
         {
             var props = new RenderingProperties(_rendering);
 
-            using (ShimsContext.Create())
-            {
-                var fakeItem = CreateFakeItem(_nestedItemDatasource._Id);
+            // Setup rendering params: no direct datasource, static item is set
+            _rendering.DataSource.Returns(ci => null);
+            _rendering.Properties.Returns(ci => props);
+            props["ItemId"] = null; // simulates no StaticItem
+            _renderingContext.ContextItem.Returns(fakeItem); // A nested datasource item IS set...
 
-                // Setup rendering params: no direct datasource, static item is set
-                _rendering.DataSource.Returns(ci => null);
-                _rendering.Properties.Returns(ci => props);
-                props["ItemId"] = null; // simulates no StaticItem
-                _renderingContext.ContextItem.Returns(fakeItem); // A nested datasource item IS set...
+            _sitecoreContext.GetCurrentItem<IGlassBase>(inferType: true).Returns(_contextItem);
 
-                _sitecoreContext.GetCurrentItem<IGlassBase>(inferType: true).Returns(_contextItem);
+            var datasource =
+                _renderingService.GetCurrentRenderingDatasource<IGlassBase>(DatasourceNestingOptions.Never);
 
-                var datasource =
-                    _renderingService.GetCurrentRenderingDatasource<IGlassBase>(DatasourceNestingOptions.Never);
-
-                Assert.AreEqual(_contextItem._Id, datasource._Id);
-            }
-        }
-
-        private Item CreateFakeItem(Guid id)
-        {
-            return new Sitecore.Data.Items.Fakes.ShimItem
-            {
-                IDGet = () => Substitute.For<ID>(id)
-            };
+            Assert.AreEqual(_contextItem._Id, datasource._Id);
         }
     }
 }
