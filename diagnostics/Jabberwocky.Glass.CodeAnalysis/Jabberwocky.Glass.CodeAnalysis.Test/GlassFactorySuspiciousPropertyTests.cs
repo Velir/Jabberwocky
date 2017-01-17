@@ -113,7 +113,7 @@ using Jabberwocky.Glass.Models;
 [GlassFactoryType(typeof (IBaseType))]
 public abstract class IBaseTypeModel : BaseInterface<IBaseType>, ITestInterface
 {
-	public string Name { get; set; } = default(string);
+    public string Name { get; set; } = default(string);
     public abstract object Hi { get; }
 	public string World => ""hello"";
 	public string CustomProperty => ""Ok Bye"";

@@ -8,6 +8,8 @@ using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Formatting;
+using Microsoft.CodeAnalysis.Simplification;
 
 namespace Jabberwocky.Glass.CodeAnalysis.GlassFactory
 {
@@ -76,7 +78,10 @@ namespace Jabberwocky.Glass.CodeAnalysis.GlassFactory
 			var propertyTypeSyntax = propDecl.Type;
 
 			var initializerExpression = SyntaxFactory.EqualsValueClause(SyntaxFactory.DefaultExpression(propertyTypeSyntax));
-			var newTypeDecl = propDecl.WithoutTrailingTrivia().WithInitializer(initializerExpression).WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken));
+			var newTypeDecl =
+				propDecl.WithInitializer(initializerExpression)
+					.WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken))
+					.WithAdditionalAnnotations(Formatter.Annotation, Simplifier.Annotation);
 
 			var root = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
 
