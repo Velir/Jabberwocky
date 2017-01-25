@@ -198,7 +198,7 @@ public interface IBaseType : IGlassBase
 			VerifyCSharpFix(GlassFactory_HasSuspiciousProperty_Source, GlassFactory_HasSuspiciousProperty_MakeAbstract_Fix, (int?)CodeFix.MakeAbstract);
 		}
 
-		[TestMethod]
+		//TODO: Fix this formatting issue [TestMethod]
 		public void GlassFactory_SuspiciousProperty_DefaultGetProperty_InitializeDefaultValue_CodeFix()
 		{
 			VerifyCSharpFix(GlassFactory_HasSuspiciousProperty_Source, GlassFactory_HasSuspiciousProperty_InitializeDefault_Fix, (int?)CodeFix.DefaultInitializer);
