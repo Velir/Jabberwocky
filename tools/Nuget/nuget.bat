@@ -9,3 +9,10 @@ set projfile=!projfile:nuspec=csproj!
 
 ..\..\.nuget\NuGet.exe pack ..\..\diagnostics\Jabberwocky.Core.CodeAnalysis/Jabberwocky.Core.CodeAnalysis/Jabberwocky.Core.CodeAnalysis.nuspec -NoPackageAnalysis -Version 2.0.0-beta -OutputDirectory . -Prop Configuration=Release
 ..\..\.nuget\NuGet.exe pack ..\..\diagnostics\Jabberwocky.Glass.CodeAnalysis/Jabberwocky.Glass.CodeAnalysis/Jabberwocky.Glass.CodeAnalysis.nuspec -NoPackageAnalysis -Version 2.0.0-beta -OutputDirectory . -Prop Configuration=Release
+
+REM - Copy symbol sources to 'symbols' directory
+mkdir symbols
+
+for %%i in (*.symbols.nupkg) do (
+    move %%i ./symbols
+)
