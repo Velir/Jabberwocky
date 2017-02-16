@@ -34,6 +34,6 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("2.0.0.0")]
 [assembly: AssemblyFileVersion("2.0.0.0")]
-[assembly: AssemblyInformationalVersion("2.0.0-alpha9-4")]
+[assembly: AssemblyInformationalVersion("2.0.0-beta")]
 
 [assembly: InternalsVisibleTo("Jabberwocky.Glass.Autofac.Mvc.Tests")]

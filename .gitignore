@@ -59,6 +59,7 @@ _ReSharper*/
 packages/
 tools/Nuget/*
 !tools/Nuget/nuget.bat
+!tools/Nuget/nuget-push.bat
 
 #ncrunch
 *ncrunch*
