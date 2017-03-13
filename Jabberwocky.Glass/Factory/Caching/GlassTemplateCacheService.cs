@@ -6,6 +6,7 @@ using Glass.Mapper.Sc;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using Jabberwocky.Glass.Factory.Util;
 using Jabberwocky.Glass.Models;
+using Sitecore.Data.Managers;
 
 namespace Jabberwocky.Glass.Factory.Caching
 {
@@ -77,7 +78,7 @@ namespace Jabberwocky.Glass.Factory.Caching
 				// Otherwise, search for match, and update 1st-level cache
 				using (var service = _serviceFactory())
 				{
-					foreach (Guid baseTemplateId in GetBaseTemplates(service.GetItem<IBaseTemplates>(templateId), service, depth))
+					foreach (Guid baseTemplateId in GetBaseTemplates(service.GetItem<IBaseTemplates>(templateId, LanguageManager.DefaultLanguage), service, depth))
 					{
 						string templateIdString = baseTemplateId.ToString();
 						if (itemInterfaces.ContainsKey(templateIdString))
@@ -100,7 +101,7 @@ namespace Jabberwocky.Glass.Factory.Caching
 
 			using (var service = _serviceFactory())
 			{
-				var currentTemplate = service.GetItem<IBaseTemplates>(templateId);
+				var currentTemplate = service.GetItem<IBaseTemplates>(templateId, LanguageManager.DefaultLanguage);
 
 				return GetBaseTemplates(currentTemplate, service, depth: MaxDepth)
 					.Select(guid => InnerGetImplementingTypeForTemplate(guid, interfaceType, 1))
