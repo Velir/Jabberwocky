@@ -78,14 +78,17 @@ namespace Jabberwocky.Glass.Factory.Caching
 				// Otherwise, search for match, and update 1st-level cache
 				using (var service = _serviceFactory())
 				{
-					foreach (Guid baseTemplateId in GetBaseTemplates(service.GetItem<IBaseTemplates>(templateId, LanguageManager.DefaultLanguage), service, depth))
-					{
-						string templateIdString = baseTemplateId.ToString();
-						if (itemInterfaces.ContainsKey(templateIdString))
-						{
-							return itemInterfaces[templateIdString].ImplementationType;
-						}
-					}
+				    using (new VersionCountDisabler())
+				    {
+				        foreach (Guid baseTemplateId in GetBaseTemplates(service.GetItem<IBaseTemplates>(templateId), service, depth))
+				        {
+				            string templateIdString = baseTemplateId.ToString();
+				            if (itemInterfaces.ContainsKey(templateIdString))
+				            {
+				                return itemInterfaces[templateIdString].ImplementationType;
+				            }
+				        }
+				    }
 				}
 
 				return null;
@@ -99,14 +102,17 @@ namespace Jabberwocky.Glass.Factory.Caching
 				return null;
 			}
 
-			using (var service = _serviceFactory())
-			{
-				var currentTemplate = service.GetItem<IBaseTemplates>(templateId, LanguageManager.DefaultLanguage);
+		    using (var service = _serviceFactory())
+		    {
+		        using (new VersionCountDisabler())
+		        {
+		            var currentTemplate = service.GetItem<IBaseTemplates>(templateId);
 
-				return GetBaseTemplates(currentTemplate, service, depth: MaxDepth)
-					.Select(guid => InnerGetImplementingTypeForTemplate(guid, interfaceType, 1))
-					.FirstOrDefault(type => type != null);
-			}
+		            return GetBaseTemplates(currentTemplate, service, depth: MaxDepth)
+		                .Select(guid => InnerGetImplementingTypeForTemplate(guid, interfaceType, 1))
+		                .FirstOrDefault(type => type != null);
+		        }
+		    }
 		}
 
 		internal IEnumerable<Guid> GetBaseTemplates(IBaseTemplates item, ISitecoreService service, int depth = DefaultDepth, bool ignoreTemplate = false)
