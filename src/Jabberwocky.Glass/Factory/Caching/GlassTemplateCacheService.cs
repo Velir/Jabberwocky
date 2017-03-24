@@ -77,6 +77,7 @@ namespace Jabberwocky.Glass.Factory.Caching
 			{
 				// Otherwise, search for match, and update 1st-level cache
 				using (var service = _serviceFactory())
+				using (new VersionCountDisabler())
 				{
 					foreach (Guid baseTemplateId in GetBaseTemplates(service.GetItem<IBaseTemplates>(templateId), service, depth))
 					{
@@ -100,6 +101,7 @@ namespace Jabberwocky.Glass.Factory.Caching
 			}
 
 			using (var service = _serviceFactory())
+			using (new VersionCountDisabler())
 			{
 				var currentTemplate = service.GetItem<IBaseTemplates>(templateId);
 
@@ -123,7 +125,7 @@ namespace Jabberwocky.Glass.Factory.Caching
 				.Concat((item.TemplateBaseTemplates ?? item.BaseTemplates) ?? Enumerable.Empty<Guid>())
 				.Where(id => !visitedSet.Contains(id))
 				.ToArray();
-			
+
 			foreach (var id in baseTemplates)
 			{
 				// prevent traversal of cycles
