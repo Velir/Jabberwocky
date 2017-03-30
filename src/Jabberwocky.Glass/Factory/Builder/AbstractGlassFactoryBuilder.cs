@@ -13,6 +13,6 @@ namespace Jabberwocky.Glass.Factory.Builder
 			Options = options;
 		}
 
-		public abstract IGlassInterfaceFactory BuildFactory();
+		public abstract IGlassAdapterFactory BuildFactory();
 	}
 }

@@ -16,7 +16,7 @@ using NUnit.Framework;
 namespace Jabberwocky.Glass.Tests.Factory
 {
 	[TestFixture]
-	public class GlassInterfaceFactoryTests
+	public class GlassAdapterFactoryTests
 	{
 		private ISitecoreService _mockService;
 		private IImplementationFactory _implFactory;
@@ -31,7 +31,7 @@ namespace Jabberwocky.Glass.Tests.Factory
 		private const string FakeIntermediateTemplate = "92BCF3F1-8F4E-4983-957C-0B18F0CD5C3F";
 
 		// SUT
-		private GlassInterfaceFactory _glassFactory;
+		private GlassAdapterFactory _glassFactory;
 
 		[SetUp]
 		public void Initialize()
@@ -110,7 +110,7 @@ namespace Jabberwocky.Glass.Tests.Factory
 			_templateCache = new GlassTemplateCacheService(_interfaceMappings, () => _mockService);
 
 			// System Under Test
-			_glassFactory = new GlassInterfaceFactory(_templateCache, _implFactory);
+			_glassFactory = new GlassAdapterFactory(_templateCache, _implFactory);
 		}
 
 		[Test]

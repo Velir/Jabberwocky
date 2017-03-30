@@ -2,6 +2,6 @@
 {
 	public interface IGlassFactoryBuilder
 	{
-		IGlassInterfaceFactory BuildFactory();
+		IGlassAdapterFactory BuildFactory();
 	}
 }

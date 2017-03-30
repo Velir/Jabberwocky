@@ -7,7 +7,7 @@ using Jabberwocky.Glass.Models;
 
 namespace Jabberwocky.Glass.Factory
 {
-	public class GlassInterfaceFactory : IGlassInterfaceFactory
+	public class GlassAdapterFactory : IGlassAdapterFactory
 	{
 		private readonly IGlassTemplateCacheService _templateCache;
 		private readonly IImplementationFactory _factory;
@@ -17,7 +17,7 @@ namespace Jabberwocky.Glass.Factory
 		/// </summary>
 		internal IGlassTemplateCacheService TemplateCacheService => _templateCache;
 
-		public GlassInterfaceFactory(IGlassTemplateCacheService templateCache, IImplementationFactory factory)
+		public GlassAdapterFactory(IGlassTemplateCacheService templateCache, IImplementationFactory factory)
 		{
 			if (templateCache == null) throw new ArgumentNullException(nameof(templateCache));
 			if (factory == null) throw new ArgumentNullException(nameof(factory));

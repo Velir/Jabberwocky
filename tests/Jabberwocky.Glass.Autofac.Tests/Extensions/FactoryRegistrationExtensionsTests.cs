@@ -28,7 +28,7 @@ namespace Jabberwocky.Glass.Autofac.Tests.Extensions
 			var container = _builder.Build();
 			container.RegisterContainer();
 
-			var factory = container.Resolve<IGlassInterfaceFactory>();
+			var factory = container.Resolve<IGlassAdapterFactory>();
 			Assert.IsNotNull(factory);
 		}
 
@@ -39,7 +39,7 @@ namespace Jabberwocky.Glass.Autofac.Tests.Extensions
 			var container = _builder.Build();
 			container.RegisterContainer();
 
-			var factory = container.Resolve<IGlassInterfaceFactory>();
+			var factory = container.Resolve<IGlassAdapterFactory>();
 			Assert.IsNotNull(factory);
 		}
 
@@ -50,7 +50,7 @@ namespace Jabberwocky.Glass.Autofac.Tests.Extensions
 			var container = _builder.Build();
 			container.RegisterContainer();
 
-			var factory = container.Resolve<IGlassInterfaceFactory>();
+			var factory = container.Resolve<IGlassAdapterFactory>();
 			Assert.IsNotNull(factory);
 		}
 

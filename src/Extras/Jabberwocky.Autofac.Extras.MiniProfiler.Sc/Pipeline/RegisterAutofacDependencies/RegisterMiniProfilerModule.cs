@@ -77,12 +77,12 @@ namespace Jabberwocky.Autofac.Extras.MiniProfiler.Sc.Pipeline.RegisterAutofacDep
 		// TODO: Will need to refactor this out - simple workaround for now
 		private IEnumerable<IProxyStrategy> LoadStrategies()
 		{
-			const string glassInterfaceProxyStrategy =
-				"Jabberwocky.Glass.Autofac.Aspects.Strategies.GlassInterfaceFactoryStrategy, Jabberwocky.Glass.Autofac";
+			const string glassAdapterProxyStrategy =
+				"Jabberwocky.Glass.Autofac.Aspects.Strategies.GlassAdapterFactoryStrategy, Jabberwocky.Glass.Autofac";
 
 			try
 			{
-				return new[] { (IProxyStrategy) Activator.CreateInstance(Type.GetType(glassInterfaceProxyStrategy, true)) };
+				return new[] { (IProxyStrategy) Activator.CreateInstance(Type.GetType(glassAdapterProxyStrategy, true)) };
 			}
 			catch
 			{

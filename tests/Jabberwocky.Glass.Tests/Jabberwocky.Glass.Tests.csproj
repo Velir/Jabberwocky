@@ -78,7 +78,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Factory\Builder\DefaultGlassFactoryBuilderTests.cs" />
-    <Compile Include="Factory\GlassInterfaceFactoryTests.cs" />
+    <Compile Include="Factory\GlassAdapterFactoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

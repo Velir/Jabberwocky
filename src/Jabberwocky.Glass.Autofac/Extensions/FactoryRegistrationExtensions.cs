@@ -65,12 +65,12 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 				.As<IGlassFactoryBuilder>();
 
 			builder.Register(c => c.Resolve<IGlassFactoryBuilder>().BuildFactory())
-				.As<IGlassInterfaceFactory>()
+				.As<IGlassAdapterFactory>()
 				.SingleInstance();
 
 			builder.Register<Func<ILookup<Type, GlassInterfaceMetadata>, IGlassTemplateCacheService>>(c => lookup => new GlassTemplateCacheService(lookup, c.Resolve<Func<ISitecoreService>>()))
 				.As<Func<ILookup<Type, GlassInterfaceMetadata>, IGlassTemplateCacheService>>();
-            builder.Register(c => ((GlassInterfaceFactory)c.Resolve<IGlassInterfaceFactory>()).TemplateCacheService)
+            builder.Register(c => ((GlassAdapterFactory)c.Resolve<IGlassAdapterFactory>()).TemplateCacheService)
 				.As<IGlassTemplateCacheService>()
 				.SingleInstance();
 

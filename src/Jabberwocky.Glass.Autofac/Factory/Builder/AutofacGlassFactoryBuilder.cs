@@ -36,7 +36,7 @@ namespace Jabberwocky.Glass.Autofac.Factory.Builder
 			_implFactory = implFactory;
 		}
 
-		public override IGlassInterfaceFactory BuildFactory()
+		public override IGlassAdapterFactory BuildFactory()
 		{
 			var implementedTypes = _typeLoader.LoadImplementations(Options.Assemblies);
 			var templateCache = _templateCacheFactory(implementedTypes);
@@ -54,7 +54,7 @@ namespace Jabberwocky.Glass.Autofac.Factory.Builder
 			// Update existing container with new registrations
 			builder.Update(_container);
 
-			return new GlassInterfaceFactory(templateCache, _implFactory);
+			return new GlassAdapterFactory(templateCache, _implFactory);
 		}
 	}
 }
