@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D093F894-C081-4DB9-943B-4E06DEAD5B03}"
 	ProjectSection(SolutionItems) = preProject
@@ -37,6 +37,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jabberwocky.Autofac.Extras.MiniProfiler", "src\Extras\Jabberwocky.Autofac.Extras.MiniProfiler\Jabberwocky.Autofac.Extras.MiniProfiler.csproj", "{44DB88AB-C38E-4CAE-ADA0-BC64778A1D4A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jabberwocky.Autofac", "src\Jabberwocky.Autofac\Jabberwocky.Autofac.csproj", "{315DCFFB-97B4-43E5-9ECF-3EDC7E32C93F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D24E1F38-0BD8-4630-A8FD-1B4884EE259E} = {D24E1F38-0BD8-4630-A8FD-1B4884EE259E}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jabberwocky.Core", "src\Jabberwocky.Core\Jabberwocky.Core.csproj", "{79F22272-B90E-4461-BAEE-92AE1A6C28BC}"
 EndProject

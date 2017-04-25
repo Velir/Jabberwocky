@@ -76,3 +76,7 @@ tools/Nuget/*
 
 #Extra Sitecore packages
 !src/Extras/Jabberwocky.Extras.Polly.Sc/Packages
+
+#Migration backups
+Backup/
+UpgradeLog*.htm
