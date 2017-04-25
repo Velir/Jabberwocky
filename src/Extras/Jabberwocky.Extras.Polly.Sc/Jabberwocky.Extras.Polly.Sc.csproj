@@ -74,6 +74,7 @@
     <Compile Include="Pipelines\Mvc\GetRenderer\AddPageEditorWrapper.cs" />
     <Compile Include="Pipelines\Mvc\GetRenderer\AddPollyWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Renderer\BaseRendererDecorator.cs" />
     <Compile Include="Renderer\CircuitBreakerRendererDecorator.cs" />
     <Compile Include="Renderer\ErrorHandlingRendererDecorator.cs" />
     <Compile Include="Renderer\PageEditorRendererDecorator.cs" />
