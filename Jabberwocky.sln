@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.13
+VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D093F894-C081-4DB9-943B-4E06DEAD5B03}"
 	ProjectSection(SolutionItems) = preProject
@@ -235,5 +235,9 @@ Global
 		{18E207E2-E97E-49A0-A092-52303C79B2AE} = {430B335F-C0F9-4DA1-A7EF-2DFC081E3C09}
 		{9ABFFE48-EE9C-4E93-95F8-17EADCC0E422} = {430B335F-C0F9-4DA1-A7EF-2DFC081E3C09}
 		{A5750E48-798D-4C29-B6D8-9D1244869382} = {57B406E8-42DD-4475-9675-7D93958EA93A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Caching.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.ServiceBus.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.WindowsAzure.Storage.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.Configuration.6.0.1304.0\lib\NET45
+		SolutionGuid = {2A7A14CC-7E28-482D-B271-15C4B6CC84AD}
 	EndGlobalSection
 EndGlobal
