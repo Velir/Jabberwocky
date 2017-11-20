@@ -18,21 +18,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{75B96651
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Jabberwocky.Core.CodeAnalysis", "Jabberwocky.Core.CodeAnalysis", "{7F69F467-1B73-4080-921C-217524735FA7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Jabberwocky.Glass.CodeAnalysis", "Jabberwocky.Glass.CodeAnalysis", "{D71C6AEF-9E9C-4BAE-8D69-C3843E3408A8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extras", "Extras", "{57B406E8-42DD-4475-9675-7D93958EA93A}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jabberwocky.Core.CodeAnalysis", "diagnostics\Jabberwocky.Core.CodeAnalysis\Jabberwocky.Core.CodeAnalysis\Jabberwocky.Core.CodeAnalysis.csproj", "{3E8ACF37-EC9B-4442-B47A-7C38B3B2E157}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jabberwocky.Core.CodeAnalysis.Test", "diagnostics\Jabberwocky.Core.CodeAnalysis\Jabberwocky.Core.CodeAnalysis.Test\Jabberwocky.Core.CodeAnalysis.Test.csproj", "{ECC040DF-9F88-4D75-B730-B852E8212380}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jabberwocky.Core.CodeAnalysis.Vsix", "diagnostics\Jabberwocky.Core.CodeAnalysis\Jabberwocky.Core.CodeAnalysis.Vsix\Jabberwocky.Core.CodeAnalysis.Vsix.csproj", "{C43D4BE3-D71B-4AA1-8D5C-C959129F24D7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Jabberwocky.Glass.CodeAnalysis", "Jabberwocky.Glass.CodeAnalysis", "{D71C6AEF-9E9C-4BAE-8D69-C3843E3408A8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jabberwocky.Glass.CodeAnalysis", "diagnostics\Jabberwocky.Glass.CodeAnalysis\Jabberwocky.Glass.CodeAnalysis\Jabberwocky.Glass.CodeAnalysis.csproj", "{1D16C0FD-43C0-4330-9A12-B059E634F408}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jabberwocky.Glass.CodeAnalysis.Test", "diagnostics\Jabberwocky.Glass.CodeAnalysis\Jabberwocky.Glass.CodeAnalysis.Test\Jabberwocky.Glass.CodeAnalysis.Test.csproj", "{9FB51F12-3479-4944-B28B-708935D7B2C0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jabberwocky.Glass.CodeAnalysis.Vsix", "diagnostics\Jabberwocky.Glass.CodeAnalysis\Jabberwocky.Glass.CodeAnalysis.Vsix\Jabberwocky.Glass.CodeAnalysis.Vsix.csproj", "{C069125A-4D43-4607-A4FF-BE441CB6607F}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extras", "Extras", "{57B406E8-42DD-4475-9675-7D93958EA93A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jabberwocky.Autofac.Extras.MiniProfiler", "src\Extras\Jabberwocky.Autofac.Extras.MiniProfiler\Jabberwocky.Autofac.Extras.MiniProfiler.csproj", "{44DB88AB-C38E-4CAE-ADA0-BC64778A1D4A}"
 EndProject
@@ -205,14 +205,14 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{7F69F467-1B73-4080-921C-217524735FA7} = {E30006E2-A063-48F2-A8C4-B332BBF3A7F3}
+		{D71C6AEF-9E9C-4BAE-8D69-C3843E3408A8} = {E30006E2-A063-48F2-A8C4-B332BBF3A7F3}
+		{57B406E8-42DD-4475-9675-7D93958EA93A} = {430B335F-C0F9-4DA1-A7EF-2DFC081E3C09}
 		{3E8ACF37-EC9B-4442-B47A-7C38B3B2E157} = {7F69F467-1B73-4080-921C-217524735FA7}
 		{ECC040DF-9F88-4D75-B730-B852E8212380} = {7F69F467-1B73-4080-921C-217524735FA7}
 		{C43D4BE3-D71B-4AA1-8D5C-C959129F24D7} = {7F69F467-1B73-4080-921C-217524735FA7}
-		{D71C6AEF-9E9C-4BAE-8D69-C3843E3408A8} = {E30006E2-A063-48F2-A8C4-B332BBF3A7F3}
 		{1D16C0FD-43C0-4330-9A12-B059E634F408} = {D71C6AEF-9E9C-4BAE-8D69-C3843E3408A8}
 		{9FB51F12-3479-4944-B28B-708935D7B2C0} = {D71C6AEF-9E9C-4BAE-8D69-C3843E3408A8}
 		{C069125A-4D43-4607-A4FF-BE441CB6607F} = {D71C6AEF-9E9C-4BAE-8D69-C3843E3408A8}
-		{57B406E8-42DD-4475-9675-7D93958EA93A} = {430B335F-C0F9-4DA1-A7EF-2DFC081E3C09}
 		{44DB88AB-C38E-4CAE-ADA0-BC64778A1D4A} = {57B406E8-42DD-4475-9675-7D93958EA93A}
 		{315DCFFB-97B4-43E5-9ECF-3EDC7E32C93F} = {430B335F-C0F9-4DA1-A7EF-2DFC081E3C09}
 		{79F22272-B90E-4461-BAEE-92AE1A6C28BC} = {430B335F-C0F9-4DA1-A7EF-2DFC081E3C09}
@@ -237,7 +237,7 @@ Global
 		{A5750E48-798D-4C29-B6D8-9D1244869382} = {57B406E8-42DD-4475-9675-7D93958EA93A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Caching.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.ServiceBus.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.WindowsAzure.Storage.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.Configuration.6.0.1304.0\lib\NET45
 		SolutionGuid = {2A7A14CC-7E28-482D-B271-15C4B6CC84AD}
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Caching.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.ServiceBus.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.WindowsAzure.Storage.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.Configuration.6.0.1304.0\lib\NET45
 	EndGlobalSection
 EndGlobal
