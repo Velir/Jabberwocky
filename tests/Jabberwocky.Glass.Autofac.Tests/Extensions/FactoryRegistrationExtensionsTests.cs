@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Glass.Mapper.Sc;
 using Jabberwocky.Glass.Autofac.Extensions;
 using Jabberwocky.Glass.Factory;
 using Jabberwocky.Glass.Factory.Configuration;
@@ -17,8 +16,6 @@ namespace Jabberwocky.Glass.Autofac.Tests.Extensions
 		public void TestSetup()
 		{
 			_builder = new ContainerBuilder();
-
-			_builder.Register(c => Substitute.For<ISitecoreService>()).As<ISitecoreService>();
 		}
 
 		[Test]
