@@ -48,6 +48,12 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Pipelines.Processors
 				return;
 			}
 
+            if (path.StartsWith("/sitecore/", StringComparison.InvariantCultureIgnoreCase))
+            {
+                // Exclude Sitecore client/Speak views
+                return;
+            }
+
 			string cacheKey = _modelCacheManager.GetKey(path);
 			Type modelType = _modelCacheManager.Get(cacheKey);
 
