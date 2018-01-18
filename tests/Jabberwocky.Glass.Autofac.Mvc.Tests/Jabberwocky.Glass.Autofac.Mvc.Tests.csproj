@@ -45,11 +45,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Glass.Mapper, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Glass.Mapper.Sc.Core.4.4.1.328-beta\lib\net45\Glass.Mapper.dll</HintPath>
+      <HintPath>..\..\packages\Glass.Mapper.Sc.Core.4.5.0.4\lib\net45\Glass.Mapper.dll</HintPath>
     </Reference>
     <Reference Include="Glass.Mapper.Sc, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Glass.Mapper.Sc.Core.4.4.1.328-beta\lib\111\Glass.Mapper.Sc.dll</HintPath>
+      <HintPath>..\..\packages\Glass.Mapper.Sc.Core.4.5.0.4\lib\111\Glass.Mapper.Sc.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="NSubstitute, Version=1.10.0.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
