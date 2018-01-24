@@ -14,9 +14,9 @@ namespace Jabberwocky.Glass.Autofac.Glass.Tasks
 	/// <summary>
 	/// Allow Glass models to use Autofac construction.  See http://glass.lu/2013/08/08/MixingInIoc.html
 	/// </summary>
-	public class AutofacGlassContructorTask : GlassMapper.Pipelines.ObjectConstruction.IObjectConstructionTask
+	public class AutofacGlassContructorTask : GlassMapper.Pipelines.ObjectConstruction.AbstractObjectConstructionTask
 	{
-		public void Execute(GlassMapper.Pipelines.ObjectConstruction.ObjectConstructionArgs args)
+		public override void Execute(GlassMapper.Pipelines.ObjectConstruction.ObjectConstructionArgs args)
 		{
 			//check that no other task has created an object
 			//also check that this is a dynamic object

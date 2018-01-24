@@ -1,35 +1,35 @@
 <?xml version="1.0"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>Jabberwocky.Library</id>
     <version>$version$</version>
     <title>Jabberwocky.Library</title>
-    <authors>Chris Smith</authors>
-    <owners>Velir, Chris Smith</owners>
+    <authors>Chris Smith, Chris Sulham</authors>
+    <owners>Velir</owners>
     <projectUrl>https://github.com/Velir/Jabberwocky</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Jabberwocky Library Metapackage</description>
     <releaseNotes>RTM</releaseNotes>
-    <copyright>Copyright 2016</copyright>
+    <copyright>Copyright 2017</copyright>
     <tags>Jabberwocky.Library, metapackage, Velir, Jabberwocky, Library</tags>
 
     <dependencies>
-      <dependency id="Jabberwocky.Core" version="2.0.0" />
-      <dependency id="Jabberwocky.WebApi" version="2.0.0" />
-      <dependency id="Jabberwocky.WebApi.Sc" version="2.0.0" />
-      <dependency id="Jabberwocky.Glass" version="2.0.0" />
-      <dependency id="Jabberwocky.Glass.Mvc" version="2.0.0" />
-      <dependency id="Jabberwocky.Glass.Autofac" version="2.0.0" />
-      <dependency id="Jabberwocky.Glass.Autofac.Mvc" version="2.0.0" />
-      <dependency id="Jabberwocky.Glass.Autofac.WebApi" version="2.0.0" />
-      <dependency id="Jabberwocky.DependencyInjection" version="2.0.0" />
-      <dependency id="Jabberwocky.DependencyInjection.Sc" version="2.0.0" />
-      <dependency id="Jabberwocky.Autofac" version="2.0.0" />
-      <dependency id="Jabberwocky.Autofac.Extras.MiniProfiler" version="2.0.0" />
-      <dependency id="Jabberwocky.Autofac.Extras.MiniProfiler.Sc" version="2.0.0" />
-      <dependency id="Jabberwocky.Autofac.Extras.Log4Net.Sc" version="2.0.0" />
-      <dependency id="Jabberwocky.Extras.Polly.Sc" version="2.0.0" />
-      <dependency id="Jabberwocky.Extras.NewRelic.Sc" version="2.0.0" />
+      <dependency id="Jabberwocky.Core" version="3.0.0" />
+      <dependency id="Jabberwocky.WebApi" version="3.0.0" />
+      <dependency id="Jabberwocky.WebApi.Sc" version="3.0.0" />
+      <dependency id="Jabberwocky.Glass" version="3.0.0" />
+      <dependency id="Jabberwocky.Glass.Mvc" version="3.0.0" />
+      <dependency id="Jabberwocky.Glass.Autofac" version="3.0.0" />
+      <dependency id="Jabberwocky.Glass.Autofac.Mvc" version="3.0.0" />
+      <dependency id="Jabberwocky.Glass.Autofac.WebApi" version="3.0.0" />
+      <dependency id="Jabberwocky.DependencyInjection" version="3.0.0" />
+      <dependency id="Jabberwocky.DependencyInjection.Sc" version="3.0.0" />
+      <dependency id="Jabberwocky.Autofac" version="3.0.0" />
+      <dependency id="Jabberwocky.Autofac.Extras.MiniProfiler" version="3.0.0" />
+      <dependency id="Jabberwocky.Autofac.Extras.MiniProfiler.Sc" version="3.0.0" />
+      <dependency id="Jabberwocky.Autofac.Extras.Log4Net.Sc" version="3.0.0" />
+      <dependency id="Jabberwocky.Extras.Polly.Sc" version="3.0.0" />
+      <dependency id="Jabberwocky.Extras.NewRelic.Sc" version="3.0.0" />
     </dependencies>
   </metadata>
 
