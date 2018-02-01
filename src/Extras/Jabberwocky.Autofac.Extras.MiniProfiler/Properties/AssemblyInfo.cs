@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Velir")]
 [assembly: AssemblyProduct("Jabberwocky.Autofac.Extras.MiniProfiler")]
-[assembly: AssemblyCopyright("Copyright © Velir 2015")]
+[assembly: AssemblyCopyright("Copyright © Velir 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -34,6 +34,6 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("3.0.0.0")]
 [assembly: AssemblyFileVersion("3.0.0.0")]
-[assembly: AssemblyInformationalVersion("3.0.0-beta")]
+[assembly: AssemblyInformationalVersion("3.0.0.0")]
 
 [assembly: InternalsVisibleTo("Jabberwocky.Autofac.Extras.MiniProfiler.Sc")]
