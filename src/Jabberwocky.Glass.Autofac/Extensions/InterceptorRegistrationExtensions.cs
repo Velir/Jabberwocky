@@ -13,7 +13,7 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 {
 	public static class InterceptorRegistrationExtensions
 	{
-		private const string InterceptorsPropertyName = "Autofac.Extras.DynamicProxy2.RegistrationExtensions.InterceptorsPropertyName";
+		private const string InterceptorsPropertyName = "Autofac.Extras.DynamicProxy.RegistrationExtensions.InterceptorsPropertyName";
 
 		public const string InterfaceNamedParameter = "interfaceType";
 		public const string GlassModelNamedParameter = "model";
