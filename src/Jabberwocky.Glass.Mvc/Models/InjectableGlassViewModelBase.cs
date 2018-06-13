@@ -1,4 +1,4 @@
-namespace Jabberwocky.Glass.Autofac.Mvc.Models
+namespace Jabberwocky.Glass.Mvc.Models
 {
 	public abstract class InjectableGlassViewModelBase
 	{

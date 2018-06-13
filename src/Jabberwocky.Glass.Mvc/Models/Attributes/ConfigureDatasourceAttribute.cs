@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Jabberwocky.Glass.Autofac.Mvc.Models.Attributes
+namespace Jabberwocky.Glass.Mvc.Models.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class ConfigureDatasourceAttribute : Attribute

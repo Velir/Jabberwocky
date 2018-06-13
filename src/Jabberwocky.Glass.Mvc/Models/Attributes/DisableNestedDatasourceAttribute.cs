@@ -1,4 +1,4 @@
-﻿namespace Jabberwocky.Glass.Autofac.Mvc.Models.Attributes
+﻿namespace Jabberwocky.Glass.Mvc.Models.Attributes
 {
     public class DisableNestedDatasourceAttribute : ConfigureDatasourceAttribute
     {

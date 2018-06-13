@@ -33,7 +33,7 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Pipelines.Processors
 		/// The name of the context.
 		/// </value>
 		public string ContextName { get; set; }
-		
+
 		protected internal override void Run(GetModelArgs args)
 		{
 			if (!IsValidForProcessing(args))
@@ -48,11 +48,11 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Pipelines.Processors
 				return;
 			}
 
-            if (path.StartsWith("/sitecore/", StringComparison.InvariantCultureIgnoreCase))
-            {
-                // Exclude Sitecore client/Speak views
-                return;
-            }
+			if (path.StartsWith("/sitecore/", StringComparison.InvariantCultureIgnoreCase))
+			{
+				// Exclude Sitecore client/Speak views
+				return;
+			}
 
 			string cacheKey = _modelCacheManager.GetKey(path);
 			Type modelType = _modelCacheManager.Get(cacheKey);
@@ -136,9 +136,9 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Pipelines.Processors
 			}
 
 			return args.Rendering.RenderingType == "Layout" ||
-				   args.Rendering.RenderingType == "View" ||
-				   args.Rendering.RenderingType == "r" ||
-				   args.Rendering.RenderingType == String.Empty;
+					 args.Rendering.RenderingType == "View" ||
+					 args.Rendering.RenderingType == "r" ||
+					 args.Rendering.RenderingType == String.Empty;
 		}
 	}
 

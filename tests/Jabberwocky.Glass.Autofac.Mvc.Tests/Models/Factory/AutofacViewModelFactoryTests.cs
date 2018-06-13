@@ -1,9 +1,9 @@
 ﻿using Autofac;
 using Autofac.Core;
-using Jabberwocky.Glass.Autofac.Mvc.Models;
-using Jabberwocky.Glass.Autofac.Mvc.Models.Attributes;
 using Jabberwocky.Glass.Autofac.Mvc.Models.Factory;
 using Jabberwocky.Glass.Models;
+using Jabberwocky.Glass.Mvc.Models;
+using Jabberwocky.Glass.Mvc.Models.Attributes;
 using Jabberwocky.Glass.Mvc.Services;
 using NSubstitute;
 using NUnit.Framework;
@@ -28,50 +28,6 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Tests.Models.Factory
             _resolver.ComponentRegistry.TryGetRegistration(null, out retVal).ReturnsForAnyArgs(true);
 
             _sut = new AutofacViewModelFactory(_resolver, _renderingContextService);
-        }
-
-        [Test]
-        public void GetGlassModelTypeFromGenericParam_DirectDerivedType_ReturnsCorrectGenericType()
-        {
-            var modelTuple = AutofacViewModelFactory.InternalGetGlassModelAndRenderingTypesFromGenericParam(typeof(DirectViewModel)).Value;
-            var datasourceType = modelTuple.GlassModel;
-            Assert.IsNotNull(datasourceType);
-            Assert.AreEqual(typeof(IGlassBase), datasourceType);
-        }
-
-        [Test]
-        public void GetGlassModelTypeFromGenericParam_IndirectDerivedType_ReturnsCorrectGenericType()
-        {
-            var modelTuple = AutofacViewModelFactory.InternalGetGlassModelAndRenderingTypesFromGenericParam(typeof(IndirectViewModel)).Value;
-            var datasourceType = modelTuple.GlassModel;
-            Assert.IsNotNull(datasourceType);
-            Assert.AreEqual(typeof(IGlassBase), datasourceType);
-        }
-
-        [Test]
-        public void GetGlassModelTypeFromGenericParam_IndirectGenericType_ReturnsCorrectGenericType()
-        {
-            var modelTuple = AutofacViewModelFactory.InternalGetGlassModelAndRenderingTypesFromGenericParam(typeof(IndirectGenericViewModel)).Value;
-            var datasourceType = modelTuple.GlassModel;
-            Assert.IsNotNull(datasourceType);
-            Assert.AreEqual(typeof(IGlassBase), datasourceType);
-        }
-
-        [Test]
-        public void GetGlassModelTypeFromGenericParam_NoInheritViewModel_ReturnsNull()
-        {
-            var modelTuple = AutofacViewModelFactory.InternalGetGlassModelAndRenderingTypesFromGenericParam(typeof(NoInheritViewModel));
-            Assert.IsNull(modelTuple);
-        }
-
-        [Test]
-        public void GetGlassModelAndRenderingTypesFromGenericParam_DirectRenderingType_ReturnsCorrectRenderingModel()
-        {
-            var modelTuple = AutofacViewModelFactory.InternalGetGlassModelAndRenderingTypesFromGenericParam(typeof(DirectRenderingViewModel)).Value;
-            var datasourceType = modelTuple.GlassModel;
-            var renderingParamType = modelTuple.RenderingParamModel;
-            Assert.AreEqual(typeof(IGlassBase), datasourceType);
-            Assert.AreEqual(typeof(IRenderingTemplate), renderingParamType);
         }
 
         [Test]
@@ -179,29 +135,8 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Tests.Models.Factory
 
         #region ViewModel Class Declarations
 
-        private abstract class DirectViewModel : GlassViewModel<IGlassBase>
-        {
-        }
-
-        private abstract class GenericViewModel<U, T> : GlassViewModel<T> where T : class, IGlassBase
-        {
-        }
-
-        private class IndirectViewModel : DirectViewModel
-        {
-        }
-
-        private class IndirectGenericViewModel : GenericViewModel<object, IGlassBase>
-        {
-        }
-
         private class InjectableViewModel : GlassViewModel<IGlassBase>
         {
-        }
-
-        private class NoInheritViewModel
-        {
-
         }
 
         private class DirectRenderingViewModel : GlassViewModel<IGlassBase, IRenderingTemplate>

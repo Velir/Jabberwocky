@@ -108,14 +108,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Extensions\MvcRegistrationExtensions.cs" />
-    <Compile Include="Models\Attributes\AllowNestedDatasourceAttribute.cs" />
-    <Compile Include="Models\Attributes\ConfigureDatasourceAttribute.cs" />
-    <Compile Include="Models\Attributes\DisableNestedDatasourceAttribute.cs" />
     <Compile Include="Models\Factory\AutofacViewModelFactory.cs" />
-    <Compile Include="Models\GlassViewModel.cs" />
-    <Compile Include="Models\InjectableGlassViewModelBase.cs" />
     <Compile Include="Pipelines\Factories\Providers\MvcLifetimeScopeProvider.cs" />
     <Compile Include="Pipelines\Processors\GetModelFromViewProcessor.cs" />
     <Compile Include="Pipelines\Processors\GetModelProcessor.cs" />

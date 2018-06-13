@@ -7,7 +7,7 @@ using Jabberwocky.Glass.Mvc.Util;
 using Sitecore.Diagnostics;
 using Sitecore.Mvc.Helpers;
 
-namespace Jabberwocky.Glass.Autofac.Mvc.Extensions
+namespace Jabberwocky.Glass.Mvc.Extensions
 {
 	public static class HtmlHelperExtensions
 	{

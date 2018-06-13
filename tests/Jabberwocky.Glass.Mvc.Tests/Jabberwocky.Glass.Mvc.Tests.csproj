@@ -145,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LocalAddin.cs" />
+    <Compile Include="Models\Factory\ViewModelFactoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\RenderingContextServiceTests.cs" />
     <Compile Include="Util\AutoSitecoreAttribute.cs" />
