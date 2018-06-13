@@ -64,11 +64,5 @@ namespace Jabberwocky.Glass.Mvc.Util
 
 			return rendering;
 		}
-
-		public virtual HtmlString DynamicPlaceholder(string dynamicKey)
-		{
-			var currentRenderingId = RenderingContext.Current.Rendering.UniqueId;
-			return Placeholder(string.Format("{0}_{1}", dynamicKey, currentRenderingId));
-		}
 	}
 }
