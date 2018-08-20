@@ -16,7 +16,7 @@ namespace Jabberwocky.Glass.Autofac.Extensions
 			// Register Caches
 			builder.RegisterType<SiteCache>().Named<ICacheProvider>("defaultCacheImplementor").WithMetadata("name", "default").SingleInstance();
 			builder.RegisterType<SiteCache>().Named<ICacheProvider>("siteCacheImplementor").WithMetadata("name", "site").SingleInstance();
-			builder.RegisterDecorator<ICacheProvider>((c, provider) => new SitecoreCacheDecorator(provider, GetSitecoreServiceForCache(c), c.Resolve<ISiteContextService>()), "siteCacheImplementor").InstancePerLifetimeScope();
+			builder.RegisterDecorator<ICacheProvider>((c, provider) => new SitecoreCacheDecorator(provider, GetSitecoreServiceForCache(c), c.Resolve<ISiteContextService>()), "siteCacheImplementor");
 		}
 
 		private static ISitecoreService GetSitecoreServiceForCache(IComponentContext c)

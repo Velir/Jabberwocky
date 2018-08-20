@@ -31,7 +31,7 @@ namespace Jabberwocky.Glass.Autofac.Mvc.Extensions
 
 			builder.RegisterType<GlassHtml>().As<IGlassHtml>().PreserveExistingDefaults();
 
-			builder.RegisterType<RenderingContextService>().As<IRenderingContextService>().InstancePerLifetimeScope();
+			builder.RegisterType<RenderingContextService>().As<IRenderingContextService>();
 			builder.RegisterType<AutofacViewModelFactory>().As<IViewModelFactory>();
 			builder.RegisterType<ModelCacheManager>().As<IModelCacheManager>().SingleInstance();
 
