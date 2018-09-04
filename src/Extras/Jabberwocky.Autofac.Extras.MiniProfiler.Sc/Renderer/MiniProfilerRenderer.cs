@@ -19,14 +19,19 @@ namespace Jabberwocky.Autofac.Extras.MiniProfiler.Sc.Renderer
 			_rendering = rendering;
 		}
 
-	    public override string CacheKey => _innerRenderer.CacheKey;
+		public override string CacheKey => _innerRenderer.CacheKey;
 
-	    public override void Render(TextWriter writer)
+		public override void Render(TextWriter writer)
 		{
 			using (Profiler.Current.Step($"Rendering:{_rendering.RenderingItem?.Name}"))
 			{
 				_innerRenderer.Render(writer);
 			}
+		}
+
+		public override string ToString()
+		{
+			return _innerRenderer.ToString();
 		}
 	}
 }
