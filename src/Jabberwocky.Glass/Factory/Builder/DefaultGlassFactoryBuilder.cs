@@ -11,11 +11,14 @@ namespace Jabberwocky.Glass.Factory.Builder
 	public class DefaultGlassFactoryBuilder : AbstractGlassFactoryBuilder
 	{
 		private readonly Func<ISitecoreService> _serviceFactory;
+		private readonly IServiceProvider _serviceProvider;
 
-		public DefaultGlassFactoryBuilder(IConfigurationOptions options, Func<ISitecoreService> serviceFactory) : base(options)
+		public DefaultGlassFactoryBuilder(IConfigurationOptions options, Func<ISitecoreService> serviceFactory, IServiceProvider serviceProvider) : base(options)
 		{
 			if (serviceFactory == null) throw new ArgumentNullException(nameof(serviceFactory));
+			if (serviceProvider == null) throw new ArgumentNullException(nameof(serviceProvider));
 			_serviceFactory = serviceFactory;
+			_serviceProvider = serviceProvider;
 		}
 
 		public override IGlassInterfaceFactory BuildFactory()
@@ -24,7 +27,7 @@ namespace Jabberwocky.Glass.Factory.Builder
 
 			var implementedTypes = new DefaultGlassTypeLoader().LoadImplementations(Options.Assemblies);
 			var templateCache = new GlassTemplateCacheService(implementedTypes, _serviceFactory);
-			implFactory = new ProxyImplementationFactory((t, model) => new FallbackInterceptor(t, model, templateCache, implFactory));
+			implFactory = new ProxyImplementationFactory(_serviceProvider, (t, model) => new FallbackInterceptor(t, model, templateCache, implFactory));
 
 			return new GlassInterfaceFactory(templateCache, implFactory);
 		}

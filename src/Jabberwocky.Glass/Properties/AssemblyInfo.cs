@@ -36,4 +36,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("3.0.0.0")]
 [assembly: AssemblyInformationalVersion("3.0.0.0")]
 [assembly: InternalsVisibleTo("Jabberwocky.Glass.Tests")]
-[assembly: InternalsVisibleTo("Jabberwocky.Glass.Autofac")]
+[assembly: InternalsVisibleTo("Jabberwocky.Glass.Mvc")]

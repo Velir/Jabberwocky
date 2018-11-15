@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Reflection;
 using Jabberwocky.Core.Utils.Reflection;
 using Jabberwocky.DependencyInjection.Autowire.Attributes;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Jabberwocky.DependencyInjection.Autowire.Extensions
 {
@@ -16,7 +15,7 @@ namespace Jabberwocky.DependencyInjection.Autowire.Extensions
 
 			var assemblies = new[] { Assembly.GetExecutingAssembly() }.Concat(assemblyNames.Select(AssemblyManager.LoadAssemblySafe)).Distinct();
 
-			foreach (var meta in assemblies.SelectMany(TryGetExportedTypes)
+			foreach (var meta in assemblies.SelectMany(AssemblyManager.TryGetExportedTypes)
 				.Select(type => new { Type = type, Attr = type.GetCustomAttributesSafe<AutowireServiceAttribute>(true).FirstOrDefault() })
 				.Where(meta => meta.Attr != null))
 			{
@@ -40,7 +39,7 @@ namespace Jabberwocky.DependencyInjection.Autowire.Extensions
 				var implementedInterfaces = meta.Type.GetInterfaces();
 				foreach (var implementedInterface in implementedInterfaces)
 				{
-					collection.Add(new ServiceDescriptor(implementedInterface, meta.Type, lifetime));
+					collection.Replace(new ServiceDescriptor(implementedInterface, meta.Type, lifetime));
 				}
 
 				// Register as itself as well
@@ -48,19 +47,6 @@ namespace Jabberwocky.DependencyInjection.Autowire.Extensions
 				{
 					collection.Add(new ServiceDescriptor(meta.Type, meta.Type, lifetime));
 				}
-			}
-		}
-
-		private static IEnumerable<Type> TryGetExportedTypes(Assembly asm)
-		{
-			try
-			{
-				return asm.ExportedTypes;
-			}
-			catch
-			{
-				// Unable to load types
-				return Enumerable.Empty<Type>();
 			}
 		}
 	}

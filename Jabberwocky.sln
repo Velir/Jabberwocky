@@ -49,13 +49,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jabberwocky.Glass.Autofac",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jabberwocky.Glass.Autofac.Mvc", "src\Jabberwocky.Glass.Autofac.Mvc\Jabberwocky.Glass.Autofac.Mvc.csproj", "{5EAD110F-F074-47E4-8B93-C0EECB9FC27A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jabberwocky.Glass.Autofac.WebApi", "src\Jabberwocky.Glass.Autofac.WebApi\Jabberwocky.Glass.Autofac.WebApi.csproj", "{86B4E810-DCA7-4510-BA2B-EC1DDA9CB7FE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jabberwocky.Glass.Mvc", "src\Jabberwocky.Glass.Mvc\Jabberwocky.Glass.Mvc.csproj", "{DD17DB22-247C-44A6-B0DD-091786863626}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jabberwocky.WebApi", "src\Jabberwocky.WebApi\Jabberwocky.WebApi.csproj", "{4F3BCE61-1D0B-42B0-8433-91CB0A89068F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jabberwocky.Autofac.Tests", "tests\Jabberwocky.Autofac.Tests\Jabberwocky.Autofac.Tests.csproj", "{87913926-895A-422B-B462-EF685DCAE215}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jabberwocky.Core.Tests", "tests\Jabberwocky.Core.Tests\Jabberwocky.Core.Tests.csproj", "{4B57D258-3737-4B0B-A84B-B6B341547EF0}"
 EndProject
@@ -67,7 +63,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jabberwocky.Glass.Mvc.Tests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jabberwocky.Glass.Tests", "tests\Jabberwocky.Glass.Tests\Jabberwocky.Glass.Tests.csproj", "{C29D9286-8D3A-40EB-A5D9-2100295F7970}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jabberwocky.Autofac.Extras.MiniProfiler.Sc", "src\Extras\Jabberwocky.Autofac.Extras.MiniProfiler.Sc\Jabberwocky.Autofac.Extras.MiniProfiler.Sc.csproj", "{33A89F6A-DD1E-4076-B526-6759FD66565F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jabberwocky.Extras.MiniProfiler.Sc", "src\Extras\Jabberwocky.Autofac.Extras.MiniProfiler.Sc\Jabberwocky.Extras.MiniProfiler.Sc.csproj", "{33A89F6A-DD1E-4076-B526-6759FD66565F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jabberwocky.Extras.NewRelic.Sc", "src\Extras\Jabberwock.Extras.NewRelic.Sc\Jabberwocky.Extras.NewRelic.Sc.csproj", "{51835579-3654-49D4-8B0B-CEB8AF41643D}"
 EndProject
@@ -135,10 +131,6 @@ Global
 		{5EAD110F-F074-47E4-8B93-C0EECB9FC27A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EAD110F-F074-47E4-8B93-C0EECB9FC27A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EAD110F-F074-47E4-8B93-C0EECB9FC27A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{86B4E810-DCA7-4510-BA2B-EC1DDA9CB7FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{86B4E810-DCA7-4510-BA2B-EC1DDA9CB7FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{86B4E810-DCA7-4510-BA2B-EC1DDA9CB7FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{86B4E810-DCA7-4510-BA2B-EC1DDA9CB7FE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DD17DB22-247C-44A6-B0DD-091786863626}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DD17DB22-247C-44A6-B0DD-091786863626}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD17DB22-247C-44A6-B0DD-091786863626}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -147,10 +139,6 @@ Global
 		{4F3BCE61-1D0B-42B0-8433-91CB0A89068F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F3BCE61-1D0B-42B0-8433-91CB0A89068F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F3BCE61-1D0B-42B0-8433-91CB0A89068F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{87913926-895A-422B-B462-EF685DCAE215}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{87913926-895A-422B-B462-EF685DCAE215}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{87913926-895A-422B-B462-EF685DCAE215}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{87913926-895A-422B-B462-EF685DCAE215}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4B57D258-3737-4B0B-A84B-B6B341547EF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4B57D258-3737-4B0B-A84B-B6B341547EF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B57D258-3737-4B0B-A84B-B6B341547EF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -219,10 +207,8 @@ Global
 		{13E08D30-B2A4-45EF-A28E-C916EB80B70D} = {430B335F-C0F9-4DA1-A7EF-2DFC081E3C09}
 		{EA620F62-8D08-4031-BAC4-1C60D5C5CBC9} = {430B335F-C0F9-4DA1-A7EF-2DFC081E3C09}
 		{5EAD110F-F074-47E4-8B93-C0EECB9FC27A} = {430B335F-C0F9-4DA1-A7EF-2DFC081E3C09}
-		{86B4E810-DCA7-4510-BA2B-EC1DDA9CB7FE} = {430B335F-C0F9-4DA1-A7EF-2DFC081E3C09}
 		{DD17DB22-247C-44A6-B0DD-091786863626} = {430B335F-C0F9-4DA1-A7EF-2DFC081E3C09}
 		{4F3BCE61-1D0B-42B0-8433-91CB0A89068F} = {430B335F-C0F9-4DA1-A7EF-2DFC081E3C09}
-		{87913926-895A-422B-B462-EF685DCAE215} = {75B96651-6860-4752-86D5-513239EA3105}
 		{4B57D258-3737-4B0B-A84B-B6B341547EF0} = {75B96651-6860-4752-86D5-513239EA3105}
 		{30E75915-FB9C-41E9-8406-6E1BB6F2F9CF} = {75B96651-6860-4752-86D5-513239EA3105}
 		{5C9DD108-B26F-43EA-B8F3-5A3512672957} = {75B96651-6860-4752-86D5-513239EA3105}
@@ -237,7 +223,7 @@ Global
 		{A5750E48-798D-4C29-B6D8-9D1244869382} = {57B406E8-42DD-4475-9675-7D93958EA93A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {2A7A14CC-7E28-482D-B271-15C4B6CC84AD}
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Caching.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.ServiceBus.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.WindowsAzure.Storage.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.Configuration.6.0.1304.0\lib\NET45
+		SolutionGuid = {2A7A14CC-7E28-482D-B271-15C4B6CC84AD}
 	EndGlobalSection
 EndGlobal

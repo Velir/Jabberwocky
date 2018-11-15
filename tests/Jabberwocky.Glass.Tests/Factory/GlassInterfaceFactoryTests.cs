@@ -105,7 +105,7 @@ namespace Jabberwocky.Glass.Tests.Factory
 				.ToLookup(pair => pair.Key, pair => pair.Value);
 
 			// Tightly-coupled test dependency... hmm
-			_implFactory = new ProxyImplementationFactory((t, model) => new FallbackInterceptor(t, model, _glassFactory.TemplateCacheService, _implFactory));
+			_implFactory = new ProxyImplementationFactory(Substitute.For<IServiceProvider>(), (t, model) => new FallbackInterceptor(t, model, _glassFactory.TemplateCacheService, _implFactory));
 
 			_templateCache = new GlassTemplateCacheService(_interfaceMappings, () => _mockService);
 

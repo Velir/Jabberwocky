@@ -1,15 +1,15 @@
-﻿using Jabberwocky.Autofac.Extras.MiniProfiler.Util;
+﻿using Jabberwocky.Extras.MiniProfiler.Sc.Configuration;
 using Sitecore.Pipelines;
 using StackExchange.Profiling;
 
-namespace Jabberwocky.Autofac.Extras.MiniProfiler.Sc.Pipeline.Initialize
+namespace Jabberwocky.Extras.MiniProfiler.Sc.Pipeline.Initialize
 {
 	public class MiniProfilerRouteProcessor
 	{
 		public virtual void Process(PipelineArgs args)
 		{
-			MiniProfilerHandler.RegisterRoutes();
-			MiniProfilerRuntime.MiniProfilerInitialized = true;
+			MiniProfilerHandler.Configure(new MiniProfilerOptions());
+			MiniProfilerConfiguration.IsMiniProfilerInitialized = true;
 		}
 	}
 }

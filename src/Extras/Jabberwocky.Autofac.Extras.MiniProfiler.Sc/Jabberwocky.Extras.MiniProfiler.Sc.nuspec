@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Jabberwocky.Autofac.Extras.MiniProfiler.Sc</id>
-    <version>$version$</version>
+    <version>$version$-alpha</version>
     <title>Jabberwocky Autofac MiniProfiler Sc</title>
     <authors>Chris Smith</authors>
     <owners>Velir, Chris Smith</owners>

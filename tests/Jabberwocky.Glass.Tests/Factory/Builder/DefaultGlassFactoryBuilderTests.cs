@@ -14,6 +14,7 @@ namespace Jabberwocky.Glass.Tests.Factory.Builder
 		private ISitecoreService _mockService;
 
 		private IConfigurationOptions _mockOptions;
+		private IServiceProvider _mockProvider;
 
 		// SUT
 		private DefaultGlassFactoryBuilder _builder;
@@ -21,18 +22,19 @@ namespace Jabberwocky.Glass.Tests.Factory.Builder
 		[SetUp]
 		public void TestSetup()
 		{
+			_mockProvider = Substitute.For<IServiceProvider>();
 			_mockOptions = Substitute.For<IConfigurationOptions>();
 			_mockOptions.Assemblies.Returns(new[] {Assembly.GetAssembly(GetType()).FullName});
 			
 			_mockService = Substitute.For<ISitecoreService>();
 
-			_builder = new DefaultGlassFactoryBuilder(_mockOptions, () => _mockService);
+			_builder = new DefaultGlassFactoryBuilder(_mockOptions, () => _mockService, _mockProvider);
 		}
 
 		[Test, ExpectedException(typeof(ArgumentNullException))]
 		public void Constructor_NullOptions_Throws()
 		{
-			new DefaultGlassFactoryBuilder(null, () => _mockService);
+			new DefaultGlassFactoryBuilder(null, () => _mockService, _mockProvider);
 		}
 
 		[Test]

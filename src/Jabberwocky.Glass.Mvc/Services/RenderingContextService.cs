@@ -3,7 +3,6 @@ using System.Collections.Concurrent;
 using System.Linq;
 using System.Reflection;
 using Glass.Mapper.Sc;
-using Jabberwocky.Glass.Models;
 using Sitecore.Mvc.Presentation;
 
 namespace Jabberwocky.Glass.Mvc.Services

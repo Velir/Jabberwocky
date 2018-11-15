@@ -30,12 +30,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NewRelic.Api.Agent, Version=6.1.48.0, Culture=neutral, PublicKeyToken=06552fced0b33d87, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\NewRelic.Agent.Api.6.1.48.0\lib\NewRelic.Api.Agent.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="NewRelic.Api.Agent, Version=8.8.83.0, Culture=neutral, PublicKeyToken=06552fced0b33d87, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\NewRelic.Agent.Api.8.8.83\lib\net45\NewRelic.Api.Agent.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Kernel, Version=11.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sitecore.Kernel.NoReferences.9.0.171002\lib\NET462\Sitecore.Kernel.dll</HintPath>
+      <HintPath>..\..\..\packages\Sitecore.Kernel.NoReferences.9.0.180604\lib\NET462\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Mvc, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Sitecore.Mvc.NoReferences.9.0.171002\lib\NET462\Sitecore.Mvc.dll</HintPath>

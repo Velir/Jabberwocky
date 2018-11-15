@@ -1,14 +1,14 @@
-﻿using Jabberwocky.Autofac.Extras.MiniProfiler.Sc.Renderer;
-using Jabberwocky.Autofac.Extras.MiniProfiler.Util;
+﻿using Jabberwocky.Extras.MiniProfiler.Sc.Configuration;
+using Jabberwocky.Extras.MiniProfiler.Sc.Renderer;
 using Sitecore.Mvc.Pipelines.Response.GetRenderer;
 
-namespace Jabberwocky.Autofac.Extras.MiniProfiler.Sc.Pipeline.Mvc.GetRenderer
+namespace Jabberwocky.Extras.MiniProfiler.Sc.Pipeline.Mvc.GetRenderer
 {
 	public class AddMiniProfilerWrapper : GetRendererProcessor
 	{
 		public override void Process(GetRendererArgs args)
 		{
-			if (args.Result == null || !MiniProfilerRuntime.MiniProfilerInitialized) return;
+			if (args.Result == null || !MiniProfilerConfiguration.IsMiniProfilerInitialized) return;
 
 			var rendering = args.Rendering;
 			var renderer = args.Result;

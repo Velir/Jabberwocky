@@ -7,8 +7,8 @@
     <ProjectGuid>{33A89F6A-DD1E-4076-B526-6759FD66565F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Jabberwocky.Autofac.Extras.MiniProfiler.Sc</RootNamespace>
-    <AssemblyName>Jabberwocky.Autofac.Extras.MiniProfiler.Sc</AssemblyName>
+    <RootNamespace>Jabberwocky.Extras.MiniProfiler.Sc</RootNamespace>
+    <AssemblyName>Jabberwocky.Extras.MiniProfiler.Sc</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -31,27 +31,37 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=4.1.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Autofac.4.1.0\lib\net45\Autofac.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.0.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.1.0.0\lib\netstandard1.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="MiniProfiler, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\MiniProfiler.4.0.138\lib\net461\MiniProfiler.dll</HintPath>
     </Reference>
-    <Reference Include="MiniProfiler, Version=3.2.0.157, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\MiniProfiler.3.2.0.157\lib\net40\MiniProfiler.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="MiniProfiler.Shared, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\MiniProfiler.Shared.4.0.138\lib\net461\MiniProfiler.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Kernel, Version=11.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Sitecore.Kernel.NoReferences.9.0.171002\lib\NET462\Sitecore.Kernel.dll</HintPath>
+      <HintPath>..\..\..\packages\Sitecore.Kernel.NoReferences.9.0.180604\lib\NET462\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Mvc, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Sitecore.Mvc.NoReferences.9.0.171002\lib\NET462\Sitecore.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.2.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Diagnostics.DiagnosticSource.4.4.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -60,31 +70,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\MiniProfilerConfiguration.cs" />
     <Compile Include="Pipeline\Initialize\MiniProfilerRouteProcessor.cs" />
     <Compile Include="Pipeline\Mvc\GetRenderer\AddMiniProfilerWrapper.cs" />
-    <Compile Include="Pipeline\RegisterAutofacDependencies\RegisterMiniProfilerModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderer\MiniProfilerRenderer.cs" />
-    <Compile Include="SitecoreMiniProfilerModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="App_Config\Include\z.Jabberwocky\2.Jabberwocky.Autofac.Extras.MiniProfiler.Sc.config" />
+    <None Include="App_Config\Include\z.Jabberwocky\2.Jabberwocky.Extras.MiniProfiler.Sc.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Jabberwocky.Autofac\Jabberwocky.Autofac.csproj">
-      <Project>{315DCFFB-97B4-43E5-9ECF-3EDC7E32C93F}</Project>
-      <Name>Jabberwocky.Autofac</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Jabberwocky.Glass.Autofac\Jabberwocky.Glass.Autofac.csproj">
-      <Project>{EA620F62-8D08-4031-BAC4-1C60D5C5CBC9}</Project>
-      <Name>Jabberwocky.Glass.Autofac</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Jabberwocky.Autofac.Extras.MiniProfiler\Jabberwocky.Autofac.Extras.MiniProfiler.csproj">
-      <Project>{44db88ab-c38e-4cae-ada0-bc64778a1d4a}</Project>
-      <Name>Jabberwocky.Autofac.Extras.MiniProfiler</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

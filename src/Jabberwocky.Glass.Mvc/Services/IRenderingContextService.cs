@@ -1,5 +1,4 @@
 using System;
-using Jabberwocky.Glass.Models;
 using Sitecore.Mvc.Presentation;
 
 namespace Jabberwocky.Glass.Mvc.Services
