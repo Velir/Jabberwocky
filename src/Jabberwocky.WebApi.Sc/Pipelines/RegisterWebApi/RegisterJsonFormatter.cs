@@ -1,5 +1,5 @@
-﻿using System.Net.Http.Formatting;
-using System.Net.Http.Headers;
+﻿using System.Net.Http.Headers;
+using Jabberwocky.WebApi.Sc.Formatters;
 using Jabberwocky.WebApi.Sc.PipelineArgs;
 using Newtonsoft.Json.Serialization;
 
@@ -9,7 +9,7 @@ namespace Jabberwocky.WebApi.Sc.Pipelines.RegisterWebApi
 	{
 		public virtual void Process(RegisterWebApiPipelineArgs args)
 		{
-			var jsonFormatter = new JsonMediaTypeFormatter
+			var jsonFormatter = new ConditionalJsonMediaTypeFormatter
 			{
 				SerializerSettings = {ContractResolver = new CamelCasePropertyNamesContractResolver()}
 			};
