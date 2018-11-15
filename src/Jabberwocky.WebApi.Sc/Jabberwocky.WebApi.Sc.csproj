@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Formatters\ConditionalJsonMediaTypeFormatter.cs" />
     <Compile Include="PipelineArgs\RegisterWebApiPipelineArgs.cs" />
     <Compile Include="Pipelines\Initialize\RegisterWebApi.cs" />
     <Compile Include="Pipelines\RegisterWebApi\EnsureInitialized.cs" />
