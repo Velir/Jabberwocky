@@ -46,10 +46,10 @@ namespace Jabberwocky.Glass.Models
 
 	public interface IGlassRelationships<T> where T : IGlassCore
 	{
-		[SitecoreChildren(InferType = true, IsLazy = true)]
+		[SitecoreChildren(InferType = true)]
 		IEnumerable<T> _ChildrenWithInferType { get; set; }
 
-		[SitecoreParent(InferType = true, IsLazy = true)]
+		[SitecoreParent(InferType = true)]
 		T _Parent { get; set; }
 	}
 }

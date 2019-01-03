@@ -18,7 +18,7 @@ namespace Jabberwocky.Glass.Factory.Builder.Loader
 			var abstractTypes = assemblies
 				.SelectMany(assembly => assembly.GetTypes())
 				.Where(type => type.IsAbstract)
-				.Where(type => type.HasAttribute<GlassFactoryTypeAttribute>());
+				.Where(type => type.GetAttribute<GlassFactoryTypeAttribute>() != null);
 
 			var flattenedTypes = abstractTypes
 				.SelectMany(abstractType => abstractType.GetInterfaces(),
@@ -38,7 +38,7 @@ namespace Jabberwocky.Glass.Factory.Builder.Loader
 		{
 			return assemblies
 				.SelectMany(assembly => assembly.GetTypes())
-				.Where(type => type.HasAttribute<GlassFactoryInterfaceAttribute>()); // Must be an interface, since AttributeUsage guarantees it
+				.Where(type => type.GetAttribute<GlassFactoryTypeAttribute>() != null); // Must be an interface, since AttributeUsage guarantees it
 		}
 		internal IEnumerable<Assembly> LoadAssemblies(IEnumerable<string> assemblyNames)
 		{

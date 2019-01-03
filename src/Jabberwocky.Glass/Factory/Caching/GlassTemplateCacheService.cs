@@ -77,9 +77,8 @@ namespace Jabberwocky.Glass.Factory.Caching
 			{
 				// Otherwise, search for match, and update 1st-level cache
 				using (var service = _serviceFactory())
-				using (new VersionCountDisabler())
 				{
-					foreach (Guid baseTemplateId in GetBaseTemplates(service.GetItem<IBaseTemplates>(templateId), service, depth))
+					foreach (Guid baseTemplateId in GetBaseTemplates(service.GetItem<IBaseTemplates>(templateId, x => x.VersionCountDisable()), service, depth))
 					{
 						string templateIdString = baseTemplateId.ToString();
 						if (itemInterfaces.ContainsKey(templateIdString))
@@ -101,9 +100,8 @@ namespace Jabberwocky.Glass.Factory.Caching
 			}
 
 			using (var service = _serviceFactory())
-			using (new VersionCountDisabler())
 			{
-				var currentTemplate = service.GetItem<IBaseTemplates>(templateId);
+				var currentTemplate = service.GetItem<IBaseTemplates>(templateId, x => x.VersionCountDisable());
 
 				return GetBaseTemplates(currentTemplate, service, depth: MaxDepth)
 					.Select(guid => InnerGetImplementingTypeForTemplate(guid, interfaceType, 1))
@@ -150,9 +148,9 @@ namespace Jabberwocky.Glass.Factory.Caching
 				foreach (var metadata in mappingGroup)
 				{
 					var sitecoreAttribute = metadata.GlassType.GetCustomAttributesSafe<SitecoreTypeAttribute>().FirstOrDefault();
-					var templateId = metadata.IsFallback
-							? DefaultFallbackTemplateId
-							: sitecoreAttribute?.TemplateId;
+					var templateId = new Guid(metadata.IsFallback
+						? DefaultFallbackTemplateId
+						: sitecoreAttribute?.TemplateId).ToString();
 
 					if (!string.IsNullOrEmpty(templateId))
 					{

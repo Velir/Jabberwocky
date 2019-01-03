@@ -83,7 +83,7 @@ namespace Jabberwocky.Glass.Caching
 
 		protected virtual string GenerateCacheKey(string key)
 		{
-			var newKey = string.Format("SitecoreCacheDecorator:{0}-{1}-{2}-{3}", SiteName, DatabaseName, LanguageName, key);
+			var newKey = $"SitecoreCacheDecorator:{SiteName}-{DatabaseName}-{LanguageName}-{key}";
 			return newKey;
 		}
 

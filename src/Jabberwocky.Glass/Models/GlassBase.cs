@@ -29,10 +29,10 @@ namespace Jabberwocky.Glass.Models
 		[SitecoreInfo(SitecoreInfoType.Name)]
 		public virtual string _Name { get; set; }
 
-		[SitecoreChildren(InferType = true, IsLazy = true)]
+		[SitecoreChildren(InferType = true)]
 		public virtual IEnumerable<IGlassBase> _ChildrenWithInferType { get; set; }
 
-		[SitecoreParent(IsLazy = true)]
+		[SitecoreParent]
 		public virtual IGlassBase _Parent { get; set; }
 
 		[SitecoreInfo(SitecoreInfoType.MediaUrl)]

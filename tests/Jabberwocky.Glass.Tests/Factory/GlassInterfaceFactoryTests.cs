@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Glass.Mapper.Sc;
+using Glass.Mapper.Sc.Builders;
 using Glass.Mapper.Sc.Configuration.Attributes;
 using Jabberwocky.Glass.Factory;
 using Jabberwocky.Glass.Factory.Attributes;
@@ -188,7 +189,7 @@ namespace Jabberwocky.Glass.Tests.Factory
 				templateItem.TemplateBaseTemplates.Returns(ci => mockItem._BaseTemplates.ToArray());
 				templateItem.Template.Returns(Guid.NewGuid());
 
-				_mockService.GetItem<IBaseTemplates>(mockItem._TemplateId).Returns(templateItem);
+				_mockService.GetItem<IBaseTemplates>(mockItem._TemplateId, x => x.VersionCountDisable()).Returns(templateItem);
 			}
 
 			{
@@ -201,7 +202,7 @@ namespace Jabberwocky.Glass.Tests.Factory
 				templateItem.TemplateBaseTemplates.Returns(ci => mockItem._BaseTemplates.ToArray());
 				templateItem.Template.Returns(Guid.NewGuid());
 
-				_mockService.GetItem<IBaseTemplates>(item._TemplateId).Returns(templateItem);
+				_mockService.GetItem<IBaseTemplates>(item._TemplateId, x => x.VersionCountDisable()).Returns(templateItem);
 			}
 
 			{
@@ -214,7 +215,7 @@ namespace Jabberwocky.Glass.Tests.Factory
 				templateItem.TemplateBaseTemplates.Returns(ci => mockItem._BaseTemplates.ToArray());
 				templateItem.Template.Returns(Guid.NewGuid());
 
-				_mockService.GetItem<IBaseTemplates>(item._TemplateId).Returns(templateItem);
+				_mockService.GetItem<IBaseTemplates>(item._TemplateId, x => x.VersionCountDisable()).Returns(templateItem);
 			}
 
 			var testItem = _glassFactory.GetItem<ITestInterface>(mockItem);
