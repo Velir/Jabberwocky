@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>Jabberwocky.Core</id>
-        <version>$version$</version>
+        <version>$version$-alpha</version>
         <title>Jabberwocky Core</title>
         <authors>Chris Smith</authors>
         <owners>Velir,Chris Smith</owners>
@@ -10,7 +10,7 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Jabberwocky Core</description>
         <releaseNotes>RTM</releaseNotes>
-        <copyright>Copyright 2015</copyright>
+        <copyright>Copyright 2018</copyright>
         <tags>Velir Jabberwocky Core</tags>
     </metadata>
 </package>

@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Jabberwocky.Glass.Mvc</id>
-    <version>$version$</version>
+    <version>$version$-alpha</version>
     <title>Jabberwocky Glass and MVC</title>
     <authors>Chris Smith</authors>
     <owners>Velir, Chris Smith</owners>

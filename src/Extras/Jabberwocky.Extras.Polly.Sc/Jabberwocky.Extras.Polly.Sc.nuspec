@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Jabberwocky.Extras.Polly.Sc</id>
-    <version>$version$</version>
+    <version>$version$-alpha</version>
     <title>Jabberwocky Polly Sc</title>
     <authors>Chris Smith</authors>
     <owners>Velir, Chris Smith</owners>
@@ -10,7 +10,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Jabberwocky package for circuit-breaker and error handling of renderings</description>
     <releaseNotes>RTM</releaseNotes>
-    <copyright>Copyright 2016</copyright>
+    <copyright>Copyright 2018</copyright>
     <tags>Velir Jabberwocky Extras Circuit Breaker Polly Error Handling</tags>
   </metadata>
 

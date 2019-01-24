@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Jabberwocky.WebApi</id>
-    <version>$version$</version>
+    <version>$version$-alpha</version>
     <title>Jabberwocky WebApi</title>
     <authors>Chris Smith</authors>
     <owners>Velir, Chris Smith</owners>
@@ -10,7 +10,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Jabberwocky WebApi</description>
     <releaseNotes>RTM</releaseNotes>
-    <copyright>Copyright 2015</copyright>
+    <copyright>Copyright 2018</copyright>
     <tags>Velir Jabberwocky WebApi</tags>
   </metadata>
 </package>

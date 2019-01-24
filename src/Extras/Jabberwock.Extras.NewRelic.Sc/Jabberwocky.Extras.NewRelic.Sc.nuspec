@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Jabberwocky.Extras.NewRelic.Sc</id>
-    <version>$version$</version>
+    <version>$version$-alpha</version>
     <title>Jabberwocky Extras New Relic for Sitecore</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
@@ -10,7 +10,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <releaseNotes>RTM</releaseNotes>
-    <copyright>Copyright 2016</copyright>
+    <copyright>Copyright 2018</copyright>
     <tags>Velir Jabberwocky New Relic Sitecore</tags>
   </metadata>
   <files>
