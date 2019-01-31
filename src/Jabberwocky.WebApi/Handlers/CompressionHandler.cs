@@ -28,7 +28,7 @@ namespace Jabberwocky.WebApi.Handlers
 							.OrderByDescending(p => p.Quality)
 							.FirstOrDefault();
 
-				string encodingValue = encodingType == null ? null : encodingType.Value;
+				string encodingValue = encodingType?.Value;
 
 				if (encodingValue != null)
 				{

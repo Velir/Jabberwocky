@@ -58,6 +58,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\CamelCasingFilterAttribute.cs" />
+    <Compile Include="Attributes\CompressionAttribute.cs" />
     <Compile Include="Handlers\CompressedContent.cs" />
     <Compile Include="Handlers\CompressionHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

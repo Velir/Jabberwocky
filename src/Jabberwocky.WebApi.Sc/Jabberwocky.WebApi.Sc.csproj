@@ -80,13 +80,10 @@
   <ItemGroup>
     <Compile Include="DependencyInjection\Configurator.cs" />
     <Compile Include="Extensions\ServiceCollectionExtensions.cs" />
-    <Compile Include="Formatters\ConditionalJsonMediaTypeFormatter.cs" />
     <Compile Include="PipelineArgs\RegisterWebApiPipelineArgs.cs" />
     <Compile Include="Pipelines\Initialize\RegisterWebApi.cs" />
     <Compile Include="Pipelines\RegisterWebApi\EnsureInitialized.cs" />
-    <Compile Include="Pipelines\RegisterWebApi\RegisterCompressionMessageHandler.cs" />
     <Compile Include="Pipelines\RegisterWebApi\RegisterDefaultRoute.cs" />
-    <Compile Include="Pipelines\RegisterWebApi\RegisterJsonFormatter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
