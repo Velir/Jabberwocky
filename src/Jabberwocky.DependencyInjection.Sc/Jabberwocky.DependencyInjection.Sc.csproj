@@ -72,6 +72,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="App_Config\Include\zzz.Jabberwocky\1.Jabberwocky.DependencyInjection.Sc.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="App_Config\Include\z.Jabberwocky\1.Jabberwocky.DependencyInjection.Sc.config">
       <SubType>Designer</SubType>
     </None>
