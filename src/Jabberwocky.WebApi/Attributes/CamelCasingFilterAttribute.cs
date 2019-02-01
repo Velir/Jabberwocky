@@ -1,10 +1,12 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Web.Http.Filters;
 using Newtonsoft.Json.Serialization;
 
 namespace Jabberwocky.WebApi.Attributes
 {
+	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 	public class CamelCasingFilterAttribute : ActionFilterAttribute
 	{
 		private JsonMediaTypeFormatter _camelCasingFormatter = new JsonMediaTypeFormatter();

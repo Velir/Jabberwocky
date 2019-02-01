@@ -6,6 +6,7 @@ using Jabberwocky.WebApi.Handlers;
 
 namespace Jabberwocky.WebApi.Attributes
 {
+	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 	public class CompressionAttribute : ActionFilterAttribute
 	{
 		private static readonly HashSet<string> SupportedEncodings = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase) { "gzip", "deflate" };
@@ -27,12 +28,9 @@ namespace Jabberwocky.WebApi.Attributes
 					if (encodingValue != null)
 					{
 						actionContext.Response.Content = new CompressedContent(actionContext.Response.Content, encodingValue);
-						actionContext.Response.Content.Headers.Add("Content-encoding", encodingValue);
 					}
 				}
 			}
-
-			base.OnActionExecuted(actionContext);
 		}
 	}
 }
