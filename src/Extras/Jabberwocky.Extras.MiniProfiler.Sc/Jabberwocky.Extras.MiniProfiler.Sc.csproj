@@ -84,6 +84,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\MiniProfilerConfiguration.cs" />
+    <Compile Include="Pipeline\HttpRequestBegin\StartMiniProfiler.cs" />
+    <Compile Include="Pipeline\HttpRequestEnd\StopMiniProfiler.cs" />
     <Compile Include="Pipeline\Initialize\MiniProfilerRouteProcessor.cs" />
     <Compile Include="Pipeline\Mvc\GetRenderer\AddMiniProfilerWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -96,6 +98,7 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
