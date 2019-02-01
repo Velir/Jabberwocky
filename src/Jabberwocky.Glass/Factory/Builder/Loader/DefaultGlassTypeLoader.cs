@@ -38,7 +38,7 @@ namespace Jabberwocky.Glass.Factory.Builder.Loader
 		{
 			return assemblies
 				.SelectMany(assembly => assembly.GetTypes())
-				.Where(type => type.GetAttribute<GlassFactoryTypeAttribute>() != null); // Must be an interface, since AttributeUsage guarantees it
+				.Where(type => type.GetAttribute<GlassFactoryInterfaceAttribute>() != null); // Must be an interface, since AttributeUsage guarantees it
 		}
 		internal IEnumerable<Assembly> LoadAssemblies(IEnumerable<string> assemblyNames)
 		{

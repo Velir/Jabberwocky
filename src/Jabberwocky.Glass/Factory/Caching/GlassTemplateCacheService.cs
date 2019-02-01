@@ -148,12 +148,14 @@ namespace Jabberwocky.Glass.Factory.Caching
 				foreach (var metadata in mappingGroup)
 				{
 					var sitecoreAttribute = metadata.GlassType.GetCustomAttributesSafe<SitecoreTypeAttribute>().FirstOrDefault();
-					var templateId = new Guid(metadata.IsFallback
+					var templateId = metadata.IsFallback
 						? DefaultFallbackTemplateId
-						: sitecoreAttribute?.TemplateId).ToString();
+						: sitecoreAttribute?.TemplateId;
 
 					if (!string.IsNullOrEmpty(templateId))
 					{
+						// normalize guid format
+						templateId = new Guid(templateId).ToString();
 						if (innerDictionary.ContainsKey(templateId))
 						{
 							var implementation = innerDictionary[templateId];

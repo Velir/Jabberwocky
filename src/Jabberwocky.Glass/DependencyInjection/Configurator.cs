@@ -48,7 +48,7 @@ namespace Jabberwocky.Glass.DependencyInjection
 					: new SitecoreService(DefaultDatabaseName);
 			});
 			serviceCollection.AddTransient<Func<ISitecoreService>>(c => c.GetService<ISitecoreService>);
-			
+
 			serviceCollection.AddProcessors(AssemblyNames);
 
 			serviceCollection.AddTransient<FallbackInterceptor>();
