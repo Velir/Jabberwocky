@@ -119,6 +119,7 @@
     <Compile Include="Factory\Util\IBaseTemplates.cs" />
     <Compile Include="Models\GlassBase.cs" />
     <Compile Include="Models\IGlassBase.cs" />
+    <Compile Include="Pipelines\GetGlassLoaders\GetAttributeConfigurationLoaders.cs" />
     <Compile Include="Pipelines\Processors\IProcessor.cs" />
     <Compile Include="Pipelines\Processors\ProcessorBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -144,6 +145,10 @@
     <ProjectReference Include="..\Jabberwocky.DependencyInjection.Sc\Jabberwocky.DependencyInjection.Sc.csproj">
       <Project>{9abffe48-ee9c-4e93-95f8-17eadcc0e422}</Project>
       <Name>Jabberwocky.DependencyInjection.Sc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Jabberwocky.DependencyInjection\Jabberwocky.DependencyInjection.csproj">
+      <Project>{d24e1f38-0bd8-4630-a8fd-1b4884ee259e}</Project>
+      <Name>Jabberwocky.DependencyInjection</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
