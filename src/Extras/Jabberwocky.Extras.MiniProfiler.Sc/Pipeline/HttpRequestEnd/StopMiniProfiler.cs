@@ -7,9 +7,7 @@ namespace Jabberwocky.Extras.MiniProfiler.Sc.Pipeline.HttpRequestEnd
 	{
 		public override void Process(HttpRequestArgs args)
 		{
-#if DEBUG
 			Profiler.Current?.Stop();
-#endif
 		}
 	}
 }

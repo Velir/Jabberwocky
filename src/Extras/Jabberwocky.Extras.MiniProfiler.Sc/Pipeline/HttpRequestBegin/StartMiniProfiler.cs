@@ -7,12 +7,10 @@ namespace Jabberwocky.Extras.MiniProfiler.Sc.Pipeline.HttpRequestBegin
 	{
 		public override void Process(HttpRequestArgs args)
 		{
-#if DEBUG
 			if (!Sitecore.Context.PageMode.IsExperienceEditor  && !args.RequestUrl.AbsolutePath.ToLowerInvariant().Contains("/sitecore/"))
 			{
 				Profiler.StartNew();
 			}
-#endif
 		}
 	}
 }
