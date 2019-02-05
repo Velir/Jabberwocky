@@ -1,3 +1,4 @@
+using System;
 using System.Web.Mvc;
 using Glass.Mapper.Sc;
 using Glass.Mapper.Sc.Configuration.Attributes;
@@ -6,6 +7,7 @@ using Jabberwocky.Glass.Mvc.Models.Factory;
 
 namespace Jabberwocky.Glass.Mvc.Views
 {
+	[Obsolete]
 	public abstract class CustomGlassView<TModel> : GlassView<TModel> where TModel : class
 	{
 		protected override TModel GetModel(GetKnownOptions options = null)

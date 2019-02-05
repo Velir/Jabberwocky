@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Linq;
 using System.Reflection;
 using Glass.Mapper.Sc;
+using Glass.Mapper.Sc.Web.Mvc;
 using Sitecore.Mvc.Presentation;
 
 namespace Jabberwocky.Glass.Mvc.Services
@@ -13,12 +14,12 @@ namespace Jabberwocky.Glass.Mvc.Services
         private const string RenderingItemIdPropertyName = "ItemId";
 
         private readonly IGlassHtml _glassHtml;
-        private readonly ISitecoreContext _context;
+        private readonly IMvcContext _context;
 
         private static readonly ConcurrentDictionary<Type, MethodInfo> GenericRenderingMethodCache = new ConcurrentDictionary<Type, MethodInfo>();
         private static readonly ConcurrentDictionary<Type, MethodInfo> GenericModelMethodCache = new ConcurrentDictionary<Type, MethodInfo>();
 
-        public RenderingContextService(IGlassHtml glassHtml, ISitecoreContext context)
+        public RenderingContextService(IGlassHtml glassHtml, IMvcContext context)
         {
             if (glassHtml == null) throw new ArgumentNullException(nameof(glassHtml));
             if (context == null) throw new ArgumentNullException(nameof(context));
@@ -46,8 +47,8 @@ namespace Jabberwocky.Glass.Mvc.Services
             {
                 // Depending on if the datasource is a GUID vs Path, use the correct overload
                 return Guid.TryParse(rendering.DataSource, out dataSourceGuid)
-                    ? _context.GetItem<T>(dataSourceGuid, inferType: true)
-                    : _context.GetItem<T>(rendering.DataSource, inferType: true);
+                    ? _context.SitecoreService.GetItem<T>(dataSourceGuid, x => x.InferType())
+                    : _context.SitecoreService.GetItem<T>(rendering.DataSource, x => x.InferType());
             }
 
             // Try to get from the Rendering StaticItem (without getting the ContextItem)
@@ -56,8 +57,8 @@ namespace Jabberwocky.Glass.Mvc.Services
             if (!string.IsNullOrEmpty(propertyItemId))
             {
                 propertyItem = Guid.TryParse(propertyItemId, out dataSourceGuid)
-                    ? _context.GetItem<T>(dataSourceGuid, inferType: true)
-                    : _context.GetItem<T>(propertyItemId, inferType: true);
+                    ? _context.SitecoreService.GetItem<T>(dataSourceGuid, x => x.InferType())
+                    : _context.SitecoreService.GetItem<T>(propertyItemId, x => x.InferType());
             }
 
             // Vary the fall-back logic (Always and Never recreate the behavior of Default, but with/without their respective fallback logic)
@@ -67,7 +68,7 @@ namespace Jabberwocky.Glass.Mvc.Services
                     var staticItem = rendering.Item;
                     if (staticItem != null)
                     {
-                        return _context.GetItem<T>(staticItem.ID.Guid, inferType: true);
+                        return _context.SitecoreService.GetItem<T>(staticItem.ID.Guid, x => x.InferType());
                     }
                     break;
                 case DatasourceNestingOptions.Always:
@@ -79,7 +80,7 @@ namespace Jabberwocky.Glass.Mvc.Services
                     var nestedItem = RenderingContext.CurrentOrNull?.ContextItem;
                     if (nestedItem != null)
                     {
-                        return _context.GetItem<T>(nestedItem.ID.Guid, inferType: true);
+                        return _context.SitecoreService.GetItem<T>(nestedItem.ID.Guid, x => x.InferType());
                     }
                     break;
                 case DatasourceNestingOptions.Never:
@@ -91,7 +92,7 @@ namespace Jabberwocky.Glass.Mvc.Services
             }
 
             // Finally just fall back to the context item
-            return _context.GetCurrentItem<T>(inferType: true);
+            return _context.GetPageContextItem<T>(x => x.InferType());
         }
 
         public object GetCurrentRenderingDatasource(Type modelType, DatasourceNestingOptions options = DatasourceNestingOptions.Default)

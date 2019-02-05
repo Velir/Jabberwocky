@@ -58,8 +58,8 @@ namespace Jabberwocky.Glass.Mvc.Models.Factory
 					return findBaseType(@base);
 				}
 
-							// recursive call
-							var genericTypeDef = @base?.GetGenericTypeDefinition();
+				// recursive call
+				var genericTypeDef = @base?.GetGenericTypeDefinition();
 				return genericTypeDef == typeof(GlassViewModel<>) || genericTypeDef == typeof(GlassViewModel<,>)
 									? @base
 									: @base == null
@@ -75,8 +75,8 @@ namespace Jabberwocky.Glass.Mvc.Models.Factory
 					: new TypeTuple
 					{
 						GlassModel = typeArgs.First(), // required
-									RenderingParamModel = typeArgs.Skip(1).FirstOrDefault() // optional
-								};
+						RenderingParamModel = typeArgs.Skip(1).FirstOrDefault() // optional
+					};
 		}
 
 		private Type GetGlassModelTypeFromGenericParam(Type viewModel)

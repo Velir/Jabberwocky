@@ -1,6 +1,7 @@
 using System;
 using AutoSitecore;
 using Glass.Mapper.Sc;
+using Glass.Mapper.Sc.Web.Mvc;
 using Jabberwocky.Glass.Models;
 using Jabberwocky.Glass.Mvc.Services;
 using Jabberwocky.Glass.Mvc.Tests.Util;
@@ -19,7 +20,7 @@ namespace Jabberwocky.Glass.Mvc.Tests.Services
         private Rendering _rendering;
         private RenderingContext _renderingContext;
         private IDisposable _disposableRenderingContext;
-        private ISitecoreContext _sitecoreContext;
+        private IMvcContext _sitecoreContext;
 
         private IGlassBase _directDatasource;
         private IGlassBase _staticItemDatasource;
@@ -55,7 +56,7 @@ namespace Jabberwocky.Glass.Mvc.Tests.Services
             _contextItem._Id.Returns(Guid.NewGuid());
 
             var mockGlassHtml = Substitute.For<IGlassHtml>();
-            _sitecoreContext = Substitute.For<ISitecoreContext>();
+            _sitecoreContext = Substitute.For<IMvcContext>();
 
             // SUT
             _renderingService = new RenderingContextService(mockGlassHtml, _sitecoreContext);
@@ -72,7 +73,7 @@ namespace Jabberwocky.Glass.Mvc.Tests.Services
         {
             // Setup DIRECT datasource for rendering
             _rendering.DataSource.Returns(ci => _directDatasource._Id.ToString());
-            _sitecoreContext.GetItem<IGlassBase>(_directDatasource._Id, inferType: true).Returns(_directDatasource);
+            _sitecoreContext.SitecoreService.GetItem<IGlassBase>(_directDatasource._Id, x => x.InferType()).Returns(_directDatasource);
 
             var datasource = _renderingService.GetCurrentRenderingDatasource<IGlassBase>();
 
@@ -89,7 +90,7 @@ namespace Jabberwocky.Glass.Mvc.Tests.Services
             _rendering.Properties.Returns(ci => props);
             _rendering.Item.Returns(fakeItem);
 
-            _sitecoreContext.GetItem<IGlassBase>(_staticItemDatasource._Id, inferType: true).Returns(_staticItemDatasource);
+            _sitecoreContext.SitecoreService.GetItem<IGlassBase>(_staticItemDatasource._Id, x => x.InferType()).Returns(_staticItemDatasource);
 
             var datasource = _renderingService.GetCurrentRenderingDatasource<IGlassBase>();
 
@@ -106,7 +107,7 @@ namespace Jabberwocky.Glass.Mvc.Tests.Services
             _rendering.Properties.Returns(ci => props);
             props["ItemId"] = _staticItemDatasource._Id.ToString();
 
-            _sitecoreContext.GetItem<IGlassBase>(_staticItemDatasource._Id, inferType: true).Returns(_staticItemDatasource);
+            _sitecoreContext.SitecoreService.GetItem<IGlassBase>(_staticItemDatasource._Id, x => x.InferType()).Returns(_staticItemDatasource);
 
             var datasource = _renderingService.GetCurrentRenderingDatasource<IGlassBase>(DatasourceNestingOptions.Always);
 
@@ -124,7 +125,7 @@ namespace Jabberwocky.Glass.Mvc.Tests.Services
             props["ItemId"] = null; // simulates no StaticItem
             _renderingContext.ContextItem.Returns(fakeItem); // sets the nested datasource
 
-            _sitecoreContext.GetItem<IGlassBase>(_nestedItemDatasource._Id, inferType: true)
+            _sitecoreContext.SitecoreService.GetItem<IGlassBase>(_nestedItemDatasource._Id, x => x.InferType())
                 .Returns(_nestedItemDatasource);
 
             var datasource =
@@ -144,7 +145,7 @@ namespace Jabberwocky.Glass.Mvc.Tests.Services
             props["ItemId"] = null; // simulates no StaticItem
             _renderingContext.ContextItem.Returns(fakeItem); // A nested datasource item IS set...
 
-            _sitecoreContext.GetCurrentItem<IGlassBase>(inferType: true).Returns(_contextItem);
+            _sitecoreContext.GetPageContextItem<IGlassBase>(x => x.InferType()).Returns(_contextItem);
 
             var datasource =
                 _renderingService.GetCurrentRenderingDatasource<IGlassBase>(DatasourceNestingOptions.Never);
