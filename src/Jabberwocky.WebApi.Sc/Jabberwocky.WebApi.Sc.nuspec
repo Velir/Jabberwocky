@@ -12,6 +12,6 @@
   </metadata>
 
   <files>
-    <file src="App_Config\Include\z.Jabberwocky\1.Jabberwocky.WebApi.Sc.config" target="content\App_Config\Include\z.Jabberwocky\1.Jabberwocky.WebApi.Sc.config" />
+    <file src="App_Config\Include\Jabberwocky\1.Jabberwocky.WebApi.Sc.config" target="content\App_Config\Include\Jabberwocky\1.Jabberwocky.WebApi.Sc.config" />
   </files>
 </package>

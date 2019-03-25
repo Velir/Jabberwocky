@@ -88,7 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="App_Config\Include\z.Jabberwocky\1.Jabberwocky.WebApi.Sc.config" />
+    <None Include="App_Config\Include\Jabberwocky\1.Jabberwocky.WebApi.Sc.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

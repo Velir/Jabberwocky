@@ -12,7 +12,7 @@
   </metadata>
 
   <files>
-    <file src="App_Config\Include\z.Jabberwocky\1.Jabberwocky.DependencyInjection.Sc.config" target="content\App_Config\Include\z.Jabberwocky\1.Jabberwocky.DependencyInjection.Sc.config" />
-    <file src="App_Config\Include\zzz.Jabberwocky\1.Jabberwocky.DependencyInjection.Sc.config" target="content\App_Config\Include\zzz.Jabberwocky\1.Jabberwocky.DependencyInjection.Sc.config" />
+    <file src="App_Config\Include\Jabberwocky\1.Jabberwocky.DependencyInjection.Sc.config" target="content\App_Config\Include\Jabberwocky\1.Jabberwocky.DependencyInjection.Sc.config" />
+    <file src="App_Config\Include\Jabberwocky\3.Jabberwocky.DependencyInjection.Sc.config" target="content\App_Config\Include\Jabberwocky\3.Jabberwocky.DependencyInjection.Sc.config" />
   </files>
 </package>

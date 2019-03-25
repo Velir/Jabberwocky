@@ -93,7 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="App_Config\Include\z.Jabberwocky\2.Jabberwocky.Extras.MiniProfiler.Sc.config">
+    <None Include="App_Config\Include\Jabberwocky\2.Jabberwocky.Extras.MiniProfiler.Sc.config">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />

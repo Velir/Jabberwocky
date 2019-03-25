@@ -14,6 +14,6 @@
     <tags>Velir Jabberwocky Glass MVC</tags>
   </metadata>
   <files>
-    <file src="App_Config\Include\z.Jabberwocky\1.Jabberwocky.Glass.Mvc.config" target="content\App_Config\Include\z.Jabberwocky\1.Jabberwocky.Glass.Mvc.config" />
+    <file src="App_Config\Include\Jabberwocky\1.Jabberwocky.Glass.Mvc.config" target="content\App_Config\Include\Jabberwocky\1.Jabberwocky.Glass.Mvc.config" />
   </files>
 </package>
