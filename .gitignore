@@ -78,5 +78,6 @@ tools/Nuget/*
 !src/Extras/Jabberwocky.Extras.Polly.Sc/Packages
 
 #Migration backups
+MigrationBackup/
 Backup/
 UpgradeLog*.htm
