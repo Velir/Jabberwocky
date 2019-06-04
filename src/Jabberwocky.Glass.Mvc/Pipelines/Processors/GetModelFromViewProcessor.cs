@@ -8,6 +8,7 @@ using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Mvc.Pipelines.Response.GetModel;
+using Sitecore.Mvc.Presentation;
 
 namespace Jabberwocky.Glass.Mvc.Pipelines.Processors
 {
@@ -67,7 +68,11 @@ namespace Jabberwocky.Glass.Mvc.Pipelines.Processors
 			if (modelType == null)
 			{
 				modelType = GetModel(args, path);
-
+				if (typeof(RenderingModel).IsAssignableFrom(modelType))
+                		{
+                    			//Abort if its RenderingModel
+                    			return;
+                		}
 				_modelCacheManager.Add(cacheKey, modelType);
 
 				if (modelType == typeof(NullModel))
