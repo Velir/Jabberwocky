@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Jabberwocky.Extras.MiniProfiler.Sc</id>
-    <version>$version$-alpha</version>
+    <version>$version$</version>
     <title>Jabberwocky MiniProfiler Sc</title>
     <authors>Chris Smith</authors>
     <owners>Velir, Chris Smith</owners>

@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Jabberwocky.Extras.NewRelic.Sc</id>
-    <version>$version$-alpha</version>
+    <version>$version$</version>
     <title>Jabberwocky Extras New Relic for Sitecore</title>
     <authors>$author$</authors>
     <owners>$author$</owners>

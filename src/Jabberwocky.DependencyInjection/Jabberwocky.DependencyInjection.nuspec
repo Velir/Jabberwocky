@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Jabberwocky.DependencyInjection</id>
-    <version>$version$-alpha</version>
+    <version>$version$</version>
     <title>Jabberwocky Dependency Injection</title>
     <authors>Chris Smith</authors>
     <owners>Velir, Chris Smith</owners>
