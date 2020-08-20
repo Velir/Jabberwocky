@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Glass.Mapper.Sc;
+using Glass.Mapper.Sc.Web;
 using Jabberwocky.Core.Caching;
 using Jabberwocky.DependencyInjection.Sc.Configuration;
 using Jabberwocky.Glass.Caching;
@@ -15,6 +16,8 @@ using Jabberwocky.Glass.Factory.Interceptors;
 using Jabberwocky.Glass.Factory.Util;
 using Jabberwocky.Glass.Services;
 using Microsoft.Extensions.DependencyInjection;
+using Sitecore.Data;
+using Sitecore.DependencyInjection;
 
 namespace Jabberwocky.Glass.DependencyInjection
 {
@@ -32,23 +35,19 @@ namespace Jabberwocky.Glass.DependencyInjection
 
 		public override void Configure(IServiceCollection serviceCollection)
 		{
-			serviceCollection.AddTransient<ISiteContextService, SiteContextService>();
+			serviceCollection.AddSingleton<ISiteContextService, SiteContextService>();
 
-			serviceCollection.AddSingleton<ICacheProvider, SiteCache>();
-			serviceCollection.Decorate<ICacheProvider>((provider, sp) => new SitecoreCacheDecorator(provider, GetSitecoreServiceForCache(sp), sp.GetService<ISiteContextService>()));
+			serviceCollection.AddSingleton<SiteCache>();
+			serviceCollection.AddScoped<ICacheProvider>(sp => new SitecoreCacheDecorator(sp.GetService<SiteCache>(), GetSitecoreServiceForCache(sp), sp.GetService<ISiteContextService>()));
 
-			serviceCollection.AddTransient<IItemService, ItemService>();
-			serviceCollection.AddTransient<ILinkService, LinkService>();
-			serviceCollection.AddTransient<ISitecoreContext, SitecoreContext>();
+			serviceCollection.AddScoped<IItemService, ItemService>();
+			serviceCollection.AddScoped<ILinkService, LinkService>();
 
-			serviceCollection.AddTransient<ISitecoreService>(sp => {
-				var context = sp.GetService<ISitecoreContext>();
-				return context?.Database != null && context.Database.Name != CoreDatabaseName
-					? (ISitecoreService)context
-					: new SitecoreService(DefaultDatabaseName);
-			});
-			serviceCollection.AddTransient<Func<ISitecoreService>>(c => c.GetService<ISitecoreService>);
-
+            serviceCollection.AddSingleton<Func<Database, ISitecoreService>>(_ => CreateSitecoreService);
+            serviceCollection.AddScoped(_ => CreateSitecoreContextService());
+            serviceCollection.AddScoped(_ => CreateRequestContext());
+            serviceCollection.AddScoped(_ => CreateLegacySitecoreContextService());
+			
 			serviceCollection.AddProcessors(AssemblyNames);
 
 			serviceCollection.AddTransient<FallbackInterceptor>();
@@ -71,5 +70,31 @@ namespace Jabberwocky.Glass.DependencyInjection
 				? sp.GetService<ISitecoreService>()
 				: sitecoreContext;
 		}
+
+        private static ISitecoreService CreateSitecoreService(Database database)
+        {
+            return new SitecoreService(database);
+        }
+
+        private static ISitecoreService CreateSitecoreContextService()
+        {
+            var sitecoreServiceThunk = Get<Func<Database, ISitecoreService>>();
+            return sitecoreServiceThunk(Sitecore.Context.Database ?? Sitecore.Configuration.Factory.GetDatabase("web"));
+        }
+
+        private static ISitecoreContext CreateLegacySitecoreContextService()
+        {
+            return new SitecoreContext(Sitecore.Context.Database ?? Sitecore.Configuration.Factory.GetDatabase("web"));
+        }
+
+        private static T Get<T>()
+        {
+            return ServiceLocator.ServiceProvider.GetService<T>();
+        }
+
+        private static IRequestContext CreateRequestContext()
+        {
+            return new RequestContext(Get<ISitecoreService>());
+        }
 	}
 }

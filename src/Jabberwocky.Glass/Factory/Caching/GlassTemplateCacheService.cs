@@ -76,17 +76,15 @@ namespace Jabberwocky.Glass.Factory.Caching
 			return _firstLevelCache.GetOrAdd(new Tuple<Type, string>(interfaceType, templateKey), key =>
 			{
 				// Otherwise, search for match, and update 1st-level cache
-				using (var service = _serviceFactory())
-				{
-					foreach (Guid baseTemplateId in GetBaseTemplates(service.GetItem<IBaseTemplates>(templateId, x => x.VersionCountDisable()), service, depth))
-					{
-						string templateIdString = baseTemplateId.ToString();
-						if (itemInterfaces.ContainsKey(templateIdString))
-						{
-							return itemInterfaces[templateIdString].ImplementationType;
-						}
-					}
-				}
+                var service = _serviceFactory();
+                foreach (Guid baseTemplateId in GetBaseTemplates(service.GetItem<IBaseTemplates>(templateId, x => x.VersionCountDisable()), service, depth))
+                {
+                    string templateIdString = baseTemplateId.ToString();
+                    if (itemInterfaces.ContainsKey(templateIdString))
+                    {
+                        return itemInterfaces[templateIdString].ImplementationType;
+                    }
+                }
 
 				return null;
 			});
@@ -99,14 +97,12 @@ namespace Jabberwocky.Glass.Factory.Caching
 				return null;
 			}
 
-			using (var service = _serviceFactory())
-			{
-				var currentTemplate = service.GetItem<IBaseTemplates>(templateId, x => x.VersionCountDisable());
+            var service = _serviceFactory();
+            var currentTemplate = service.GetItem<IBaseTemplates>(templateId, x => x.VersionCountDisable());
 
-				return GetBaseTemplates(currentTemplate, service, depth: MaxDepth)
-					.Select(guid => InnerGetImplementingTypeForTemplate(guid, interfaceType, 1))
-					.FirstOrDefault(type => type != null);
-			}
+            return GetBaseTemplates(currentTemplate, service, depth: MaxDepth)
+                .Select(guid => InnerGetImplementingTypeForTemplate(guid, interfaceType, 1))
+                .FirstOrDefault(type => type != null);
 		}
 
 		internal IEnumerable<Guid> GetBaseTemplates(IBaseTemplates item, ISitecoreService service, int depth = DefaultDepth)

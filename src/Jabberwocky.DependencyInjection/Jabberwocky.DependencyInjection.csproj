@@ -54,6 +54,7 @@
     <Compile Include="AggregateService\Interceptors\ResolvingInterceptor.cs" />
     <Compile Include="Autowire\Attributes\AutowireServiceAttribute.cs" />
     <Compile Include="Autowire\Extensions\AutowireRegistrationExtensions.cs" />
+    <Compile Include="Extensions\ServiceCollectionExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\DelegatingServiceProvider.cs" />
     <Compile Include="Scanning\IAssemblyScanningService.cs" />

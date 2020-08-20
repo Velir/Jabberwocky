@@ -34,9 +34,9 @@ namespace Jabberwocky.Glass.Mvc.Pipelines.Processors
 		/// </remarks>
 		private const int RecursionDepthLimit = 2;
 
-		private readonly IViewModelFactory _viewModelFactory;
+		private readonly Func<IViewModelFactory> _viewModelFactory;
 
-		public GetModelProcessor(IViewModelFactory viewModelFactory)
+		public GetModelProcessor(Func<IViewModelFactory> viewModelFactory)
 		{
 			if (viewModelFactory == null) throw new ArgumentNullException(nameof(viewModelFactory));
 			_viewModelFactory = viewModelFactory;
@@ -113,7 +113,7 @@ namespace Jabberwocky.Glass.Mvc.Pipelines.Processors
 				return null;
 			}
 
-			return _viewModelFactory.Create(type);
+			return _viewModelFactory().Create(type);
 		}
 
 		/// <summary>

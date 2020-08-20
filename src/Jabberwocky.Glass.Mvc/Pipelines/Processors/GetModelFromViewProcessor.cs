@@ -15,9 +15,9 @@ namespace Jabberwocky.Glass.Mvc.Pipelines.Processors
 	public class GetModelFromViewProcessor : ProcessorBase<GetModelArgs>
 	{
 		private readonly IModelCacheManager _modelCacheManager;
-		private readonly IViewModelFactory _viewModelFactory;
+		private readonly Func<IViewModelFactory> _viewModelFactory;
 
-		public GetModelFromViewProcessor(IModelCacheManager modelCacheManager, IViewModelFactory viewModelFactory)
+		public GetModelFromViewProcessor(IModelCacheManager modelCacheManager, Func<IViewModelFactory> viewModelFactory)
 		{
 			if (modelCacheManager == null) throw new ArgumentNullException(nameof(modelCacheManager));
 			if (viewModelFactory == null) throw new ArgumentNullException(nameof(viewModelFactory));
@@ -83,8 +83,8 @@ namespace Jabberwocky.Glass.Mvc.Pipelines.Processors
 				}
 			}
 
-			args.Result = _viewModelFactory.Create(modelType); ;
-		}
+			args.Result = _viewModelFactory().Create(modelType);
+        }
 
 		private string GetPathFromLayout(
 			Database db,
