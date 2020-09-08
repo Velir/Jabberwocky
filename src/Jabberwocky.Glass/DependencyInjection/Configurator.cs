@@ -44,6 +44,7 @@ namespace Jabberwocky.Glass.DependencyInjection
 			serviceCollection.AddScoped<ILinkService, LinkService>();
 
             serviceCollection.AddSingleton<Func<Database, ISitecoreService>>(_ => CreateSitecoreService);
+	    serviceCollection.AddSingleton<Func<ISitecoreService>>(_ => Get<ISitecoreService>);
             serviceCollection.AddScoped(_ => CreateSitecoreContextService());
             serviceCollection.AddScoped(_ => CreateRequestContext());
             serviceCollection.AddScoped(_ => CreateLegacySitecoreContextService());
