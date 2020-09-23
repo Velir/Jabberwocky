@@ -12,25 +12,26 @@ namespace Jabberwocky.WebApi.Attributes
 		private static readonly HashSet<string> SupportedEncodings = new HashSet<string>(StringComparer.InvariantCultureIgnoreCase) { "gzip", "deflate" };
 		public override void OnActionExecuted(HttpActionExecutedContext actionContext)
 		{
-			if (actionContext.Response.Content != null)
-			{
-				var acceptEncodings = actionContext.Response.RequestMessage.Headers.AcceptEncoding;
+            if (actionContext?.Response?.Content != null)
+            {
+                var acceptEncodings = actionContext.Response.RequestMessage.Headers.AcceptEncoding;
 
-				if (acceptEncodings != null && acceptEncodings.Any())
-				{
-					var encodingType =
-						acceptEncodings.Where(p => SupportedEncodings.Contains(p.Value))
-							.OrderByDescending(p => p.Quality)
-							.FirstOrDefault();
+                if (acceptEncodings != null && acceptEncodings.Any())
+                {
+                    var encodingType =
+                        acceptEncodings.Where(p => SupportedEncodings.Contains(p.Value))
+                            .OrderByDescending(p => p.Quality)
+                            .FirstOrDefault();
 
-					string encodingValue = encodingType?.Value;
+                    string encodingValue = encodingType?.Value;
 
-					if (encodingValue != null)
-					{
-						actionContext.Response.Content = new CompressedContent(actionContext.Response.Content, encodingValue);
-					}
-				}
-			}
-		}
+                    if (encodingValue != null)
+                    {
+                        actionContext.Response.Content =
+                            new CompressedContent(actionContext.Response.Content, encodingValue);
+                    }
+                }
+            }
+        }
 	}
 }
