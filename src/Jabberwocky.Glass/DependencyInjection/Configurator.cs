@@ -50,7 +50,7 @@ namespace Jabberwocky.Glass.DependencyInjection
                 c.GetService<Func<ISitecoreService>>(),
                 c));
             serviceCollection.AddSingleton<IGlassInterfaceFactory>(c => c.GetService<IGlassFactoryBuilder>().BuildFactory());
-            serviceCollection.AddTransient<Func<ILookup<Type, GlassInterfaceMetadata>, IGlassTemplateCacheService>>(c => lookup => new GlassTemplateCacheService(lookup, c.GetService<Func<ISitecoreService>>()));
+            serviceCollection.AddSingleton<Func<ILookup<Type, GlassInterfaceMetadata>, IGlassTemplateCacheService>>(c => lookup => new GlassTemplateCacheService(lookup, c.GetService<Func<ISitecoreService>>()));
             serviceCollection.AddSingleton<IGlassTemplateCacheService>(c => ((GlassInterfaceFactory)c.GetService<IGlassInterfaceFactory>()).TemplateCacheService);
         }
 
