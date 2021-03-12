@@ -61,15 +61,14 @@
     <Compile Include="Scanning\WebHostAssemblyScanner.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Jabberwocky.Core\Jabberwocky.Core.csproj">
       <Project>{79F22272-B90E-4461-BAEE-92AE1A6C28BC}</Project>
       <Name>Jabberwocky.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
