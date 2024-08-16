@@ -35,7 +35,7 @@
       <HintPath>..\..\..\packages\Microsoft.Extensions.DependencyInjection.7.0.0\lib\net462\Microsoft.Extensions.DependencyInjection.dll</HintPath>
     </Reference>
     <Reference Include="NewRelic.Api.Agent, Version=10.0.0.0, Culture=neutral, PublicKeyToken=06552fced0b33d87, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\NewRelic.Agent.Api.10.4.0\lib\net462\NewRelic.Api.Agent.dll</HintPath>
+      <HintPath>..\..\..\packages\NewRelic.Agent.Api.10.28.0\lib\net462\NewRelic.Api.Agent.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Kernel, Version=19.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Sitecore.Kernel.10.4.0\lib\net48\Sitecore.Kernel.dll</HintPath>
